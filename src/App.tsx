@@ -5,7 +5,12 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import Layout from "./components/Layout";
+import Money from "./views/Money";
+import Target from "./views/Target";
+import Statistic from "./views/Statistic";
+import Bill from "./views/Bill";
+import Tags from "./views/Tags";
+import NotFound from "./views/NotFound";
 
 
 
@@ -35,48 +40,5 @@ function App() {
             </Switch>
       </Router>
   );
-}
-
-function Money() {
-  return (
-      <Layout>
-        <h2>Money</h2>
-      </Layout>
-  );
-}
-
-function Bill() {
-  return  (
-      <Layout>
-        <h2>Bill</h2>
-      </Layout>
-  );
-}
-
-function Statistic() {
-  return  (
-      <Layout>
-        <h2>Statistic</h2>
-      </Layout>
-  );
-}
-
-function Tags() {
-  return  (
-      <Layout>
-        <h2>Tags</h2>
-      </Layout>
-  );
-}
-
-function Target() {
-  return  (
-      <Layout>
-        <h2>Target</h2>
-      </Layout>
-  );
-}
-function NotFound() {
-  return <h2>404：当前页面不存在</h2>;
 }
 export default App
