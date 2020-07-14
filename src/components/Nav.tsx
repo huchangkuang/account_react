@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import Icon from "./Icon";
+
 
 const NavWrapper = styled.nav`
     background: #ffffff;
@@ -15,6 +17,11 @@ const NavWrapper = styled.nav`
             flex-direction: column;
             width: 20%;
             font-size: 12px;
+            .icon {
+                width: 32px;
+                height: 32px;
+                margin: 3px;
+            }
         }
 
     }
@@ -24,18 +31,24 @@ const Nav = () => {
         <NavWrapper>
             <ul>
                 <li>
-                    <Link to="/">money</Link>
+                    <Icon name={"bill"}/>
+                    <Link to="/bill">bill</Link>
+
                 </li>
                 <li>
+                    <Icon name={"charts_line"}/>
                     <Link to="/statistic">statistic</Link>
                 </li>
                 <li>
-                    <Link to="/bill">bill</Link>
+                    <Icon name={"add"}/>
+                    <Link to="/">money</Link>
                 </li>
                 <li>
+                    <Icon name={"tag"}/>
                     <Link to="/tags">tags</Link>
                 </li>
                 <li>
+                    <Icon name={"target"}/>
                     <Link to="/target">target</Link>
                 </li>
             </ul>

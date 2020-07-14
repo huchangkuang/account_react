@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.9.0",
+    "@babel/helper-create-regexp-features-plugin": "^7.10.4",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -91,7 +92,10 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.0",
-    "node-sass": "npm:dart-sass"
+    "@types/webpack-env": "^1.15.2",
+    "node-sass": "npm:dart-sass",
+    "svg-sprite-loader": "^5.0.0",
+    "svgo-loader": "^2.2.1"
   },
   "jest": {
     "roots": [
