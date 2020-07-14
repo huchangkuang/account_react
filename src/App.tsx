@@ -12,8 +12,6 @@ import Bill from "./views/Bill";
 import Tags from "./views/Tags";
 import NotFound from "./views/NotFound";
 
-
-
 function App() {
   return (
       <Router>

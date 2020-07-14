@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import Icon from "./Icon";
 
 
@@ -11,16 +11,24 @@ const NavWrapper = styled.nav`
     > ul {
         display: flex;
         > li {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
             width: 20%;
             font-size: 12px;
-            .icon {
-                width: 32px;
-                height: 32px;
-                margin: 3px;
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                .icon {
+                    width: 32px;
+                    height: 32px;
+                    margin: 3px;
+                }
+                &.selected {
+                    color: #f3c623;
+                    .icon {
+                      fill: #f3c623;
+                    }
+                }
             }
         }
 
@@ -31,25 +39,34 @@ const Nav = () => {
         <NavWrapper>
             <ul>
                 <li>
-                    <Icon name={"bill"}/>
-                    <Link to="/bill">bill</Link>
-
+                    <NavLink to="/bill" activeClassName="selected">
+                        <Icon name={"bill"}/>
+                        bill
+                    </NavLink>
                 </li>
                 <li>
-                    <Icon name={"charts_line"}/>
-                    <Link to="/statistic">statistic</Link>
+                    <NavLink to="/statistic" activeClassName="selected">
+                        <Icon name={"charts_line"}/>
+                        statistic
+                    </NavLink>
                 </li>
                 <li>
-                    <Icon name={"add"}/>
-                    <Link to="/">money</Link>
+                    <NavLink to="/money" activeClassName="selected">
+                        <Icon name={"add"}/>
+                        money
+                    </NavLink>
                 </li>
                 <li>
-                    <Icon name={"tag"}/>
-                    <Link to="/tags">tags</Link>
+                    <NavLink to="/tags" activeClassName="selected">
+                        <Icon name={"tag"}/>
+                        tags
+                    </NavLink>
                 </li>
                 <li>
-                    <Icon name={"target"}/>
-                    <Link to="/target">target</Link>
+                    <NavLink to="/target" activeClassName="selected">
+                        <Icon name={"target"}/>
+                        target
+                    </NavLink>
                 </li>
             </ul>
         </NavWrapper>
