@@ -5,25 +5,13 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import Nav from "components/Nav";
-import styled from "styled-components";
+import Layout from "./components/Layout";
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  height: 100vh;
-`
-const Main = styled.div`
-  flex-grow: 1;
-  overflow: auto;
-`
+
 
 function App() {
   return (
       <Router>
-        <Wrapper>
-          <Main>
             <Switch>
               <Route path="/money">
                 <Money/>
@@ -45,31 +33,48 @@ function App() {
                 <NotFound />
               </Route>
             </Switch>
-          </Main>
-          <Nav/>
-        </Wrapper>
       </Router>
   );
 }
 
 function Money() {
-  return <h2>Money</h2>;
+  return (
+      <Layout>
+        <h2>Money</h2>
+      </Layout>
+  );
 }
 
 function Bill() {
-  return <h2>Bill</h2>;
+  return  (
+      <Layout>
+        <h2>Bill</h2>
+      </Layout>
+  );
 }
 
 function Statistic() {
-  return <h2>Statistic</h2>;
+  return  (
+      <Layout>
+        <h2>Statistic</h2>
+      </Layout>
+  );
 }
 
 function Tags() {
-  return <h2>Tags</h2>;
+  return  (
+      <Layout>
+        <h2>Tags</h2>
+      </Layout>
+  );
 }
 
 function Target() {
-  return <h2>Target</h2>;
+  return  (
+      <Layout>
+        <h2>Target</h2>
+      </Layout>
+  );
 }
 function NotFound() {
   return <h2>404：当前页面不存在</h2>;
