@@ -1,10 +1,11 @@
 import Layout from "../components/Layout";
 import React from "react";
+import {DataFilter} from "../components/DataFilter";
 
-function Statistic() {
+const Statistic=()=> {
     return  (
         <Layout>
-            <h2>Statistic</h2>
+            <DataFilter/>
         </Layout>
     );
 }

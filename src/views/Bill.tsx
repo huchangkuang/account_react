@@ -1,10 +1,11 @@
 import Layout from "../components/Layout";
 import React from "react";
+import {DataFilter} from "../components/DataFilter";
 
-function Bill() {
+const Bill=()=> {
     return  (
         <Layout>
-            <h2>Bill</h2>
+            <DataFilter/>
         </Layout>
     );
 }
