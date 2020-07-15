@@ -36,10 +36,19 @@ const Wrapper = styled.div`
             }
         }
 `
-const NumberPad:React.FC = ()=>{
+type Props = {
+    onChange:(value:number)=>void
+}
+const NumberPad:React.FC<Props> = (props)=>{
+    const onClickWrapper = (e: React.MouseEvent)=>{
+        const text = (e.target as HTMLButtonElement).textContent
+        if (text){
+            props.onChange(parseFloat(text))
+        }
+    }
     return (
         <Wrapper>
-            <div className="buttons">
+            <div className="buttons" onClick={onClickWrapper}>
                 <button >1</button>
                 <button >2</button>
                 <button >3</button>

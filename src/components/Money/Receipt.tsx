@@ -57,7 +57,10 @@ const Wrapper = styled.div`
             }
   }
 `
-const Receipt:React.FC = ()=>{
+type Props = {
+    amount:number
+}
+const Receipt:React.FC<Props> = (props)=>{
     return (
         <Wrapper>
             <div className="top-bar">
@@ -66,7 +69,7 @@ const Receipt:React.FC = ()=>{
             <div className="paper">
                 <div className="amount">
                     <div className="text">金额：</div>
-                    <div className="output">0</div>
+                    <div className="output">{props.amount}</div>
                 </div>
                 <div className="bar time">
                     <div>日期：</div>
