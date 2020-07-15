@@ -35,38 +35,68 @@ const Wrapper = styled.div`
                 background: #b5b5b5;
             }
         }
-`
+`;
 type Props = {
-    onChange:(value:number)=>void
+    value: number
+    onChange: (value: number) => void
 }
-const NumberPad:React.FC<Props> = (props)=>{
-    const onClickWrapper = (e: React.MouseEvent)=>{
-        const text = (e.target as HTMLButtonElement).textContent
-        if (text){
-            props.onChange(parseFloat(text))
+const NumberPad: React.FC<Props> = (props) => {
+    let output = props.value.toString();
+    // useEffect(() => {
+    //     console.log("hi");
+    //     props.onChange(parseFloat(output));
+    // }, [output]);
+    const toMoney = ()=> props.onChange(parseFloat(output))
+    const onClickWrapper = (e: React.MouseEvent) => {
+        const text = (e.target as HTMLButtonElement).textContent;
+        if (text) {
+            if ("0123456789.".indexOf(text) >= 0) {
+                if (output === "0" && text !== ".") {
+                    output = text;
+                    toMoney();
+                } else {
+                    if (text === "." && output.indexOf(".") >= 0) {
+                        return;
+                    } else {
+                        output += text;
+                        toMoney();
+                    }
+                }
+            } else if (text === "删除") {
+                if (output.length > 1) {
+                    output = output.slice(0, output.length - 1);
+                    toMoney();
+                } else {
+                    output = "0";
+                    toMoney();
+                }
+            } else if (text === "清空") {
+                output = "0";
+                toMoney();
+            }
         }
-    }
+    };
     return (
         <Wrapper>
             <div className="buttons" onClick={onClickWrapper}>
-                <button >1</button>
-                <button >2</button>
-                <button >3</button>
-                <button >删除</button>
-                <button >4</button>
-                <button >5</button>
-                <button >6</button>
-                <button >清空</button>
-                <button >7</button>
-                <button >8</button>
-                <button >9</button>
-                <button >备注</button>
-                <button >.</button>
-                <button >0</button>
-                <button >今天</button>
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>删除</button>
+                <button>4</button>
+                <button>5</button>
+                <button>6</button>
+                <button>清空</button>
+                <button>7</button>
+                <button>8</button>
+                <button>9</button>
+                <button>备注</button>
+                <button>.</button>
+                <button>0</button>
+                <button>今天</button>
                 <button className="ok">确认</button>
             </div>
         </Wrapper>
-    )
-}
+    );
+};
 export {NumberPad};

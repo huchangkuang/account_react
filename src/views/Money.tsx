@@ -23,7 +23,7 @@ const Money=()=> {
                 <ConsumeType/>
                 <Classify/>
                 <Receipt amount={receiptData.amount}/>
-                <NumberPad onChange={(value:number)=>{setReceiptData(
+                <NumberPad value={receiptData.amount} onChange={(value:number)=>{setReceiptData(
                     {...receiptData,amount:value}
                 )}}/>
             </Wrapper>
