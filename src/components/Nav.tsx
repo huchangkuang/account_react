@@ -41,31 +41,31 @@ const Nav = () => {
                 <li>
                     <NavLink to="/bill" activeClassName="selected">
                         <Icon name={"bill"}/>
-                        bill
+                        账单
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/statistic" activeClassName="selected">
                         <Icon name={"charts_line"}/>
-                        statistic
+                        统计
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/money" activeClassName="selected">
                         <Icon name={"add"}/>
-                        money
+                        记账
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/tags" activeClassName="selected">
                         <Icon name={"tag"}/>
-                        tags
+                        标签
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/target" activeClassName="selected">
                         <Icon name={"target"}/>
-                        target
+                        目标
                     </NavLink>
                 </li>
             </ul>
