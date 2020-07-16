@@ -27,13 +27,14 @@ const Wrapper = styled.div`
         }
         }     
 `;
+type Category = "-" | "+"
 type Props = {
-    type:string
-    onChangeType:(type:string)=>void
+    type:Category
+    onChangeType:(type:Category)=>void
 }
 const ConsumeType:React.FC<Props> = (props) => {
     let type = props.type
-    const selected = (t:string)=> type===t ? "selected" : ""
+    const selected = (t:Category)=> type===t ? "selected" : ""
     return (
         <Wrapper className="type">
             <div className={selected("-")} onClick={()=>props.onChangeType("-")}>支出</div>
