@@ -29,7 +29,7 @@ const Tags=()=> {
                 <div className="title">分类设置</div>
                 <ConsumeType type={type} onChange={type=>setType(type)}/>
                 <DisplayTags type={type}/>
-                <AddTagButton name="addNoCircle">添加类别</AddTagButton>
+                <AddTagButton/>
             </Wrapper>
         </Layout>
     );

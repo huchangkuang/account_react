@@ -6,6 +6,8 @@ import {NumberPad} from "../components/Money/NumberPad";
 import {Classify} from "../components/Money/Classify";
 import styled from "styled-components";
 import {useTags} from "../hooks/useTags";
+import dayjs from "dayjs";
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,7 +24,8 @@ type ReceiptData = {
 }
 const Money=()=> {
     const {tags} = useTags()
-    const [receiptData,setReceiptData] = useState<ReceiptData>({amount:"0",date:"2020-7-15", selectedId:0,note:"",type:"-"})
+    const now = dayjs().format("YYYY-MM-DD")
+    const [receiptData,setReceiptData] = useState<ReceiptData>({amount:"0",date:now, selectedId:0,note:"",type:"-"})
     const onChange = (obj:object) => {
         setReceiptData({...receiptData,...obj})
     }

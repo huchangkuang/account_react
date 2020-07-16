@@ -1,30 +1,33 @@
 import React from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
 import Icon from "../Icon";
 
-const Wrapper = styled.div`
-    .link {
+const Wrapper=styled.div`
+      > button {
+         width: 100vw;
          display: flex;
          justify-content: center;
          align-items: center;
+         border: none;
          border-top: 1px solid #c4c4c4;
          padding: 8px 0;
          background: white;
-         .icon {
-          width: 24px;
-          height: 24px;
+         font-size: 16px;
+         > .icon {
+            width: 24px;
+            height: 24px;
          }
     }
-`;
-const AddTagButton: React.FC = () => {
+`
+
+const RemoveTagButton = ()=>{
   return (
     <Wrapper>
-      <Link to="/tag/add" className="link">
-        <Icon name="addNoCircle"/>
-        添加类别
-      </Link>
+      <button>
+        <Icon name="delete"/>
+        删除标签
+      </button>
     </Wrapper>
-  );
-};
-export {AddTagButton};
+  )
+}
+export {RemoveTagButton}
