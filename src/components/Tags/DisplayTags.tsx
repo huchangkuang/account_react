@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom"
 import styled from "styled-components";
 import Icon from "../Icon";
+import {useTags} from "../../hooks/useTags";
 
 const Wrapper = styled.div`
 .link {
@@ -37,11 +38,11 @@ const Wrapper = styled.div`
    }
 }
 `
-const iconMap = [{id:0,name:"food",text:"餐饮",type:"-"},{id:1,name:"shop",text:"购物",type:"-"}]
 const DisplayTags:React.FC = ()=>{
+    const {tags} = useTags()
     return (
         <Wrapper className="display">
-                {iconMap.map(i=><Link to="" key={i.id} className="link">
+                {tags.map(i=><Link to="" key={i.id} className="link">
                     <div className="icon-name">
                     <div className="icon-container">
                         <Icon name={i.name}/>

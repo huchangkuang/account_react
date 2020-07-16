@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -27,14 +27,17 @@ const Wrapper = styled.div`
         }
         }     
 `;
-const ConsumeType:React.FC = () => {
-    const [type,setType] = useState<string>("-")
+type Props = {
+    type:string
+    onChangeType:(type:string)=>void
+}
+const ConsumeType:React.FC<Props> = (props) => {
+    let type = props.type
     const selected = (t:string)=> type===t ? "selected" : ""
-
     return (
         <Wrapper className="type">
-            <div className={selected("-")} onClick={()=>setType("-")}>支出</div>
-            <div className={selected("+")} onClick={()=>setType("+")}>收入</div>
+            <div className={selected("-")} onClick={()=>props.onChangeType("-")}>支出</div>
+            <div className={selected("+")} onClick={()=>props.onChangeType("+")}>收入</div>
         </Wrapper>
     );
 };

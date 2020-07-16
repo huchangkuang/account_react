@@ -57,8 +57,15 @@ const Wrapper = styled.div`
             }
   }
 `
+type ReceiptData = {
+    amount:string,
+    date:string,
+    classify:string,
+    note:string,
+    type: string
+}
 type Props = {
-    amount:string
+    receiptData:ReceiptData
 }
 const Receipt:React.FC<Props> = (props)=>{
     return (
@@ -69,19 +76,19 @@ const Receipt:React.FC<Props> = (props)=>{
             <div className="paper">
                 <div className="amount">
                     <div className="text">金额：</div>
-                    <div className="output">{props.amount}</div>
+                    <div className="output">{props.receiptData.amount}</div>
                 </div>
                 <div className="bar time">
                     <div>日期：</div>
-                    <div className="time-content">2020-7-15</div>
+                    <div className="time-content">{props.receiptData.date}</div>
                 </div>
                 <div className="bar kind">
                     <div>分类：</div>
-                    <div className="kind-content">餐饮</div>
+                    <div className="kind-content">{props.receiptData.classify}</div>
                 </div>
                 <div className="bar notes">
                     <div>备注：</div>
-                    <div className="note-content"/>
+                    <div className="note-content">{props.receiptData.note}</div>
                 </div>
             </div>
         </Wrapper>
