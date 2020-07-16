@@ -47,14 +47,17 @@ const Wrapper = styled.div`
                 justify-content: space-around;
                 border-top:1px solid #b5b5b5;
                 box-shadow: none;
+                min-height: 50px;
                 button {
                     background: transparent;
                     border: none;
                     &:first-child {
                         color: #1a73e8;
+                        font-size: 16px;
                     }
                     &:last-child {
                         color: #b5b5b5;
+                        font-size: 16px;
                         &.change {
                             color: #1a73e8;
                         }
@@ -62,38 +65,42 @@ const Wrapper = styled.div`
                 }
             }
         }
-`
+`;
 type Props = {
-    placeholder:string,
-    children:string,
-    show:string,
-    onChange:(state:string)=>void
-    getNote:(value:string)=>void
+  placeholder: string,
+  children: string,
+  show: string,
+  onChange: (state: string) => void
+  getValue: (value: string) => void
 }
-const Prompt:React.FC<Props> = (props)=>{
-    const display = props.show
-    const [value,setValue] = useState("")
-    const confirm = ()=>{
-        if (value!==""){
-            props.getNote(value)
-            props.onChange("hide")
-            setValue("")
-        }
+const Prompt: React.FC<Props> = (props) => {
+  const display = props.show;
+  const [value, setValue] = useState("");
+  const confirm = () => {
+    if (value !== "") {
+      props.getValue(value);
+      props.onChange("hide");
+      setValue("");
     }
-    return (
-        <Wrapper className={display}>
-            <div className="board">
-                <label>
-                    <span>{props.children}</span>
-                    <input type="text" placeholder={props.placeholder} value={value}
-                           onChange={(e:ChangeEvent<HTMLInputElement>)=>{setValue(e.target.value)}}/>
-                </label>
-                <div className="buttons">
-                    <button onClick={()=>{props.onChange("hide")}}>取消</button>
-                    <button className={value===""?"":"change"} onClick={confirm}>确认</button>
-                </div>
-            </div>
-        </Wrapper>
-    )
-}
-export {Prompt}
+  };
+  return (
+    <Wrapper className={display}>
+      <div className="board">
+        <label>
+          <span>{props.children}</span>
+          <input type="text" placeholder={props.placeholder} value={value}
+                 onChange={(e: ChangeEvent<HTMLInputElement>) => {setValue(e.target.value);}}/>
+        </label>
+        <div className="buttons">
+          <button onClick={() => {
+            props.onChange("hide");
+            setValue("");
+          }}>取消
+          </button>
+          <button className={value === "" ? "" : "change"} onClick={confirm}>确认</button>
+        </div>
+      </div>
+    </Wrapper>
+  );
+};
+export {Prompt};

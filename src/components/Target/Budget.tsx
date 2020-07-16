@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
+import {Prompt} from "../Prompt";
 
 const Wrapper = styled.div`
    background: white;
@@ -77,36 +78,48 @@ const Wrapper = styled.div`
         }
 `;
 const Budget: React.FC = () => {
-    return (
-        <Wrapper className="budget">
-            <div className="budget-header">
-                <div className="text">07月总预算</div>
-                <button className="setBudget">+设置预算</button>
-            </div>
-            <div className="budget-main">
-                <div className="pie">
-                    <div className="remain">
-                        <span>剩余</span>
-                        <span>0%</span>
-                        </div>
-                </div>
-                <ul className="description">
-                    <li>
-                        <span className="budget-description">剩余预算</span>
-                        <span className="number">0</span>
-                    </li>
-                    <li className="line"/>
-                    <li>
-                        <span className="budget-description">本月预算</span>
-                        <span className="number">0</span>
-                    </li>
-                    <li>
-                        <span className="budget-description">本月支出</span>
-                        <span className="number">0</span>
-                    </li>
-                </ul>
-            </div>
-        </Wrapper>
-    );
+  const [display, setDisplay] = useState<string>("hide");
+  const [budget, _setBudget] = useState<number>(0);
+  const setBudget = (state: string) => {
+    const number = parseFloat(state);
+    if (number) {
+      _setBudget(number);
+    } else {
+      window.alert("请输入合法的数字");
+    }
+  };
+  return (
+    <Wrapper className="budget">
+      <div className="budget-header">
+        <div className="text">07月总预算</div>
+        <button className="setBudget" onClick={() => setDisplay("show")}>+设置预算</button>
+      </div>
+      <div className="budget-main">
+        <div className="pie">
+          <div className="remain">
+            <span>剩余</span>
+            <span>0%</span>
+          </div>
+        </div>
+        <ul className="description">
+          <li>
+            <span className="budget-description">剩余预算</span>
+            <span className="number">0</span>
+          </li>
+          <li className="line"/>
+          <li>
+            <span className="budget-description">本月预算</span>
+            <span className="number">{budget}</span>
+          </li>
+          <li>
+            <span className="budget-description">本月支出</span>
+            <span className="number">0</span>
+          </li>
+        </ul>
+      </div>
+      <Prompt placeholder="请输入预算金额" show={display} onChange={state => setDisplay(state)}
+              getValue={setBudget} children="每月总预算"/>
+    </Wrapper>
+  );
 };
 export {Budget};

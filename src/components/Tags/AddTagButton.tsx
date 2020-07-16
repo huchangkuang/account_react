@@ -16,19 +16,19 @@ const Wrapper = styled.div`
           height: 24px;
          }
     }
-`
+`;
 type Props = {
-    name:string
-    children:string
+  name: string
+  children: string
 }
-const AddTagButton:React.FC<Props> = (props)=>{
-    return (
-        <Wrapper>
-            <Link to="/tag/add" className="link">
-                <Icon name={props.name}/>
-                {props.children}
-            </Link>
-        </Wrapper>
-    )
-}
-export {AddTagButton}
+const AddTagButton: React.FC<Props> = (props) => {
+  return (
+    <Wrapper>
+      <Link to="/tag/add" className="link">
+        <Icon name={props.name}/>
+        {props.children}
+      </Link>
+    </Wrapper>
+  );
+};
+export {AddTagButton};

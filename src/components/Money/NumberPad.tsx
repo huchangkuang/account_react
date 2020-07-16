@@ -80,7 +80,6 @@ const NumberPad: React.FC<Props> = (props) => {
         }
     };
     const [display,setDisplay] = useState("hide")
-    const changeDisplay = (state:string)=>setDisplay(state)
     return (
         <Wrapper>
             <div className="buttons" onClick={onClickWrapper}>
@@ -101,7 +100,7 @@ const NumberPad: React.FC<Props> = (props) => {
                 <button>今天</button>
                 <button className="ok">确认</button>
             </div>
-            <Prompt placeholder="请输入备注" children="备注" show={display} onChange={changeDisplay} getNote={value => props.getNote(value)}/>
+            <Prompt placeholder="请输入备注" children="备注" show={display} onChange={state=>setDisplay(state)} getValue={value => props.getNote(value)}/>
         </Wrapper>
     );
 };
