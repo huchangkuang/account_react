@@ -77,12 +77,7 @@ const Prompt:React.FC<Props> = (props)=>{
         if (value!==""){
             props.getNote(value)
             props.onChange("hide")
-            console.log(value)
             setValue("")
-            setTimeout(()=>{
-                console.log(value)
-            },1000)
-
         }
     }
     return (
@@ -90,7 +85,7 @@ const Prompt:React.FC<Props> = (props)=>{
             <div className="board">
                 <label>
                     <span>{props.children}</span>
-                    <input type="text" placeholder={props.placeholder}
+                    <input type="text" placeholder={props.placeholder} value={value}
                            onChange={(e:ChangeEvent<HTMLInputElement>)=>{setValue(e.target.value)}}/>
                 </label>
                 <div className="buttons">
