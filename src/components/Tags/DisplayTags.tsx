@@ -38,11 +38,14 @@ const Wrapper = styled.div`
    }
 }
 `
-const DisplayTags:React.FC = ()=>{
+type Props = {
+    type:"-"|"+"
+}
+const DisplayTags:React.FC<Props> = (props)=>{
     const {tags} = useTags()
     return (
         <Wrapper className="display">
-                {tags.map(i=><Link to="" key={i.id} className="link">
+                {tags.filter(i=>i.type===props.type).map(i=><Link to={"/tags/"+i.id} key={i.id} className="link">
                     <div className="icon-name">
                     <div className="icon-container">
                         <Icon name={i.name}/>

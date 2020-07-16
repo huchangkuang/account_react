@@ -40,6 +40,7 @@ const Wrapper = styled.div`
 type Props = {
     value: string
     onChange: (value: string) => void
+    getNote:(value:string)=>void
 }
 const NumberPad: React.FC<Props> = (props) => {
     let output = props.value
@@ -100,7 +101,7 @@ const NumberPad: React.FC<Props> = (props) => {
                 <button>今天</button>
                 <button className="ok">确认</button>
             </div>
-            <Prompt placeholder="请输入备注" children="备注" show={display} onChange={changeDisplay}/>
+            <Prompt placeholder="请输入备注" children="备注" show={display} onChange={changeDisplay} getNote={value => props.getNote(value)}/>
         </Wrapper>
     );
 };

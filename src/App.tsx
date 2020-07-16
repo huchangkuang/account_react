@@ -11,24 +11,32 @@ import Statistic from "./views/Statistic";
 import Bill from "./views/Bill";
 import Tags from "./views/Tags";
 import NotFound from "./views/NotFound";
+import {EditTag} from "./components/Tags/EditTag";
+import {AddTag} from "./components/Tags/AddTag";
 
 function App() {
   return (
       <Router>
             <Switch>
-              <Route path="/money">
+              <Route exact path="/money">
                 <Money/>
               </Route>
-              <Route path="/Bill">
+              <Route exact path="/bill">
                 <Bill />
               </Route>
-              <Route path="/Statistic">
+              <Route exact path="/statistic">
                 <Statistic />
               </Route>
-              <Route path="/Tags">
+              <Route exact path="/tags">
                 <Tags />
               </Route>
-              <Route path="/Target">
+              <Route exact path="/tags/:id">
+                <EditTag />
+              </Route>
+              <Route exact path="/tag/add">
+                <AddTag/>
+              </Route>
+              <Route exact path="/target">
                 <Target />
               </Route>
               <Redirect exact from="/" to="/money"/>

@@ -18,26 +18,23 @@ const Wrapper = styled.div`
 `
 type Category = "-" | "+"
 type ReceiptData = {
-    amount:string,date:string, classify:string,note:string,type:Category
+    amount:string,date:string, selectedId:0,note:string,type:Category
 }
 const Money=()=> {
     const {tags} = useTags()
-    const [selectId,setSelectId] =useState<number>(0)
-    const [receiptData,setReceiptData] = useState<ReceiptData>({amount:"0",date:"2020-7-15", classify:"餐饮",note:"",type:"-"})
-    const changeID = (id:number)=>{
-        setSelectId(id)
-        onChange({classify:tags.filter(i=>i.id===id)[0].text})
-    }
+    const [receiptData,setReceiptData] = useState<ReceiptData>({amount:"0",date:"2020-7-15", selectedId:0,note:"",type:"-"})
     const onChange = (obj:object) => {
         setReceiptData({...receiptData,...obj})
     }
     return (
         <Layout>
             <Wrapper>
-                <ConsumeType type={receiptData.type} onChangeType={(type:Category)=>{onChange({type:type})}}/>
-                <Classify onIdChange={(id:number)=>{changeID(id)}} id={selectId}/>
+                <ConsumeType type={receiptData.type}
+                             onChange={type=>onChange({type:type,selectedId:tags.filter(i=>i.type===type)[0].id})}/>
+                <Classify onChange={id => onChange({selectedId:id})} id={receiptData.selectedId} type={receiptData.type}/>
                 <Receipt receiptData={receiptData}/>
-                <NumberPad value={receiptData.amount} onChange={(value:string)=>{onChange({amount:value})}}/>
+                <NumberPad value={receiptData.amount} onChange={value=>onChange({amount:value})}
+                           getNote={value => onChange({note:value})}/>
             </Wrapper>
         </Layout>
     );

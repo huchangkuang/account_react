@@ -30,15 +30,15 @@ const Wrapper = styled.div`
 type Category = "-" | "+"
 type Props = {
     type:Category
-    onChangeType:(type:Category)=>void
+    onChange:(type:Category)=>void
 }
 const ConsumeType:React.FC<Props> = (props) => {
     let type = props.type
     const selected = (t:Category)=> type===t ? "selected" : ""
     return (
         <Wrapper className="type">
-            <div className={selected("-")} onClick={()=>props.onChangeType("-")}>支出</div>
-            <div className={selected("+")} onClick={()=>props.onChangeType("+")}>收入</div>
+            <div className={selected("-")} onClick={()=>props.onChange("-")}>支出</div>
+            <div className={selected("+")} onClick={()=>props.onChange("+")}>收入</div>
         </Wrapper>
     );
 };

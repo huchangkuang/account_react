@@ -31,19 +31,20 @@ const Wrapper = styled.div`
     }
 `
 type Props = {
-    onIdChange:(id:number)=>void,
-    id:number
+    onChange:(id:number)=>void,
+    id:number,
+    type:"-"|"+"
 }
 const Classify:React.FC<Props> = (props)=>{
     const {tags} = useTags()
     let iconId = props.id
     const select = (id:number)=>{
-        props.onIdChange(id)
+        props.onChange(id)
     }
     return (
         <Wrapper>
             <ul>
-                {tags.map(i=>
+                {tags.filter(i=>i.type===props.type).map(i=>
                     <li key={i.id}>
                         <Icon name={i.name} className={iconId===i.id?"selected":""}
                               onClick={()=>{select(i.id)}}/>

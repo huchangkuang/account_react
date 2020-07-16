@@ -21,14 +21,14 @@ type Props = {
     name:string
     children:string
 }
-const EditTagButton:React.FC<Props> = (props)=>{
+const AddTagButton:React.FC<Props> = (props)=>{
     return (
         <Wrapper>
-            <Link to="" className="link">
+            <Link to="/tag/add" className="link">
                 <Icon name={props.name}/>
                 {props.children}
             </Link>
         </Wrapper>
     )
 }
-export {EditTagButton}
+export {AddTagButton}

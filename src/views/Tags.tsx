@@ -1,9 +1,9 @@
 import Layout from "../components/Layout";
-import React from "react";
+import React, {useState} from "react";
 import {ConsumeType} from "../components/ConsumeType";
 import styled from "styled-components";
 import {DisplayTags} from "../components/Tags/DisplayTags";
-import {EditTagButton} from "../components/Tags/EditTagButton";
+import {AddTagButton} from "../components/Tags/AddTagButton";
 
 const Wrapper = styled.div`
     display: flex;
@@ -22,13 +22,14 @@ const Wrapper = styled.div`
     }
 `
 const Tags=()=> {
+    const [type,setType] = useState<"-"|"+">("-")
     return  (
         <Layout>
             <Wrapper>
                 <div className="title">分类设置</div>
-                <ConsumeType/>
-                <DisplayTags/>
-                <EditTagButton name="addNoCircle">添加类别</EditTagButton>
+                <ConsumeType type={type} onChange={type=>setType(type)}/>
+                <DisplayTags type={type}/>
+                <AddTagButton name="addNoCircle">添加类别</AddTagButton>
             </Wrapper>
         </Layout>
     );

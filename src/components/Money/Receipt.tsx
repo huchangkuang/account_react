@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import {useTags} from "../../hooks/useTags";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -60,7 +61,7 @@ const Wrapper = styled.div`
 type ReceiptData = {
     amount:string,
     date:string,
-    classify:string,
+    selectedId:number,
     note:string,
     type: string
 }
@@ -68,6 +69,7 @@ type Props = {
     receiptData:ReceiptData
 }
 const Receipt:React.FC<Props> = (props)=>{
+    const {tags} = useTags()
     return (
         <Wrapper>
             <div className="top-bar">
@@ -84,7 +86,7 @@ const Receipt:React.FC<Props> = (props)=>{
                 </div>
                 <div className="bar kind">
                     <div>分类：</div>
-                    <div className="kind-content">{props.receiptData.classify}</div>
+                    <div className="kind-content">{tags.filter(i=>i.id===props.receiptData.selectedId)[0].text}</div>
                 </div>
                 <div className="bar notes">
                     <div>备注：</div>

@@ -68,12 +68,22 @@ type Props = {
     children:string,
     show:string,
     onChange:(state:string)=>void
+    getNote:(value:string)=>void
 }
 const Prompt:React.FC<Props> = (props)=>{
     const display = props.show
     const [value,setValue] = useState("")
     const confirm = ()=>{
-        props.onChange("hide")
+        if (value!==""){
+            props.getNote(value)
+            props.onChange("hide")
+            console.log(value)
+            setValue("")
+            setTimeout(()=>{
+                console.log(value)
+            },1000)
+
+        }
     }
     return (
         <Wrapper className={display}>
