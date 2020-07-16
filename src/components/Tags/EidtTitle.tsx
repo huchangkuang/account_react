@@ -30,13 +30,14 @@ const Wrapper = styled.div`
 `
 type Props = {
   text:string
+  save:()=>void
 }
 const EditTitle:React.FC<Props> = (props)=>{
   return (
     <Wrapper>
       <div><Icon name="left"/></div>
       <span>{props.text}</span>
-      <button>保存</button>
+      <button onClick={props.save}>保存</button>
     </Wrapper>
   )
 }

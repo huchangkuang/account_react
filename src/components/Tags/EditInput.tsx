@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import styled from "styled-components";
 
 const Label = styled.label`
@@ -21,12 +21,14 @@ const Label = styled.label`
 `
 type Props = {
   value:string
+  onChange:(value:string)=>void
 }
 const EditInput:React.FC<Props> = (props)=>{
   return (
     <Label>
       <span>标签名</span>
-      <input type="text" value={props.value} placeholder="输入类别名称，建议不超过四个汉字"/>
+      <input type="text" value={props.value} placeholder="输入类别名称，建议不超过四个汉字"
+             onChange={(e:ChangeEvent<HTMLInputElement>)=>props.onChange(e.target.value)}/>
     </Label>
   )
 }

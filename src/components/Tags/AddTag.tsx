@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Layout from "../Layout";
 import {EditTitle} from "./EidtTitle";
@@ -17,12 +17,13 @@ const Wrapper = styled.div`
   }
 `
 const AddTag = ()=>{
+    const [value,setValue] = useState("")
     return (
       <Layout>
         <Wrapper>
-          <EditTitle text="新增标签"/>
-          <EditInput value=""/>
-          <IconList/>
+          <EditTitle text="新增标签" save={()=>console.log("hi")}/>
+          <EditInput value={value} onChange={value => setValue(value)}/>
+          <IconList selectedId="0" changeSelectedId={id => console.log(id)}/>
         </Wrapper>
       </Layout>
     )
