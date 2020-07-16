@@ -10,10 +10,14 @@ const Wrapper = styled.div`
   background: #f3c623;
   width: 100vw;
   padding: 10px 20px;
-  .icon {
+  > div {
+    width: 32px;
+    .icon {
     width: 16px;
     height: 16px;
+    }
   }
+
   > span {
     font-size: 18px;
     font-weight: bold;
@@ -30,7 +34,7 @@ type Props = {
 const EditTitle:React.FC<Props> = (props)=>{
   return (
     <Wrapper>
-      <Icon name="left"/>
+      <div><Icon name="left"/></div>
       <span>{props.text}</span>
       <button>保存</button>
     </Wrapper>
