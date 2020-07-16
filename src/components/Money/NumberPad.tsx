@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
+import {Prompt} from "../Prompt";
 
 const Wrapper = styled.div`
         width: 100%;
@@ -37,45 +38,48 @@ const Wrapper = styled.div`
         }
 `;
 type Props = {
-    value: number
-    onChange: (value: number) => void
+    value: string
+    onChange: (value: string) => void
 }
 const NumberPad: React.FC<Props> = (props) => {
-    let output = props.value.toString();
-    // useEffect(() => {
-    //     console.log("hi");
-    //     props.onChange(parseFloat(output));
-    // }, [output]);
-    const toMoney = ()=> props.onChange(parseFloat(output))
+    let output = props.value
+    const setOutput = (newOutput:string)=>{
+        props.onChange(newOutput)
+    }
     const onClickWrapper = (e: React.MouseEvent) => {
-        const text = (e.target as HTMLButtonElement).textContent;
+        const text = (e.target as HTMLButtonElement).textContent as string;
         if (text) {
             if ("0123456789.".indexOf(text) >= 0) {
-                if (output === "0" && text !== ".") {
-                    output = text;
-                    toMoney();
-                } else {
-                    if (text === "." && output.indexOf(".") >= 0) {
-                        return;
+                if (output.length<=8){
+                    if (output === "0" && text !== ".") {
+                        setOutput(text);
                     } else {
-                        output += text;
-                        toMoney();
+                        if (text === "." && output.indexOf(".") >= 0) {
+                            return;
+                        } else {
+                            setOutput(output+text);
+                        }
+                    }
+                }else {
+                    if (parseFloat(output)>100000){
+                        window.alert("小老弟，你有那么多钱嘛")
                     }
                 }
             } else if (text === "删除") {
                 if (output.length > 1) {
-                    output = output.slice(0, output.length - 1);
-                    toMoney();
+                    setOutput(output.slice(0, output.length - 1));
                 } else {
-                    output = "0";
-                    toMoney();
+                    setOutput("0");
                 }
             } else if (text === "清空") {
-                output = "0";
-                toMoney();
+                setOutput("0");
+            }else if (text==="备注"){
+                setDisplay("show")
             }
         }
     };
+    const [display,setDisplay] = useState("hide")
+    const changeDisplay = (state:string)=>setDisplay(state)
     return (
         <Wrapper>
             <div className="buttons" onClick={onClickWrapper}>
@@ -96,6 +100,7 @@ const NumberPad: React.FC<Props> = (props) => {
                 <button>今天</button>
                 <button className="ok">确认</button>
             </div>
+            <Prompt placeholder="请输入备注" children="备注" show={display} onChange={changeDisplay}/>
         </Wrapper>
     );
 };

@@ -58,7 +58,7 @@ const Wrapper = styled.div`
   }
 `
 type Props = {
-    amount:number
+    amount:string
 }
 const Receipt:React.FC<Props> = (props)=>{
     return (
