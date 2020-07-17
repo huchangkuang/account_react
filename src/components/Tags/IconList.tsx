@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Icon from "../Icon";
-import {useTags} from "../../hooks/useTags";
 
 const Wrapper = styled.div`
       width: 90%;
@@ -34,17 +33,15 @@ const icon = ["food", "shop", "clothes", "bus", "entertainment", "handshake", "c
   "alipay","time","star","beauty","travel","repair","snacks","sport","gift","house","social_wechat","social_sina",
   "part_time_job","salary","bonus","lottery"]
 type Props={
-  selectedId:string
-  changeSelectedId:(id:number)=>void
+  selectedName:string
+  getIconName:(name:string)=>void
 }
 const IconList:React.FC<Props> = (props)=>{
-  const {tags,findTag} = useTags()
-  const tag = findTag(props.selectedId)
   return (
     <Wrapper className="iconList">
       <ul>
-        {icon.map(i=><li key={i} onClick={()=>props.changeSelectedId(tags.filter(tag=>tag.name===i)[0].id)}>
-          <Icon name={i} className={tag.name===i?"selected":""}/>
+        {icon.map((i,index)=><li key={index} onClick={()=>props.getIconName(i)}>
+          <Icon name={i} className={props.selectedName===i?"selected":""}/>
         </li>)}
       </ul>
     </Wrapper>

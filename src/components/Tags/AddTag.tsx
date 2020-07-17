@@ -23,7 +23,7 @@ const AddTag = ()=>{
         <Wrapper>
           <EditTitle text="新增标签" save={()=>console.log("hi")}/>
           <EditInput value={value} onChange={value => setValue(value)}/>
-          <IconList selectedId="0" changeSelectedId={id => console.log(id)}/>
+          <IconList selectedName="food" getIconName={name => console.log(name)}/>
         </Wrapper>
       </Layout>
     )

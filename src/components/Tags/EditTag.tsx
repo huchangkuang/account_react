@@ -23,24 +23,24 @@ type Params = {
   id:string
 }
 const EditTag = ()=> {
-  const {tags,findTag} = useTags()
+  const {findTag} = useTags()
   let {id} = useParams<Params>()
-  const [selectedId,setSelectedId] =useState(id)
   const tag = findTag(id)
+  const [selectedName,setSelectedName] =useState(tag.name)
   const [value,setValue] = useState(tag.text)
   const onChange=(value:string)=>{
     setValue(value)
   }
   const save = ()=>{
     tag.text = value
-    tag.name = tags.filter(i=>i.id===parseFloat(selectedId))[0].name
+    tag.name = selectedName
   }
     return (
       <Layout>
         <Wrapper>
           <EditTitle text="编辑标签" save={()=>save()}/>
           <EditInput value={value} onChange={value => onChange(value)}/>
-          <IconList selectedId={selectedId} changeSelectedId={id=>setSelectedId(id.toString())}/>
+          <IconList selectedName={selectedName} getIconName={name=>setSelectedName(name)}/>
           <RemoveTagButton/>
         </Wrapper>
       </Layout>
