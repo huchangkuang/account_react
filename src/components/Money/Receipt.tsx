@@ -86,7 +86,7 @@ const Receipt:React.FC<Props> = (props)=>{
                 </div>
                 <div className="bar kind">
                     <div>分类：</div>
-                    <div className="kind-content">{tags.filter(i=>i.id===props.receiptData.selectedId)[0].text}</div>
+                    <div className="kind-content">{(tags.filter(i=> i.id===props.receiptData.selectedId)[0] || {}).text}</div>
                 </div>
                 <div className="bar notes">
                     <div>备注：</div>

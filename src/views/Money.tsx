@@ -20,12 +20,15 @@ const Wrapper = styled.div`
 `
 type Category = "-" | "+"
 type ReceiptData = {
-    amount:string,date:string, selectedId:0,note:string,type:Category
+    amount:string,date:string, selectedId:number,note:string,type:Category
 }
 const Money=()=> {
     const {tags} = useTags()
     const now = dayjs().format("YYYY-MM-DD")
-    const [receiptData,setReceiptData] = useState<ReceiptData>({amount:"0",date:now, selectedId:0,note:"",type:"-"})
+    const defaultData:ReceiptData = {amount:"0",date:now, selectedId:0,note:"",type:"-"}
+    const [receiptData,setReceiptData] = useState<ReceiptData>(
+      {...defaultData,selectedId:tags.filter(i=>i.type===defaultData.type)[0].id}
+      )
     const onChange = (obj:object) => {
         setReceiptData({...receiptData,...obj})
     }
