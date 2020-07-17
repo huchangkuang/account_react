@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Icon from "../Icon";
 
-const Wrapper=styled.div`
-      > button {
+const Button=styled.button`
          width: 100vw;
          display: flex;
          justify-content: center;
@@ -17,17 +16,17 @@ const Wrapper=styled.div`
             width: 24px;
             height: 24px;
          }
-    }
 `
 
-const RemoveTagButton = ()=>{
+type Props= {
+  remove:()=>void
+}
+const RemoveTagButton:React.FC<Props> = (props)=>{
   return (
-    <Wrapper>
-      <button>
+    <Button onClick={()=>props.remove()}>
         <Icon name="delete"/>
         删除标签
-      </button>
-    </Wrapper>
+    </Button>
   )
 }
 export {RemoveTagButton}

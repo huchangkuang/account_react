@@ -6,6 +6,7 @@ import {EditInput} from "./EditInput";
 import {IconList} from "./IconList";
 import {useType} from "../../hooks/useType";
 import {useTags} from "../../hooks/useTags";
+import {useHistory} from "react-router-dom"
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,10 +24,15 @@ const AddTag = ()=>{
     const [selectedName,setSelectedName] = useState("")
     const {type} =useType()
     const {createTag} = useTags()
+    const history = useHistory()
+    const save = ()=>{
+      createTag(selectedName,value,type)
+      history.goBack()
+    }
     return (
       <Layout>
         <Wrapper>
-          <EditTitle text="新增标签" save={()=>createTag(selectedName,value,type)}/>
+          <EditTitle text="新增标签" save={save}/>
           <EditInput value={value} onChange={value => setValue(value)}/>
           <IconList selectedName={selectedName} getIconName={name => setSelectedName(name)}/>
         </Wrapper>

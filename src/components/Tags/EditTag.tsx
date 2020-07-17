@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useParams} from "react-router-dom";
+import {useParams,useHistory} from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../Layout";
 import {RemoveTagButton} from "./RemoveTagButton";
@@ -23,18 +23,27 @@ type Params = {
   id: string
 }
 const EditTag = () => {
-  const {findTag, saveTag} = useTags();
+  const {findTag, updateTag,removeTag} = useTags();
   let {id} = useParams<Params>();
   const tag = findTag(id);
   const [selectedName, setSelectedName] = useState(tag.name);
   const [value, setValue] = useState(tag.text);
+  const history = useHistory()
+  const remove = ()=> {
+    removeTag(id)
+    history.goBack()
+  }
+  const save = ()=>{
+    updateTag(id, value, selectedName)
+    history.goBack()
+  }
   return (
     <Layout>
       <Wrapper>
-        <EditTitle text="编辑标签" save={() => saveTag(id, value, selectedName)}/>
+        <EditTitle text="编辑标签" save={save}/>
         <EditInput value={value} onChange={value => setValue(value)}/>
         <IconList selectedName={selectedName} getIconName={name => setSelectedName(name)}/>
-        <RemoveTagButton/>
+        <RemoveTagButton remove={remove}/>
       </Wrapper>
     </Layout>
   );

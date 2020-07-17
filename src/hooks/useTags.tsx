@@ -1,7 +1,10 @@
 import {useState} from "react";
 import {createId} from "../lib/createId";
+import {useUpdate} from "./useUpdate";
 
-const iconMap = [
+type Category = "-" | "+"
+type Tag = {id: number, name: string, text: string, type: Category}
+let iconMap = [
   {id: 0, name: "food", text: "餐饮", type: "-"},
   {id: 1, name: "shop", text: "购物", type: "-"},
   {id: 2, name: "clothes", text: "服饰", type: "-"},
@@ -16,16 +19,23 @@ const iconMap = [
   {id: 11, name: "lottery", text: "彩票", type: "+"}
 ];
 const useTags = () => {
-  const [tags, setTags] = useState(iconMap);
-  const findTag = (id:string) => tags.filter(i=>i.id===parseFloat(id))[0]
-  const saveTag = (id:string,value:string,selectedName:string) => {
-    const tag = findTag(id)
-    tag.text = value
-    tag.name = selectedName
+  const [tags, setTags] = useState<Tag[]>(JSON.parse(window.localStorage.getItem("tags") || JSON.stringify(iconMap)));
+  const findTag = (id:string) => tags.filter(i=>i.id===parseFloat(id))[0] || {}
+  const updateTag = (id:string, value:string, selectedName:string) => {
+    setTags(tags.map(tag=>tag.id===parseFloat(id) ?  {...tag,name:selectedName,text:value} : tag))
   }
-  const createTag = (selectedName:string,value:string,type:"-"|"+") => {
-    tags.push({id: createId(),name: selectedName,text: value,type: type})
+  const createTag = (selectedName:string,value:string,type:Category) => {
+    let tagsClone: Tag[] = JSON.parse(JSON.stringify(tags))
+    tagsClone.push({id: createId(),name: selectedName,text: value,type: type})
+    setTags(tagsClone)
   }
-  return {tags, setTags,findTag,saveTag,createTag};
+  const removeTag = (id:string)=>{
+    setTags(tags.filter(i=>i.id!==parseFloat(id)))
+  }
+  useUpdate(()=>{
+    window.localStorage.setItem("tags",JSON.stringify(tags))
+  },tags)
+
+  return {tags, setTags,findTag,updateTag,createTag,removeTag};
 };
 export {useTags};
