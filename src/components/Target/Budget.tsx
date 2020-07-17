@@ -1,8 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Prompt} from "../Prompt";
+import {useUpdate} from "../../hooks/useUpdate";
 
-const Wrapper = styled.div`
+const Budget: React.FC = () => {
+  const [expense] = useState<number>(1000)
+  const [display, setDisplay] = useState<string>("hide");
+  const [budget, _setBudget] = useState<number>(0);
+  const [remain] = useState<number>((budget-expense)<0?0:(budget-expense))
+  const [deg,setDeg] =useState<number>(budget===0?0:remain/budget)
+  const Wrapper = styled.div`
    background: white;
         min-height: 160px;
         width: 88%;
@@ -36,7 +43,7 @@ const Wrapper = styled.div`
                 height: 100px;
                 border-radius: 50%;
                 position: relative;
-                background: #eaeaea;
+                background: conic-gradient(#f3c623 ${deg}deg,#eaeaea ${deg}deg 360deg);
                 .remain {
                     text-align: center;
                     position: absolute;
@@ -77,13 +84,17 @@ const Wrapper = styled.div`
             }
         }
 `;
-const Budget: React.FC = () => {
-  const [display, setDisplay] = useState<string>("hide");
-  const [budget, _setBudget] = useState<number>(0);
+  useEffect(()=>{
+    _setBudget(parseFloat(window.localStorage.getItem("budget") || "0"))
+  },[])
+  useUpdate(()=>{
+    setDeg(budget===0?0:remain/budget)
+  },[budget,expense])
   const setBudget = (state: string) => {
     const number = parseFloat(state);
     if (number) {
       _setBudget(number);
+      window.localStorage.setItem("budget",state)
     } else {
       window.alert("请输入合法的数字");
     }
@@ -104,7 +115,7 @@ const Budget: React.FC = () => {
         <ul className="description">
           <li>
             <span className="budget-description">剩余预算</span>
-            <span className="number">0</span>
+            <span className="number">{remain}</span>
           </li>
           <li className="line"/>
           <li>
@@ -113,7 +124,7 @@ const Budget: React.FC = () => {
           </li>
           <li>
             <span className="budget-description">本月支出</span>
-            <span className="number">0</span>
+            <span className="number">{expense}</span>
           </li>
         </ul>
       </div>
