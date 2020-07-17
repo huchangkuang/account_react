@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Icon from "../Icon";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
         background: #f3c623;
@@ -31,23 +32,39 @@ const Wrapper = styled.div`
                 margin-left: 6px;
             }
         }
-`
-const TouchCard:React.FC = ()=> {
-    return (
-        <Wrapper>
-            <div className="keeping">
-                <div className="number">0</div>
-                <div>已持续打卡</div>
-            </div>
-            <div className="touch">
-                <Icon name="touchCard"/>
-                <span>打卡</span>
-            </div>
-            <div className="sum">
-                <div className="number">0</div>
-                <div>记账总天数</div>
-            </div>
-        </Wrapper>
-    )
-}
-export {TouchCard}
+`;
+const TouchCard: React.FC = () => {
+  const today = dayjs().format("YYYY-MM-DD");
+  const [keep, setKeep] = useState<number>(0);
+  useEffect(()=>{
+    setKeep(parseFloat(window.localStorage.getItem("keep")||"0"))
+  },[])
+  const touchCard = () => {
+    let lastTouch = window.localStorage.getItem("lastTouch");
+    if (lastTouch === today) {
+      window.alert("今日已经打过卡咯！");
+    } else {
+      window.alert("打卡成功，保持记账的好习惯哦！");
+      setKeep(keep + 1);
+      window.localStorage.setItem("keep", (keep+1).toString());
+      window.localStorage.setItem("lastTouch", today);
+    }
+  };
+  return (
+    <Wrapper>
+      <div className="keeping">
+        <div className="number">{keep}</div>
+        <div>已持续打卡</div>
+      </div>
+      <div className="touch" onClick={touchCard}>
+        <Icon name="touchCard"/>
+        <span>打卡</span>
+      </div>
+      <div className="sum">
+        <div className="number">0</div>
+        <div>记账总天数</div>
+      </div>
+    </Wrapper>
+  );
+};
+export {TouchCard};
