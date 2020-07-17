@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {createId} from "../lib/createId";
 
 const iconMap = [
   {id: 0, name: "food", text: "餐饮", type: "-"},
@@ -17,6 +18,14 @@ const iconMap = [
 const useTags = () => {
   const [tags, setTags] = useState(iconMap);
   const findTag = (id:string) => tags.filter(i=>i.id===parseFloat(id))[0]
-  return {tags, setTags,findTag};
+  const saveTag = (id:string,value:string,selectedName:string) => {
+    const tag = findTag(id)
+    tag.text = value
+    tag.name = selectedName
+  }
+  const createTag = (selectedName:string,value:string,type:"-"|"+") => {
+    tags.push({id: createId(),name: selectedName,text: value,type: type})
+  }
+  return {tags, setTags,findTag,saveTag,createTag};
 };
 export {useTags};

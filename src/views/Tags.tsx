@@ -1,9 +1,10 @@
 import Layout from "../components/Layout";
-import React, {useState} from "react";
+import React from "react";
 import {ConsumeType} from "../components/ConsumeType";
 import styled from "styled-components";
 import {DisplayTags} from "../components/Tags/DisplayTags";
 import {AddTagButton} from "../components/Tags/AddTagButton";
+import {useType} from "../hooks/useType";
 
 const Wrapper = styled.div`
     display: flex;
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
     }
 `
 const Tags=()=> {
-    const [type,setType] = useState<"-"|"+">("-")
+    const {type,setType} = useType()
     return  (
         <Layout>
             <Wrapper>
