@@ -38,70 +38,80 @@ const Wrapper = styled.div`
         }
 `;
 type Props = {
-    value: string
-    onChange: (value: string) => void
-    getNote:(value:string)=>void
+  value: string
+  onChange: (value: string) => void
+  getNote: (value: string) => void
+  confirm: () => void
 }
 const NumberPad: React.FC<Props> = (props) => {
-    let output = props.value
-    const setOutput = (newOutput:string)=>{
-        props.onChange(newOutput)
-    }
-    const onClickWrapper = (e: React.MouseEvent) => {
-        const text = (e.target as HTMLButtonElement).textContent as string;
-        if (text) {
-            if ("0123456789.".indexOf(text) >= 0) {
-                if (output.length<=8){
-                    if (output === "0" && text !== ".") {
-                        setOutput(text);
-                    } else {
-                        if (text === "." && output.indexOf(".") >= 0) {
-                            return;
-                        } else {
-                            setOutput(output+text);
-                        }
-                    }
-                }else {
-                    if (parseFloat(output)>100000){
-                        window.alert("小老弟，你有那么多钱嘛")
-                    }
-                }
-            } else if (text === "删除") {
-                if (output.length > 1) {
-                    setOutput(output.slice(0, output.length - 1));
-                } else {
-                    setOutput("0");
-                }
-            } else if (text === "清空") {
-                setOutput("0");
-            }else if (text==="备注"){
-                setDisplay("show")
+  let output = props.value;
+  const setOutput = (newOutput: string) => {
+    props.onChange(newOutput);
+  };
+  const onClickWrapper = (e: React.MouseEvent) => {
+    const text = (e.target as HTMLButtonElement).textContent as string;
+    if (text) {
+      if ("0123456789.".indexOf(text) >= 0) {
+        if (output.length <= 8) {
+          if (output === "0" && text !== ".") {
+            setOutput(text);
+          } else {
+            if (text === "." && output.indexOf(".") >= 0) {
+              return;
+            } else {
+              setOutput(output + text);
             }
+          }
+        } else {
+          if (parseFloat(output) > 100000) {
+            window.alert("小老弟，你有那么多钱嘛");
+          }
         }
-    };
-    const [display,setDisplay] = useState("hide")
-    return (
-        <Wrapper>
-            <div className="buttons" onClick={onClickWrapper}>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>删除</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>清空</button>
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
-                <button>备注</button>
-                <button>.</button>
-                <button>0</button>
-                <button>今天</button>
-                <button className="ok">确认</button>
-            </div>
-            <Prompt placeholder="请输入备注" children="备注" show={display} onChange={state=>setDisplay(state)} getValue={value => props.getNote(value)}/>
-        </Wrapper>
-    );
+      } else if (text === "删除") {
+        if (output.length > 1) {
+          setOutput(output.slice(0, output.length - 1));
+        } else {
+          setOutput("0");
+        }
+      } else if (text === "清空") {
+        setOutput("0");
+      } else if (text === "备注") {
+        setDisplay("show");
+      } else if (text === "今天") {
+        console.log("设置日期");
+      } else if (text === "确认") {
+        if (output === "0") {
+          window.alert("你记了笔0元的帐啊！");
+        } else {
+          props.confirm();
+        }
+      }
+    }
+  };
+  const [display, setDisplay] = useState("hide");
+  return (
+    <Wrapper>
+      <div className="buttons" onClick={onClickWrapper}>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>删除</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>清空</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button>备注</button>
+        <button>.</button>
+        <button>0</button>
+        <button>今天</button>
+        <button className="ok">确认</button>
+      </div>
+      <Prompt placeholder="请输入备注" children="备注" show={display} onChange={state => setDisplay(state)}
+              getValue={value => props.getNote(value)}/>
+    </Wrapper>
+  );
 };
 export {NumberPad};

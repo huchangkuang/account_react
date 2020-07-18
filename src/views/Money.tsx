@@ -30,6 +30,9 @@ const Money=()=> {
     const onChange = (obj:object) => {
         setReceiptData({...receiptData,...obj})
     }
+    const confirm = ()=>{
+        console.log("hi")
+    }
     return (
         <Layout>
             <Wrapper>
@@ -38,7 +41,7 @@ const Money=()=> {
                 <Classify onChange={id => onChange({selectedId:id})} id={receiptData.selectedId} type={receiptData.type}/>
                 <Receipt receiptData={receiptData}/>
                 <NumberPad value={receiptData.amount} onChange={value=>onChange({amount:value})}
-                           getNote={value => onChange({note:value})}/>
+                           getNote={value => onChange({note:value})} confirm={confirm}/>
             </Wrapper>
         </Layout>
     );
