@@ -1,15 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {Prompt} from "../Prompt";
 import {useUpdate} from "../../hooks/useUpdate";
 
-const Budget: React.FC = () => {
-  const [expense] = useState<number>(1000)
-  const [display, setDisplay] = useState<string>("hide");
-  const [budget, _setBudget] = useState<number>(0);
-  const [remain] = useState<number>((budget-expense)<0?0:(budget-expense))
-  const [deg,setDeg] =useState<number>(budget===0?0:remain/budget)
-  const Wrapper = styled.div`
+const Wrapper = styled.div`
    background: white;
         min-height: 160px;
         width: 88%;
@@ -20,7 +14,6 @@ const Budget: React.FC = () => {
             align-items: center;
             justify-content: space-between;
             padding: 10px 25px;
-
             .setBudget {
                 background: #f3c623;
                 border: none;
@@ -43,7 +36,7 @@ const Budget: React.FC = () => {
                 height: 100px;
                 border-radius: 50%;
                 position: relative;
-                background: conic-gradient(#f3c623 ${deg}deg,#eaeaea ${deg}deg 360deg);
+                background: conic-gradient(#f3c623 0deg,#eaeaea 0deg 360deg);
                 .remain {
                     text-align: center;
                     position: absolute;
@@ -84,11 +77,14 @@ const Budget: React.FC = () => {
             }
         }
 `;
-  useEffect(()=>{
-    _setBudget(parseFloat(window.localStorage.getItem("budget") || "0"))
-  },[])
+const Budget: React.FC = () => {
+  const [expense] = useState<number>(0)
+  const [display, setDisplay] = useState<string>("hide");
+  const [budget, _setBudget] = useState<number>(0);
+  const [remain,setRemain] = useState<number>(0)
   useUpdate(()=>{
-    setDeg(budget===0?0:remain/budget)
+    let _remain = budget-expense
+    setRemain(_remain<0?0:_remain)
   },[budget,expense])
   const setBudget = (state: string) => {
     const number = parseFloat(state);

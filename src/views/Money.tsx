@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {ConsumeType} from "../components/ConsumeType";
 import {Receipt} from "../components/Money/Receipt";
 import {NumberPad} from "../components/Money/NumberPad";
@@ -25,10 +25,8 @@ type ReceiptData = {
 const Money=()=> {
     const {tags} = useTags()
     const now = dayjs().format("YYYY-MM-DD")
-    const [receiptData,setReceiptData] = useState<ReceiptData>({amount:"0",date:now, selectedId:0,note:"",type:"-"})
-    useEffect(()=>{
-        setReceiptData({...receiptData,selectedId:tags.filter(i=>i.type===receiptData.type)[0].id})
-    },[])
+    const defaultData:ReceiptData = {amount:"0",date:now, selectedId:0,note:"",type:"-"}
+    const [receiptData,setReceiptData] = useState<ReceiptData>({...defaultData,selectedId:tags.filter(i=>i.type===defaultData.type)[0].id})
     const onChange = (obj:object) => {
         setReceiptData({...receiptData,...obj})
     }
