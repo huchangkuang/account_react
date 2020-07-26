@@ -87,6 +87,7 @@ const NumberPad: React.FC<Props> = (props) => {
           window.alert("你记了笔0元的帐啊！");
         } else {
           props.confirm();
+          setOutput("0")
         }
       }
     }

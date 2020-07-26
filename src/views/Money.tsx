@@ -7,6 +7,7 @@ import {Classify} from "../components/Money/Classify";
 import styled from "styled-components";
 import {useTags} from "../hooks/useTags";
 import dayjs from "dayjs";
+import {useRecord} from "../hooks/useRecord"
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ type ReceiptData = {
     amount:string,date:string, selectedId:number,note:string,type:Category
 }
 const Money=()=> {
+    const {recordItem,setRecordItem} = useRecord()
     const {tags} = useTags()
     const now = dayjs().format("YYYY-MM-DD")
     const defaultData:ReceiptData = {amount:"0",date:now, selectedId:0,note:"",type:"-"}
@@ -31,7 +33,8 @@ const Money=()=> {
         setReceiptData({...receiptData,...obj})
     }
     const confirm = ()=>{
-        console.log("hi")
+        window.alert("记下一笔！")
+        setRecordItem([...recordItem,receiptData])
     }
     return (
         <Layout>
