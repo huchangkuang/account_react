@@ -31,6 +31,9 @@ const Wrapper = styled.div`
             display: flex;
             justify-content: space-between;
             padding: 5px 25px;
+            @media(max-width: 352px){
+              padding: 5px 10px;
+            }
             .pie {
                 width: 100px;
                 height: 100px;
