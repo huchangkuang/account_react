@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     width: 100%;
     > ul {
        display: flex;
-       justify-content: space-around;
+       justify-content: center;
        align-items: center; 
        > li {
            border: 1px solid #333333;
@@ -18,6 +18,7 @@ const Wrapper = styled.div`
            text-align: center;
            color: #333333;
            border-radius: 4px;
+           margin: 0 2px;
            &.selected {
                background: #333333;
                color: #f3c623;
@@ -25,7 +26,7 @@ const Wrapper = styled.div`
        }     
     }
     .in-out {
-        width: 30%;
+        width: 40%;
         > li {
             padding: 4px 10px;
         }        

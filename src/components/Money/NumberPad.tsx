@@ -13,6 +13,9 @@ const Wrapper = styled.div`
                 height: 48px;
                 background: transparent;
                 border: none;
+                @media(max-height: 580px){
+                  height: 40px;
+                }
             }
             & :nth-child(1) {
                 background: #f2f2f2;

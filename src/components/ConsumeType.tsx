@@ -15,6 +15,7 @@ const Wrapper = styled.div`
             padding: 4px 23px;
             text-align: center;
             color: #333333;
+            min-height: 30px;
             &.selected {
                 background: #333333;
                 color: #f3c623;

@@ -33,9 +33,12 @@ const Wrapper = styled.div`
                 display: flex;
                 justify-content: space-between;
                 padding: 2px 10px;
-                font-size: 36px;
+                font-size: 24px;
                 font-family: Consolas, monospace;
                 border-bottom: 1px solid #e9e9e9;
+                @media(max-height: 580px){
+                  padding: 0 10px;
+                }
             }
             .bar {
                 display: flex;
