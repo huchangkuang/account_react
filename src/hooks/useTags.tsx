@@ -32,9 +32,12 @@ const useTags = () => {
   const removeTag = (id:string)=>{
     setTags(tags.filter(i=>i.id!==parseFloat(id)))
   }
-  useUpdate(()=>{
+  const save=() => {
     window.localStorage.setItem("tags",JSON.stringify(tags))
-  },tags)
+  }
+  useUpdate(()=>{
+    save()
+  },[tags])
 
   return {tags, setTags,findTag,updateTag,createTag,removeTag};
 };
