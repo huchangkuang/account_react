@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
+import {useRecord} from "../../hooks/useRecord";
+import {useUpdate} from "../../hooks/useUpdate";
 
 const Wrapper = styled.div`
         background: #ffffff;
@@ -32,30 +34,39 @@ const Wrapper = styled.div`
                 align-items: center;
             }
         }
-`
-const Remain:React.FC = ()=> {
-    return (
-        <Wrapper className="remain">
-            <div className="time">
-                <div className="year">2020年</div>
-                <div className="mouth">07月</div>
-            </div>
-            <div className="line"/>
-            <ul className="message">
-                <li>
-                    <div className="description">收入</div>
-                    <div className="number">0</div>
-                </li>
-                <li>
-                    <div className="description">支出</div>
-                    <div className="number">0</div>
-                </li>
-                <li>
-                    <div className="description">结余</div>
-                    <div className="number">0</div>
-                </li>
-            </ul>
-        </Wrapper>
-    )
-}
-export {Remain}
+`;
+const Remain: React.FC = () => {
+  const {recordItem} = useRecord();
+  const [expense,setExpense] = useState(0)
+  const [income,setIncome] =useState(0)
+  const [remain,setRemain] =useState(0)
+  useUpdate(()=>{
+    setExpense(recordItem.filter(i=>i.type==="-").reduce((sum,j)=>sum+parseFloat(j.amount),0))
+    setIncome(recordItem.filter(i=>i.type==="+").reduce((sum,j)=>sum+parseFloat(j.amount),0))
+    setRemain(income-expense)
+  },[expense,income,recordItem])
+  return (
+    <Wrapper className="remain">
+      <div className="time">
+        <div className="year">2020年</div>
+        <div className="mouth">07月</div>
+      </div>
+      <div className="line"/>
+      <ul className="message">
+        <li>
+          <div className="description">收入</div>
+          <div className="number">{income}</div>
+        </li>
+        <li>
+          <div className="description">支出</div>
+          <div className="number">{expense}</div>
+        </li>
+        <li>
+          <div className="description">结余</div>
+          <div className="number">{remain}</div>
+        </li>
+      </ul>
+    </Wrapper>
+  );
+};
+export {Remain};

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import {Prompt} from "../Prompt";
 import {useUpdate} from "../../hooks/useUpdate";
+import {useRecord} from "../../hooks/useRecord";
 
 const Wrapper = styled.div`
    background: white;
@@ -81,19 +82,21 @@ const Wrapper = styled.div`
         }
 `;
 const Budget: React.FC = () => {
-  const [expense] = useState<number>(0)
+  const [expense, setExpense] = useState<number>(0);
   const [display, setDisplay] = useState<string>("hide");
   const [budget, _setBudget] = useState<number>(0);
-  const [remain,setRemain] = useState<number>(0)
-  useUpdate(()=>{
-    let _remain = budget-expense
-    setRemain(_remain<0?0:_remain)
-  },[budget,expense])
+  const [remain, setRemain] = useState<number>(0);
+  const {recordItem} = useRecord();
+  useUpdate(() => {
+    let _remain = budget - expense;
+    setRemain(_remain < 0 ? 0 : _remain);
+    setExpense(recordItem.filter(i => i.type === "-").reduce((sum, j) =>  sum + parseFloat(j.amount), 0));
+  }, [budget, expense, recordItem]);
   const setBudget = (state: string) => {
     const number = parseFloat(state);
     if (number) {
       _setBudget(number);
-      window.localStorage.setItem("budget",state)
+      window.localStorage.setItem("budget", state);
     } else {
       window.alert("请输入合法的数字");
     }
