@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Prompt} from "../Prompt";
 import {useUpdate} from "../../hooks/useUpdate";
 import {useRecord} from "../../hooks/useRecord";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
    background: white;
@@ -82,11 +83,16 @@ const Wrapper = styled.div`
         }
 `;
 const Budget: React.FC = () => {
+  const now = dayjs()
+  const [month,setMonth] = useState("")
   const [expense, setExpense] = useState<number>(0);
   const [display, setDisplay] = useState<string>("hide");
   const [budget, _setBudget] = useState<number>(0);
   const [remain, setRemain] = useState<number>(0);
   const {recordItem} = useRecord();
+  useEffect(()=>{
+    setMonth(now.format("MM"))
+  },[now])
   useUpdate(() => {
     let _remain = budget - expense;
     setRemain(_remain < 0 ? 0 : _remain);
@@ -104,7 +110,7 @@ const Budget: React.FC = () => {
   return (
     <Wrapper className="budget">
       <div className="budget-header">
-        <div className="text">07月总预算</div>
+        <div className="text">{month}月总预算</div>
         <button className="setBudget" onClick={() => setDisplay("show")}>+设置预算</button>
       </div>
       <div className="budget-main">

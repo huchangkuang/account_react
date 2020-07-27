@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Icon from "../Icon";
 import dayjs from "dayjs";
+import {useRecord} from "../../hooks/useRecord";
 
 const Wrapper = styled.div`
         background: #f3c623;
@@ -36,9 +37,22 @@ const Wrapper = styled.div`
 const TouchCard: React.FC = () => {
   const today = dayjs().format("YYYY-MM-DD");
   const [keep, setKeep] = useState<number>(0);
+  const {recordItem} =useRecord()
+  const [sumDay,setSumDay] = useState(0)
   useEffect(()=>{
     setKeep(parseFloat(window.localStorage.getItem("keep")||"0"))
   },[])
+  useEffect(()=>{
+    let dateArray =  recordItem.reduce((arr:string[],i)=>{
+      if (arr.indexOf(i.date)<0){
+        arr.push(i.date)
+        return arr
+      }else {
+        return arr
+      }
+    },[])
+    setSumDay(dateArray.length)
+  },[recordItem])
   const touchCard = () => {
     let lastTouch = window.localStorage.getItem("lastTouch");
     if (lastTouch === today) {
@@ -61,7 +75,7 @@ const TouchCard: React.FC = () => {
         <span>打卡</span>
       </div>
       <div className="sum">
-        <div className="number">0</div>
+        <div className="number">{sumDay}</div>
         <div>记账总天数</div>
       </div>
     </Wrapper>

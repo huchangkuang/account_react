@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {useRecord} from "../../hooks/useRecord";
 import {useUpdate} from "../../hooks/useUpdate";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
         background: #ffffff;
@@ -36,10 +37,17 @@ const Wrapper = styled.div`
         }
 `;
 const Remain: React.FC = () => {
+  const now = dayjs()
+  const [month,setMonth] = useState("")
+  const [year,setYear] = useState("")
   const {recordItem} = useRecord();
   const [expense,setExpense] = useState(0)
   const [income,setIncome] =useState(0)
   const [remain,setRemain] =useState(0)
+  useEffect(()=>{
+    setMonth(now.format("MM"))
+    setYear(now.format("YYYY"))
+  },[now])
   useUpdate(()=>{
     setExpense(recordItem.filter(i=>i.type==="-").reduce((sum,j)=>sum+parseFloat(j.amount),0))
     setIncome(recordItem.filter(i=>i.type==="+").reduce((sum,j)=>sum+parseFloat(j.amount),0))
@@ -48,8 +56,8 @@ const Remain: React.FC = () => {
   return (
     <Wrapper className="remain">
       <div className="time">
-        <div className="year">2020年</div>
-        <div className="mouth">07月</div>
+        <div className="year">{year}年</div>
+        <div className="mouth">{month}月</div>
       </div>
       <div className="line"/>
       <ul className="message">
