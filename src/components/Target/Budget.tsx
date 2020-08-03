@@ -5,7 +5,35 @@ import {useUpdate} from "../../hooks/useUpdate";
 import {useRecord} from "../../hooks/useRecord";
 import dayjs from "dayjs";
 
-const Wrapper = styled.div`
+const Budget: React.FC = () => {
+  const now = dayjs()
+  const [month,setMonth] = useState("")
+  const [expense, setExpense] = useState<number>(0);
+  const [display, setDisplay] = useState<string>("hide");
+  const [budget, _setBudget] = useState<number>(0);
+  const [remain, setRemain] = useState<number>(0);
+  const [deg,setDeg] = useState<number>(0)
+  const {recordItem} = useRecord();
+  useEffect(()=>{
+    setMonth(now.format("MM"))
+  },[now])
+  useUpdate(() => {
+    let _remain = budget - expense;
+    setRemain(_remain < 0 ? 0 : _remain);
+    setExpense(recordItem.filter(i => i.type === "-").reduce((sum, j) =>  sum + parseFloat(j.amount), 0));
+    let x = remain/budget*100
+    setDeg(Math.round(x ? x : 0 ))
+  }, [budget, expense, recordItem]);
+  const setBudget = (state: string) => {
+    const number = parseFloat(state);
+    if (number) {
+      _setBudget(number);
+      window.localStorage.setItem("budget", state);
+    } else {
+      window.alert("请输入合法的数字");
+    }
+  };
+  const Wrapper = styled.div`
    background: white;
         min-height: 160px;
         width: 88%;
@@ -41,7 +69,7 @@ const Wrapper = styled.div`
                 height: 100px;
                 border-radius: 50%;
                 position: relative;
-                background: conic-gradient(#f3c623 0deg,#eaeaea 0deg 360deg);
+                background: conic-gradient(#f3c623 ${deg/100*360}deg,#eaeaea ${deg/100*360}deg 360deg);
                 .remain {
                     text-align: center;
                     position: absolute;
@@ -82,31 +110,6 @@ const Wrapper = styled.div`
             }
         }
 `;
-const Budget: React.FC = () => {
-  const now = dayjs()
-  const [month,setMonth] = useState("")
-  const [expense, setExpense] = useState<number>(0);
-  const [display, setDisplay] = useState<string>("hide");
-  const [budget, _setBudget] = useState<number>(0);
-  const [remain, setRemain] = useState<number>(0);
-  const {recordItem} = useRecord();
-  useEffect(()=>{
-    setMonth(now.format("MM"))
-  },[now])
-  useUpdate(() => {
-    let _remain = budget - expense;
-    setRemain(_remain < 0 ? 0 : _remain);
-    setExpense(recordItem.filter(i => i.type === "-").reduce((sum, j) =>  sum + parseFloat(j.amount), 0));
-  }, [budget, expense, recordItem]);
-  const setBudget = (state: string) => {
-    const number = parseFloat(state);
-    if (number) {
-      _setBudget(number);
-      window.localStorage.setItem("budget", state);
-    } else {
-      window.alert("请输入合法的数字");
-    }
-  };
   return (
     <Wrapper className="budget">
       <div className="budget-header">
@@ -117,7 +120,7 @@ const Budget: React.FC = () => {
         <div className="pie">
           <div className="remain">
             <span>剩余</span>
-            <span>0%</span>
+            <span>{deg}%</span>
           </div>
         </div>
         <ul className="description">
@@ -141,4 +144,5 @@ const Budget: React.FC = () => {
     </Wrapper>
   );
 };
+
 export {Budget};
