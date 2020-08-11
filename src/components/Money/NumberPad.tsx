@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {Prompt} from "../Prompt";
+import {PopWarning} from "../PopWarning";
 
 const Wrapper = styled.div`
         width: 100%;
@@ -47,6 +48,8 @@ type Props = {
   confirm: () => void
 }
 const NumberPad: React.FC<Props> = (props) => {
+  const [display, setDisplay] = useState("hide");
+  const [show,setShow] = useState("hide")
   let output = props.value;
   const setOutput = (newOutput: string) => {
     props.onChange(newOutput);
@@ -84,7 +87,8 @@ const NumberPad: React.FC<Props> = (props) => {
         console.log("设置日期");
       } else if (text === "确认") {
         if (output === "0") {
-          window.alert("你记了笔0元的帐啊！");
+          setShow("show")
+          // window.alert("你记了笔0元的帐啊！");
         } else {
           props.confirm();
           setOutput("0")
@@ -92,7 +96,6 @@ const NumberPad: React.FC<Props> = (props) => {
       }
     }
   };
-  const [display, setDisplay] = useState("hide");
   return (
     <Wrapper>
       <div className="buttons" onClick={onClickWrapper}>
@@ -115,6 +118,7 @@ const NumberPad: React.FC<Props> = (props) => {
       </div>
       <Prompt placeholder="请输入备注" children="备注" show={display} onChange={state => setDisplay(state)}
               getValue={value => props.getNote(value)}/>
+      <PopWarning show={show} cancel={(value)=>{setShow(value)}}>"你记了笔0元的帐！"</PopWarning>
     </Wrapper>
   );
 };
