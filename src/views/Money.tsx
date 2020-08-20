@@ -44,7 +44,7 @@ const Money=()=> {
                 <Classify onChange={id => onChange({selectedId:id})} id={receiptData.selectedId} type={receiptData.type}/>
                 <Receipt receiptData={receiptData}/>
                 <NumberPad value={receiptData.amount} onChange={value=>onChange({amount:value})}
-                           getNote={value => onChange({note:value})} confirm={confirm}/>
+                           getNote={value => onChange({note:value})} confirm={confirm} getTime={time => onChange({date:time})}/>
             </Wrapper>
         </Layout>
     );

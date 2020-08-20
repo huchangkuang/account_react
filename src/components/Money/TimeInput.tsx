@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -42,6 +42,7 @@ const Wrapper = styled.div`
                 display: flex;
                 justify-content: space-around;
                 border-top: 1px solid #b5b5b5;
+                box-shadow: none;
 
                 button {
                     width: 100%;
@@ -53,7 +54,10 @@ const Wrapper = styled.div`
         }  
 `;
 type Props = {
-  class: string
+  class: string,
+  value: string,
+  onChange:(value:string)=>void,
+  confirm:()=>void
 }
 const TimeInput: React.FC<Props> = (props) => {
   return (
@@ -61,10 +65,10 @@ const TimeInput: React.FC<Props> = (props) => {
       <div className="board">
         <label>
           <span>请选择日期</span>
-          <input type="date"/>
+          <input type="date" value={props.value} onChange={(e:ChangeEvent<HTMLInputElement>)=>{props.onChange(e.target.value)}}/>
         </label>
         <div className="buttons">
-          <button>确认</button>
+          <button onClick={props.confirm}>确认</button>
         </div>
       </div>
     </Wrapper>

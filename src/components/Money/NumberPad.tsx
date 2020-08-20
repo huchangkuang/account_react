@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {Prompt} from "../Prompt";
 import {PopWarning} from "../PopWarning";
 import {TimeInput} from "./TimeInput";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
         width: 100%;
@@ -46,16 +47,23 @@ type Props = {
   value: string
   onChange: (value: string) => void
   getNote: (value: string) => void
-  confirm: () => void
+  confirm: () => void,
+  getTime: (value:string)=> void
 }
 const NumberPad: React.FC<Props> = (props) => {
+  const now = dayjs().format("YYYY-MM-DD")
   const [display, setDisplay] = useState("hide");
-  const [show,setShow] = useState("hide")
-  const [input,setInput] = useState("hide")
+  const [show, setShow] = useState("hide");
+  const [input, setInput] = useState("hide");
+  const [time, setTime] = useState(now);
   let output = props.value;
   const setOutput = (newOutput: string) => {
     props.onChange(newOutput);
   };
+  const getTime =()=>{
+    props.getTime(time)
+    setInput("hide")
+  }
   const onClickWrapper = (e: React.MouseEvent) => {
     const text = (e.target as HTMLButtonElement).textContent as string;
     if (text) {
@@ -86,14 +94,14 @@ const NumberPad: React.FC<Props> = (props) => {
       } else if (text === "备注") {
         setDisplay("show");
       } else if (text === "今天") {
-        setInput("show")
+        setInput("show");
       } else if (text === "确认") {
         if (output === "0") {
-          setShow("show")
+          setShow("show");
           // window.alert("你记了笔0元的帐啊！");
         } else {
           props.confirm();
-          setOutput("0")
+          setOutput("0");
         }
       }
     }
@@ -120,8 +128,9 @@ const NumberPad: React.FC<Props> = (props) => {
       </div>
       <Prompt placeholder="请输入备注" children="备注" show={display} onChange={state => setDisplay(state)}
               getValue={value => props.getNote(value)}/>
-      <PopWarning show={show} cancel={(value)=>{setShow(value)}}>"你记了笔0元的帐！"</PopWarning>
-      <TimeInput class={input}/>
+      <PopWarning show={show} cancel={(value) => {setShow(value);}}>"你记了笔0元的帐！"</PopWarning>
+      <TimeInput class={input} value={time} onChange={(value) => {setTime(value);}}
+                 confirm={getTime}/>
     </Wrapper>
   );
 };
