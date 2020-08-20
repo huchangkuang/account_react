@@ -22,12 +22,28 @@ const useTags = () => {
   const [tags, setTags] = useState<Tag[]>(JSON.parse(window.localStorage.getItem("tags") || JSON.stringify(iconMap)));
   const findTag = (id:string) => tags.filter(i=>i.id===parseFloat(id))[0] || {}
   const updateTag = (id:string, value:string, selectedName:string) => {
-    setTags(tags.map(tag=>tag.id===parseFloat(id) ?  {...tag,name:selectedName,text:value} : tag))
+    if (!value){
+      return "empty"
+    }else if(tags.filter(i=>i.text===value).length>0){
+      return "duplicated"
+    }else {
+      setTags(tags.map(tag=>tag.id===parseFloat(id) ?  {...tag,name:selectedName,text:value} : tag))
+      return "success"
+    }
   }
   const createTag = (selectedName:string,value:string,type:Category) => {
-    let tagsClone: Tag[] = JSON.parse(JSON.stringify(tags))
-    tagsClone.push({id: createId(),name: selectedName,text: value,type: type})
-    setTags(tagsClone)
+    if (!value){
+      return "name empty"
+    }else if(!selectedName){
+      return "icon empty"
+    }else if(tags.filter(i=>i.text===value).length>0){
+      return "duplicated"
+    }else {
+      let tagsClone: Tag[] = JSON.parse(JSON.stringify(tags))
+      tagsClone.push({id: createId(),name: selectedName,text: value,type: type})
+      setTags(tagsClone)
+      return "success"
+    }
   }
   const removeTag = (id:string)=>{
     setTags(tags.filter(i=>i.id!==parseFloat(id)))

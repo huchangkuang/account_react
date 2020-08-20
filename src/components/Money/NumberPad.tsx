@@ -56,6 +56,7 @@ const NumberPad: React.FC<Props> = (props) => {
   const [show, setShow] = useState("hide");
   const [input, setInput] = useState("hide");
   const [time, setTime] = useState(now);
+  const [message,setMessage] = useState("")
   let output = props.value;
   const setOutput = (newOutput: string) => {
     props.onChange(newOutput);
@@ -80,7 +81,8 @@ const NumberPad: React.FC<Props> = (props) => {
           }
         } else {
           if (parseFloat(output) > 100000) {
-            window.alert("小老弟，你有那么多钱嘛");
+            setShow("show");
+            setMessage("小老弟，你有那么多钱嘛")
           }
         }
       } else if (text === "删除") {
@@ -98,7 +100,7 @@ const NumberPad: React.FC<Props> = (props) => {
       } else if (text === "确认") {
         if (output === "0") {
           setShow("show");
-          // window.alert("你记了笔0元的帐啊！");
+          setMessage("你记了笔0元的帐！")
         } else {
           props.confirm();
           setOutput("0");
@@ -128,7 +130,7 @@ const NumberPad: React.FC<Props> = (props) => {
       </div>
       <Prompt placeholder="请输入备注" children="备注" show={display} onChange={state => setDisplay(state)}
               getValue={value => props.getNote(value)}/>
-      <PopWarning show={show} cancel={(value) => {setShow(value);}}>"你记了笔0元的帐！"</PopWarning>
+      <PopWarning show={show} cancel={(value) => {setShow(value);}}>{message}</PopWarning>
       <TimeInput class={input} value={time} onChange={(value) => {setTime(value);}}
                  confirm={getTime}/>
     </Wrapper>
