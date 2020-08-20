@@ -7,6 +7,7 @@ import {EditTitle} from "./EidtTitle";
 import {IconList} from "./IconList";
 import {EditInput} from "./EditInput";
 import {useTags} from "../../hooks/useTags";
+import {PopWarning} from "../PopWarning";
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,14 +29,25 @@ const EditTag = () => {
   const tag = findTag(id);
   const [selectedName, setSelectedName] = useState(tag.name);
   const [value, setValue] = useState(tag.text);
+  const [show,setShow] = useState("hide")
+  const [tagState,setTagState] = useState("")
   const history = useHistory()
   const remove = ()=> {
     removeTag(id)
     history.goBack()
   }
   const save = ()=>{
-    updateTag(id, value, selectedName)
-    history.goBack()
+    const saveState = {
+      "empty":"标签名不能为空",
+      "duplicated":"标签名重复了"
+    }
+    let result:"empty"|"duplicated"|"success" = updateTag(id, value, selectedName)
+    if (result!=="success"){
+      setShow("show")
+      setTagState(saveState[result])
+    }else {
+      history.goBack()
+    }
   }
   return (
     <Layout>
@@ -44,6 +56,7 @@ const EditTag = () => {
         <EditInput value={value} onChange={value => setValue(value)}/>
         <IconList selectedName={selectedName} getIconName={name => setSelectedName(name)}/>
         <RemoveTagButton remove={remove}/>
+        <PopWarning show={show} cancel={value => setShow(value)}>{tagState}</PopWarning>
       </Wrapper>
     </Layout>
   );
