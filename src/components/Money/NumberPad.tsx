@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import {Prompt} from "../Prompt";
 import {PopWarning} from "../PopWarning";
+import {TimeInput} from "./TimeInput";
 
 const Wrapper = styled.div`
         width: 100%;
@@ -50,6 +51,7 @@ type Props = {
 const NumberPad: React.FC<Props> = (props) => {
   const [display, setDisplay] = useState("hide");
   const [show,setShow] = useState("hide")
+  const [input,setInput] = useState("hide")
   let output = props.value;
   const setOutput = (newOutput: string) => {
     props.onChange(newOutput);
@@ -84,7 +86,7 @@ const NumberPad: React.FC<Props> = (props) => {
       } else if (text === "备注") {
         setDisplay("show");
       } else if (text === "今天") {
-        console.log("设置日期");
+        setInput("show")
       } else if (text === "确认") {
         if (output === "0") {
           setShow("show")
@@ -119,6 +121,7 @@ const NumberPad: React.FC<Props> = (props) => {
       <Prompt placeholder="请输入备注" children="备注" show={display} onChange={state => setDisplay(state)}
               getValue={value => props.getNote(value)}/>
       <PopWarning show={show} cancel={(value)=>{setShow(value)}}>"你记了笔0元的帐！"</PopWarning>
+      <TimeInput class={input}/>
     </Wrapper>
   );
 };
