@@ -43,21 +43,33 @@ const typeMap = {"-":"支出","+":"收入"}
 const dateMap = {"day":"日", "month":"月", "year":"年"}
 type TypeList = keyof typeof typeMap
 type DateList = keyof typeof dateMap
-const DataFilter:React.FC = ()=>{
+type Props = {
+  getType:(type:TypeList)=>void,
+  getDate:(date:DateList)=>void
+}
+const DataFilter:React.FC<Props> = (props)=>{
     const [typeList] = useState<TypeList[]>(["-","+"])
     const [dateList] = useState<DateList[]>(["day","month","year"])
     const [selectedType,setSelectedType] = useState("-")
     const [selectedDate,setSelectedDate] = useState("day")
+    const changeType = (i:TypeList)=>{
+      setSelectedType(i)
+      props.getType(i)
+    }
+    const changeDate = (d:DateList)=>{
+      setSelectedDate(d)
+      props.getDate(d)
+    }
     return(
         <Wrapper>
             <ul className="in-out">
                 {typeList.map(i=><li key={i} className={selectedType===i?"selected":""}
-                                     onClick={()=>setSelectedType(i)}>{typeMap[i]}
+                                     onClick={()=>changeType(i)}>{typeMap[i]}
                 </li>)}
             </ul>
             <ul className="date">
                 {dateList.map(d=><li key={d} className={selectedDate===d?"selected":""}
-                                     onClick={()=>setSelectedDate(d)}>{dateMap[d]}
+                                     onClick={()=>changeDate(d)}>{dateMap[d]}
                 </li>)}
             </ul>
         </Wrapper>

@@ -1,16 +1,17 @@
 import Layout from "../components/Layout";
-import React from "react";
+import React, {useState} from "react";
 import {DataFilter} from "../components/DataFilter";
 import {useRecord} from "../hooks/useRecord";
 import styled from "styled-components";
 import {useTags} from "../hooks/useTags";
 import Icon from "../components/Icon";
+import dayjs from "dayjs";
+import cs from "classnames";
+import {NoData} from "../components/NoData";
 
-type Category = "-" | "+"
-type ReceiptData = {
-  amount: string, date: string, selectedId: number, note: string, type: Category
-}
-const BillList = styled.div`
+
+const Wrapper = styled.div`
+  .bill-list{
   padding: 10px 20px;
   font-size: 18px;
   overflow: auto;
@@ -61,13 +62,28 @@ const BillList = styled.div`
           }
       }
   }
+  }
+  .noData{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
 `;
+type Category = "-" | "+"
+type ReceiptData = {
+  amount: string, date: string, selectedId: number, note: string, type: Category
+}
 const Bill = () => {
   const {recordItem} = useRecord();
   const {tags} = useTags();
+  const [type, setType] = useState<"-" | "+">("-");
+  const [date, setDate] = useState<"day" | "month" | "year">("day");
+  const colorType = type === "+" ? "red" : "green";
+  console.log(date);//todo
   const getGroupRecord = () => {
     if (recordItem.length === 0) {return [];}
-    const newRecord: ReceiptData[] = JSON.parse(JSON.stringify(recordItem));
+    const newRecord: ReceiptData[] = (JSON.parse(JSON.stringify(recordItem)) as ReceiptData[]).filter(i => i.type === type);
     const result = [{title: newRecord[0].date, item: [newRecord[0]], total: 0}];
     const titleList: string[] = [];
     for (let i = 1; i < newRecord.length; i++) {
@@ -84,35 +100,42 @@ const Bill = () => {
         result.push({title: current.date, item: [current], total: 0});
       }
     }
+    result.sort((a, b) => dayjs(b.title).valueOf() - dayjs(a.title).valueOf());
+    result.map(i => i.total = i.item.reduce((sum, j) => sum+parseFloat(j.amount), 0));
     return result;
   };
   return (
     <Layout>
-      <DataFilter/>
-      <BillList>
-        <ol>
-          {getGroupRecord().map(i => <li key={i.title}>
-            <div className="head">
-              <div className="title">{i.title}</div>
-              <div className="sum">总计：{i.total}</div>
-            </div>
+      <DataFilter getType={type => setType(type)} getDate={date => setDate(date)}/>
+      <Wrapper>
+        {recordItem.length !== 0 ?
+          <div className="bill-list">
             <ol>
-              {i.item.map((j, index) => <li key={index}>
-                <div className="detail">
-                  <div className="classify">
-                    <Icon name={tags.filter(i => i.id === j.selectedId)[0].name}/>
-                    {tags.filter(i => i.id === j.selectedId)[0].text}
-                  </div>
-                  <div className="note">{j.note}</div>
+              {getGroupRecord().map(i => <li key={i.title}>
+                <div className="head">
+                  <div className="title">{i.title}</div>
+                  <div className="sum">总计：{i.total}</div>
                 </div>
-                <div className="count">
-                  {j.type + j.amount}
-                </div>
+                <ol>
+                  {i.item.map((j, index) => <li key={index}>
+                    <div className="detail">
+                      <div className="classify">
+                        <Icon name={tags.filter(i => i.id === j.selectedId)[0].name}/>
+                        {tags.filter(i => i.id === j.selectedId)[0].text}
+                      </div>
+                      <div className="note">{j.note}</div>
+                    </div>
+                    <div className={cs("count", colorType)}>
+                      {j.type + j.amount}
+                    </div>
+                  </li>)}
+                </ol>
               </li>)}
             </ol>
-          </li>)}
-        </ol>
-      </BillList>
+          </div>
+          : <NoData/>
+        }
+      </Wrapper>
     </Layout>
   );
 };
