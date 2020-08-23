@@ -48,6 +48,8 @@ const Wrapper = styled.div`
                 max-width: 80%;
                 .classify {
                   padding: 4px 0;
+                  display: flex;
+                  align-items: center;
                   .icon {
                     width: 1em;
                     height: 1em;
@@ -80,11 +82,18 @@ const Bill = () => {
   const [type, setType] = useState<"-" | "+">("-");
   const [date, setDate] = useState<"day" | "month" | "year">("day");
   const colorType = type === "+" ? "red" : "green";
-  console.log(date);//todo
+  const formatTime=(type: "day"|"month"|"year",time: string)=>{
+    const obj = {
+      "day":dayjs(time).format("YYYY-MM-DD"),
+      "month":dayjs(time).format("YYYY-MM"),
+      "year":dayjs(time).format("YYYY")
+    }
+    return obj[type]
+  }
   const getGroupRecord = () => {
     if (recordItem.length === 0) {return [];}
     const newRecord: ReceiptData[] = (JSON.parse(JSON.stringify(recordItem)) as ReceiptData[]).filter(i => i.type === type);
-    const result = [{title: newRecord[0].date, item: [newRecord[0]], total: 0}];
+    const result = [{title: formatTime(date,newRecord[0].date), item: [newRecord[0]], total: 0}];
     const titleList: string[] = [];
     for (let i = 1; i < newRecord.length; i++) {
       let current = newRecord[i];
@@ -93,11 +102,11 @@ const Bill = () => {
           titleList.push(result[j].title);
         }
       }
-      let index = titleList.indexOf(current.date);
+      let index = titleList.indexOf(formatTime(date,current.date));
       if (index >= 0) {
-        result.map(i => i.title === titleList[index] ? i.item.push(current) : i);
+        result[index].item.push(current)
       } else {
-        result.push({title: current.date, item: [current], total: 0});
+        result.push({title: formatTime(date,current.date), item: [current], total: 0});
       }
     }
     result.sort((a, b) => dayjs(b.title).valueOf() - dayjs(a.title).valueOf());
