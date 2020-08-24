@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {DataFilter} from "../components/DataFilter";
 import {NoData} from "../components/NoData";
 import {Chart} from "../components/Chart";
@@ -136,14 +136,14 @@ const Statistic = () => {
     return obj[type];
   };
   const {lineX,lineY,pieName,pieValue} = getGroupRecord(type,date)
-  const [optionLine,setOptionLine] = useState({
+  const optionLine = {
     title: {
       text: "金额统计",
       left: "center",
     },
     xAxis: {
       type: "category",
-      data: [] as string[],
+      data: lineX,
       axisTick: {
         alignWithLabel: true,
       },
@@ -164,7 +164,7 @@ const Statistic = () => {
     },
     series: [
       {
-        data: [] as number[],
+        data: lineY,
         type: "line",
         markPoint: {
           data: [
@@ -175,8 +175,8 @@ const Statistic = () => {
         },
       },
     ],
-  });
-  const [optionPie,setOptionPie] = useState({
+  }
+  const optionPie = {
     title: {
       text: "分类占比(总)",
       subtext: "",
@@ -189,7 +189,7 @@ const Statistic = () => {
     legend: {
       orient: "vertical",
       left: "left",
-      data: [] as string[],
+      data: pieName,
     },
     series: [
       {
@@ -197,7 +197,7 @@ const Statistic = () => {
         type: "pie",
         radius: "55%",
         center: ["50%", "60%"],
-        data: [] as {value:number,name: string}[],
+        data: pieValue,
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
@@ -209,85 +209,8 @@ const Statistic = () => {
           formatter: "{b}\n{d}%",
         },
       },
-    ],
-  })
-  useEffect(()=>{
-    setOptionLine({
-      title: {
-        text: "金额统计",
-        left: "center",
-      },
-      xAxis: {
-        type: "category",
-        data: lineX,
-        axisTick: {
-          alignWithLabel: true,
-        },
-        axisLabel: {
-          rotate: 45
-        },
-      },
-      yAxis: {
-        type: "value",
-        axisLabel: {
-          margin: 4,
-          length: 3,
-        },
-      },
-      tooltip: {
-        triggerOn: "click",
-        formatter: "日期：{b}；金额：{c}",
-      },
-      series: [
-        {
-          data: lineY,
-          type: "line",
-          markPoint: {
-            data: [
-              {
-                type: "max",
-              },
-            ],
-          },
-        },
-      ],
-    })
-    setOptionPie({
-      title: {
-        text: "分类占比(总)",
-        subtext: "",
-        left: "center",
-      },
-      tooltip: {
-        trigger: "item",
-        formatter: "{a} <br/>{b} : {c} ({d}%)",
-      },
-      legend: {
-        orient: "vertical",
-        left: "left",
-        data: pieName,
-      },
-      series: [
-        {
-          name: "支出",
-          type: "pie",
-          radius: "55%",
-          center: ["50%", "60%"],
-          data: pieValue,
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: "rgba(0, 0, 0, 0.5)",
-            },
-          },
-          label: {
-            formatter: "{b}\n{d}%",
-          },
-        },
-      ]
-    })
-  },[lineX,lineY,pieName,pieValue])
+    ]
+  }
   return (
     <Layout>
       <Wrapper>
