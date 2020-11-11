@@ -33,7 +33,42 @@ const Budget: React.FC = () => {
       window.alert("请输入合法的数字");
     }
   };
-  const Wrapper = styled.div`
+  return (
+    <Wrapper deg={deg} className="budget">
+      <div className="budget-header">
+        <div className="text">{month}月总预算</div>
+        <button className="setBudget" onClick={() => setDisplay("show")}>+设置预算</button>
+      </div>
+      <div className="budget-main">
+        <div className="pie">
+          <div className="remain">
+            <span>剩余</span>
+            <span>{deg}%</span>
+          </div>
+        </div>
+        <ul className="description">
+          <li>
+            <span className="budget-description">剩余预算</span>
+            <span className="number">{remain}</span>
+          </li>
+          <li className="line"/>
+          <li>
+            <span className="budget-description">本月预算</span>
+            <span className="number">{budget}</span>
+          </li>
+          <li>
+            <span className="budget-description">本月支出</span>
+            <span className="number">{expense}</span>
+          </li>
+        </ul>
+      </div>
+      <Prompt placeholder="请输入预算金额" show={display} onChange={state => setDisplay(state)}
+              getValue={setBudget} children="每月总预算"/>
+    </Wrapper>
+  );
+};
+type Props = {deg:number}
+const Wrapper = styled.div<Props>`
    background: white;
         min-height: 160px;
         width: 88%;
@@ -69,7 +104,7 @@ const Budget: React.FC = () => {
                 height: 100px;
                 border-radius: 50%;
                 position: relative;
-                background: conic-gradient(#f3c623 ${deg/100*360}deg,#eaeaea ${deg/100*360}deg 360deg);
+                background: conic-gradient(#f3c623 ${props => props.deg/100*360}deg,#eaeaea ${props=>props.deg/100*360}deg 360deg);
                 .remain {
                     text-align: center;
                     position: absolute;
@@ -110,39 +145,4 @@ const Budget: React.FC = () => {
             }
         }
 `;
-  return (
-    <Wrapper className="budget">
-      <div className="budget-header">
-        <div className="text">{month}月总预算</div>
-        <button className="setBudget" onClick={() => setDisplay("show")}>+设置预算</button>
-      </div>
-      <div className="budget-main">
-        <div className="pie">
-          <div className="remain">
-            <span>剩余</span>
-            <span>{deg}%</span>
-          </div>
-        </div>
-        <ul className="description">
-          <li>
-            <span className="budget-description">剩余预算</span>
-            <span className="number">{remain}</span>
-          </li>
-          <li className="line"/>
-          <li>
-            <span className="budget-description">本月预算</span>
-            <span className="number">{budget}</span>
-          </li>
-          <li>
-            <span className="budget-description">本月支出</span>
-            <span className="number">{expense}</span>
-          </li>
-        </ul>
-      </div>
-      <Prompt placeholder="请输入预算金额" show={display} onChange={state => setDisplay(state)}
-              getValue={setBudget} children="每月总预算"/>
-    </Wrapper>
-  );
-};
-
 export {Budget};
