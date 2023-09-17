@@ -7,16 +7,16 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   .icon {
-      width: 48px;
-      height: 48px;
+    width: 48px;
+    height: 48px;
   }
-`
-const NoData:React.FC = ()=> {
+`;
+const NoData: React.FC = () => {
   return (
     <Wrapper className="noData">
-      <Icon name="write"/>
+      <Icon name="write" />
       <span>还没有记过账哦！快去记下一笔吧</span>
     </Wrapper>
-  )
-}
-export {NoData}
+  );
+};
+export { NoData };

@@ -1,70 +1,79 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {Prompt} from "../Prompt";
-import {PopWarning} from "../PopWarning";
-import {TimeInput} from "./TimeInput";
+import { Prompt } from "../Prompt";
+import { PopWarning } from "../PopWarning";
+import { TimeInput } from "./TimeInput";
 import dayjs from "dayjs";
 
 const Wrapper = styled.div`
-        width: 100%;
-        .buttons {
-            display: flex;
-            flex-wrap: wrap;
-            box-shadow: 0px -1px 2px rgba(0, 0, 0, 0.25);
-            button {
-                width: 25%;
-                height: 48px;
-                background: transparent;
-                border: none;
-                @media(max-height: 580px){
-                  height: 40px;
-                }
-            }
-            & :nth-child(1) {
-                background: #f2f2f2;
-            }
-            & :nth-child(2), & :nth-child(5) {
-                background: #e8e8e8;
-            }
-            & :nth-child(3), & :nth-child(6), & :nth-child(9) {
-                background: #dedede;
-            }
-            & :nth-child(4), & :nth-child(7), & :nth-child(10), & :nth-child(13) {
-                background: #d3d3d3;
-            }
-            & :nth-child(8), & :nth-child(11), & :nth-child(14) {
-                background: #c9c9c9;
-            }
-            & :nth-child(12), & :nth-child(15) {
-                background: #bfbfbf;
-            }
-            & :nth-child(16) {
-                background: #b5b5b5;
-            }
-        }
+  width: 100%;
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: 0px -1px 2px rgba(0, 0, 0, 0.25);
+    button {
+      width: 25%;
+      height: 48px;
+      background: transparent;
+      border: none;
+      @media (max-height: 580px) {
+        height: 40px;
+      }
+    }
+    & :nth-child(1) {
+      background: #f2f2f2;
+    }
+    & :nth-child(2),
+    & :nth-child(5) {
+      background: #e8e8e8;
+    }
+    & :nth-child(3),
+    & :nth-child(6),
+    & :nth-child(9) {
+      background: #dedede;
+    }
+    & :nth-child(4),
+    & :nth-child(7),
+    & :nth-child(10),
+    & :nth-child(13) {
+      background: #d3d3d3;
+    }
+    & :nth-child(8),
+    & :nth-child(11),
+    & :nth-child(14) {
+      background: #c9c9c9;
+    }
+    & :nth-child(12),
+    & :nth-child(15) {
+      background: #bfbfbf;
+    }
+    & :nth-child(16) {
+      background: #b5b5b5;
+    }
+  }
 `;
 type Props = {
-  value: string
-  onChange: (value: string) => void
-  getNote: (value: string) => void
-  confirm: () => void,
-  getTime: (value:string)=> void
-}
+  value: string;
+  onChange: (value: string) => void;
+  getNote: (value: string) => void;
+  confirm: () => void;
+  getTime: (value: string) => void;
+};
 const NumberPad: React.FC<Props> = (props) => {
-  const now = dayjs().format("YYYY-MM-DD")
+  const now = dayjs().format("YYYY-MM-DD");
   const [display, setDisplay] = useState("hide");
   const [show, setShow] = useState("hide");
   const [input, setInput] = useState("hide");
   const [time, setTime] = useState(now);
-  const [message,setMessage] = useState("")
+  const [message, setMessage] = useState("");
   let output = props.value;
   const setOutput = (newOutput: string) => {
     props.onChange(newOutput);
   };
-  const getTime =()=>{
-    props.getTime(time)
-    setInput("hide")
-  }
+  const getTime = () => {
+    props.getTime(time);
+    setInput("hide");
+  };
   const onClickWrapper = (e: React.MouseEvent) => {
     const text = (e.target as HTMLButtonElement).textContent as string;
     if (text) {
@@ -82,7 +91,7 @@ const NumberPad: React.FC<Props> = (props) => {
         } else {
           if (parseFloat(output) > 100000) {
             setShow("show");
-            setMessage("小老弟，你有那么多钱嘛")
+            setMessage("小老弟，你有那么多钱嘛");
           }
         }
       } else if (text === "删除") {
@@ -100,7 +109,7 @@ const NumberPad: React.FC<Props> = (props) => {
       } else if (text === "确认") {
         if (output === "0") {
           setShow("show");
-          setMessage("你记了笔0元的帐！")
+          setMessage("你记了笔0元的帐！");
         } else {
           props.confirm();
           setOutput("0");
@@ -128,12 +137,30 @@ const NumberPad: React.FC<Props> = (props) => {
         <button>今天</button>
         <button className="ok">确认</button>
       </div>
-      <Prompt placeholder="请输入备注" children="备注" show={display} onChange={state => setDisplay(state)}
-              getValue={value => props.getNote(value)}/>
-      <PopWarning show={show} cancel={(value) => {setShow(value);}}>{message}</PopWarning>
-      <TimeInput class={input} value={time} onChange={(value) => {setTime(value);}}
-                 confirm={getTime}/>
+      <Prompt
+        placeholder="请输入备注"
+        children="备注"
+        show={display}
+        onChange={(state) => setDisplay(state)}
+        getValue={(value) => props.getNote(value)}
+      />
+      <PopWarning
+        show={show}
+        cancel={(value) => {
+          setShow(value);
+        }}
+      >
+        {message}
+      </PopWarning>
+      <TimeInput
+        class={input}
+        value={time}
+        onChange={(value) => {
+          setTime(value);
+        }}
+        confirm={getTime}
+      />
     </Wrapper>
   );
 };
-export {NumberPad};
+export { NumberPad };

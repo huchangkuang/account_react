@@ -7,19 +7,17 @@ const Wrapper = styled.div`
   justify-content: space-between;
   flex-direction: column;
   height: 100vh;
-`
+`;
 const Main = styled.div`
   flex-grow: 1;
   overflow: auto;
-`
-const Layout = (props:any)=> {
-    return (
-        <Wrapper>
-            <Main>
-                {props.children}
-            </Main>
-            <Nav/>
-        </Wrapper>
-    )
-}
-export default Layout
+`;
+const Layout = (props: any) => {
+  return (
+    <Wrapper>
+      <Main>{props.children}</Main>
+      <Nav />
+    </Wrapper>
+  );
+};
+export default Layout;

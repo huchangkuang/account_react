@@ -1,12 +1,12 @@
 import Layout from "../components/Layout";
-import React, {useState} from "react";
-import {DataFilter} from "../components/DataFilter";
-import {NoData} from "../components/NoData";
-import {Chart} from "../components/Chart";
+import React, { useState } from "react";
+import { DataFilter } from "../components/DataFilter";
+import { NoData } from "../components/NoData";
+import { Chart } from "../components/Chart";
 import styled from "styled-components";
-import {useRecord} from "../hooks/useRecord";
+import { useRecord } from "../hooks/useRecord";
 import dayjs from "dayjs";
-import {useTags} from "../hooks/useTags";
+import { useTags } from "../hooks/useTags";
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,16 +43,20 @@ const Wrapper = styled.div`
     }
   }
 `;
-type Category = "-" | "+"
+type Category = "-" | "+";
 type ReceiptData = {
-  amount: string, date: string, selectedId: number, note: string, type: Category
-}
+  amount: string;
+  date: string;
+  selectedId: number;
+  note: string;
+  type: Category;
+};
 const Statistic = () => {
   const [type, setType] = useState<"-" | "+">("-");
   const [date, setDate] = useState<"day" | "month" | "year">("day");
-  const {recordItem} = useRecord();
-  const {tags} = useTags();
-  const nMap = {day: 30, month: 12, year: 5};
+  const { recordItem } = useRecord();
+  const { tags } = useTags();
+  const nMap = { day: 30, month: 12, year: 5 };
   const getGroupRecord = (type: string, date: "day" | "month" | "year") => {
     type DataOrigin = {
       lineX: string[];
@@ -60,21 +64,27 @@ const Statistic = () => {
       pieValue: { value: number; name: string }[];
       pieName: string[];
     };
-    const newRecord = (JSON.parse(JSON.stringify(recordItem)) as ReceiptData[]).filter(i => i.type === type);
+    const newRecord = (
+      JSON.parse(JSON.stringify(recordItem)) as ReceiptData[]
+    ).filter((i) => i.type === type);
     const dataOrigin: DataOrigin = {
       lineX: [],
       lineY: [],
       pieValue: [],
       pieName: [],
     };
-    const {lineX, lineY, pieValue, pieName} = dataOrigin;
+    const { lineX, lineY, pieValue, pieName } = dataOrigin;
     for (let i = 0; i < newRecord.length; i++) {
       const current = newRecord[i];
       if (lineX.indexOf(formatTime(date, current.date)) < 0) {
         lineX.push(formatTime(date, current.date)); //"MM-DD"
       }
-      if (pieName.indexOf(tags.filter(i => i.id === current.selectedId)[0].text) < 0) {
-        pieName.push(tags.filter(i => i.id === current.selectedId)[0].text);
+      if (
+        pieName.indexOf(
+          tags.filter((i) => i.id === current.selectedId)[0].text,
+        ) < 0
+      ) {
+        pieName.push(tags.filter((i) => i.id === current.selectedId)[0].text);
       }
     }
     //["06-15","07-07"]
@@ -93,15 +103,20 @@ const Statistic = () => {
             formatTime(date, i.date) === formatTime(date, current)
               ? sum + parseFloat(i.amount)
               : sum,
-          0
-        )
+          0,
+        ),
       );
     }
     for (let i = 0; i < pieName.length; i++) {
       const current = pieName[i];
       pieValue.push({
         value: newRecord.reduce(
-          (sum, i) => tags.filter(j => j.id === i.selectedId)[0].text === current ? sum + parseFloat(i.amount) : sum, 0),
+          (sum, i) =>
+            tags.filter((j) => j.id === i.selectedId)[0].text === current
+              ? sum + parseFloat(i.amount)
+              : sum,
+          0,
+        ),
         name: current,
       });
     }
@@ -111,7 +126,8 @@ const Statistic = () => {
     maxDate: string,
     n: number,
     arr: string[],
-    date: "day" | "month" | "year") => {
+    date: "day" | "month" | "year",
+  ) => {
     const map = {
       day: "MM-DD",
       month: "MM",
@@ -135,7 +151,7 @@ const Statistic = () => {
     };
     return obj[type];
   };
-  const {lineX,lineY,pieName,pieValue} = getGroupRecord(type,date)
+  const { lineX, lineY, pieName, pieValue } = getGroupRecord(type, date);
   const optionLine = {
     title: {
       text: "金额统计",
@@ -148,7 +164,7 @@ const Statistic = () => {
         alignWithLabel: true,
       },
       axisLabel: {
-        rotate: 45
+        rotate: 45,
       },
     },
     yAxis: {
@@ -175,7 +191,7 @@ const Statistic = () => {
         },
       },
     ],
-  }
+  };
   const optionPie = {
     title: {
       text: "分类占比(总)",
@@ -209,28 +225,35 @@ const Statistic = () => {
           formatter: "{b}\n{d}%",
         },
       },
-    ]
-  }
+    ],
+  };
   return (
     <Layout>
       <Wrapper>
-        <DataFilter getType={type => setType(type)} getDate={date => setDate(date)}/>
+        <DataFilter
+          getType={(type) => setType(type)}
+          getDate={(date) => setDate(date)}
+        />
         <div className="chart">
           <div className="line">
-            {recordItem.length === 0 ?
+            {recordItem.length === 0 ? (
               <div className="nodata">
                 <div>支出统计</div>
-                <NoData/>
-              </div> :
-              <Chart option={optionLine}/>}
+                <NoData />
+              </div>
+            ) : (
+              <Chart option={optionLine} />
+            )}
           </div>
           <div className="pie">
-            {recordItem.length === 0 ?
+            {recordItem.length === 0 ? (
               <div className="nodata">
                 <div>分类占比</div>
-                <NoData/>
-              </div> :
-              <Chart option={optionPie}/>}
+                <NoData />
+              </div>
+            ) : (
+              <Chart option={optionPie} />
+            )}
           </div>
         </div>
       </Wrapper>

@@ -77,6 +77,7 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
+    "prettier": "prettier --write \"src/**/*.ts*\"",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
@@ -97,10 +98,24 @@
       "last 1 safari version"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "@types/styled-components": "^5.1.0",
     "@types/webpack-env": "^1.15.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
     "node-sass": "npm:dart-sass",
+    "prettier": "^3.0.3",
     "svg-sprite-loader": "^5.0.0",
     "svgo-loader": "^2.2.1"
   },

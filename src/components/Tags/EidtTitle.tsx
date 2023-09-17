@@ -1,5 +1,5 @@
 import React from "react";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Icon from "../Icon";
 
@@ -17,30 +17,32 @@ const Wrapper = styled.div`
     background: transparent;
     width: 32px;
     .icon {
-    width: 16px;
-    height: 16px;
+      width: 16px;
+      height: 16px;
     }
   }
   > span {
     font-size: 18px;
     font-weight: bold;
   }
-`
+`;
 type Props = {
-  text:string
-  save:()=>void
-}
-const EditTitle:React.FC<Props> = (props)=>{
-  const history = useHistory()
-  const back = ()=>{
-    history.goBack()
-  }
+  text: string;
+  save: () => void;
+};
+const EditTitle: React.FC<Props> = (props) => {
+  const history = useHistory();
+  const back = () => {
+    history.goBack();
+  };
   return (
     <Wrapper>
-      <button onClick={back}><Icon name="left"/></button>
+      <button onClick={back}>
+        <Icon name="left" />
+      </button>
       <span>{props.text}</span>
       <button onClick={props.save}>保存</button>
     </Wrapper>
-  )
-}
-export {EditTitle}
+  );
+};
+export { EditTitle };
