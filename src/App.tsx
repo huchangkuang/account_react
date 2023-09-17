@@ -13,6 +13,7 @@ import Tags from "./views/Tags";
 import NotFound from "./views/NotFound";
 import { EditTag } from "./components/Tags/EditTag";
 import { AddTag } from "./components/Tags/AddTag";
+import {Login} from "./views/Login";
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
         </Route>
         <Route exact path="/target">
           <Target />
+        </Route>
+        <Route exact path="/login">
+          <Login />
         </Route>
         <Redirect exact from="/" to="/money" />
         <Route path="*">
