@@ -1,9 +1,9 @@
 import Layout from "../components/Layout";
 import React from "react";
-import { TouchCard } from "../components/Target/TouchCard";
-import { Remain } from "../components/Target/Remain";
-import { Budget } from "../components/Target/Budget";
-import {UserInfo} from "../components/Target/UserInfoCard";
+import { TouchCard } from "./Target/TouchCard";
+import { Remain } from "./Target/Remain";
+import { Budget } from "./Target/Budget";
+import {UserInfo} from "./Target/UserInfoCard";
 
 const Target = () => {
   return (

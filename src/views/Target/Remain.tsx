@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useRecord } from "../../hooks/useRecord";
 import { useUpdate } from "../../hooks/useUpdate";
 import dayjs from "dayjs";
-import {Card} from "../Card";
+import {Card} from "../../components/Card";
 
 const Wrapper = styled.div`
   .remain {

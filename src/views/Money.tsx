@@ -1,9 +1,9 @@
 import Layout from "../components/Layout";
 import React, { useState } from "react";
 import { ConsumeType } from "../components/ConsumeType";
-import { Receipt } from "../components/Money/Receipt";
-import { NumberPad } from "../components/Money/NumberPad";
-import { Classify } from "../components/Money/Classify";
+import { Receipt } from "./Money/Receipt";
+import { NumberPad } from "./Money/NumberPad";
+import { Classify } from "./Money/Classify";
 import styled from "styled-components";
 import { useTags } from "../hooks/useTags";
 import dayjs from "dayjs";

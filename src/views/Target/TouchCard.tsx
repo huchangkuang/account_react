@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Icon from "../Icon";
+import Icon from "../../components/Icon";
 import dayjs from "dayjs";
 import { useRecord } from "../../hooks/useRecord";
 

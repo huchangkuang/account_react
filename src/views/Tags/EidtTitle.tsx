@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Icon from "../Icon";
+import Icon from "../../components/Icon";
 
 const Wrapper = styled.div`
   display: flex;

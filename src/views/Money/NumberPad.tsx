@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Prompt } from "../Prompt";
-import { PopWarning } from "../PopWarning";
+import { Prompt } from "../../components/Prompt";
+import { PopWarning } from "../../components/PopWarning";
 import { TimeInput } from "./TimeInput";
 import dayjs from "dayjs";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Icon from "../Icon";
+import Icon from "../../components/Icon";
 import { useTags } from "../../hooks/useTags";
 
 const Wrapper = styled.div`

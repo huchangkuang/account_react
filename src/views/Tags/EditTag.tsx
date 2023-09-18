@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Layout from "../Layout";
+import Layout from "../../components/Layout";
 import { RemoveTagButton } from "./RemoveTagButton";
 import { EditTitle } from "./EidtTitle";
 import { IconList } from "./IconList";
 import { EditInput } from "./EditInput";
 import { useTags } from "../../hooks/useTags";
-import { PopWarning } from "../PopWarning";
+import { PopWarning } from "../../components/PopWarning";
 
 const Wrapper = styled.div`
   display: flex;

@@ -11,8 +11,8 @@ import Statistic from "./views/Statistic";
 import Bill from "./views/Bill";
 import Tags from "./views/Tags";
 import NotFound from "./views/NotFound";
-import { EditTag } from "./components/Tags/EditTag";
-import { AddTag } from "./components/Tags/AddTag";
+import { EditTag } from "./views/Tags/EditTag";
+import { AddTag } from "./views/Tags/AddTag";
 import {Login} from "./views/Login";
 
 function App() {

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Prompt } from "../Prompt";
+import { Prompt } from "../../components/Prompt";
 import { useUpdate } from "../../hooks/useUpdate";
 import { useRecord } from "../../hooks/useRecord";
 import dayjs from "dayjs";
-import {Card} from "../Card";
+import {Card} from "../../components/Card";
 
 const Budget: React.FC = () => {
   const now = dayjs();
