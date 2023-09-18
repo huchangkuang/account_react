@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useRecord } from "../../hooks/useRecord";
 import { useUpdate } from "../../hooks/useUpdate";
 import dayjs from "dayjs";
-import {Card} from "../../components/Card";
+import { Card } from "../../components/Card";
 
 const Wrapper = styled.div`
   .remain {
@@ -37,8 +37,8 @@ const Wrapper = styled.div`
 type RemainProps = {
   expense: number;
   income: number;
-}
-const Remain: React.FC<RemainProps> = ({expense, income}) => {
+};
+const Remain: React.FC<RemainProps> = ({ expense, income }) => {
   const [remain, setRemain] = useState(0);
   useUpdate(() => {
     setRemain(income - expense);

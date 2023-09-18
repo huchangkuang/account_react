@@ -1,32 +1,35 @@
-import React, {FC} from 'react';
+import React, { FC } from "react";
 import styled from "styled-components";
-import {Card} from "../../components/Card";
+import { Card } from "../../components/Card";
 import Icon from "../../components/Icon";
-import { Link } from 'react-router-dom';
-import {LocalStore} from "../../utils/localStore";
+import { Link } from "react-router-dom";
+import { LocalStore } from "../../utils/localStore";
 
-type UserInfoProps = {
-
-};
+type UserInfoProps = {};
 export const UserInfo: FC<UserInfoProps> = (props) => {
-  const token = LocalStore.getToken()
-  const userName = LocalStore.getUserName()
-  const avatar = LocalStore.getAvatar()
+  const token = LocalStore.getToken();
+  const userName = LocalStore.getUserName();
+  const avatar = LocalStore.getAvatar();
   return (
     <Wrapper>
-      <Card className='userInfo'>
-        <div className='left'>
-          {token && avatar ? <img className='avatar' alt='' src={avatar} /> : <Icon name='avatar' fill='#999' />}
-          <div className='userName'>
-            {token && userName ? userName : 'HELLO!'}
+      <Card className="userInfo">
+        <div className="left">
+          {token && avatar ? (
+            <img className="avatar" alt="" src={avatar} />
+          ) : (
+            <Icon name="avatar" fill="#999" />
+          )}
+          <div className="userName">
+            {token && userName ? userName : "HELLO!"}
           </div>
         </div>
-        <Link to='/login' className='loginBtn'>
-          {!token ? '注册/登录' :'切换用户'}
+        <Link to="/login" className="loginBtn">
+          {!token ? "注册/登录" : "切换用户"}
         </Link>
       </Card>
-  </Wrapper>
-)};
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   margin-top: -10px;
@@ -62,4 +65,4 @@ const Wrapper = styled.div`
       color: #333333;
     }
   }
-`
+`;

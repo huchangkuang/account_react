@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {BillType} from "../api/bills/type";
+import { BillType } from "../api/bills/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,14 +33,20 @@ type Props = {
   type: BillType;
   onChange: (type: BillType) => void;
 };
-const ConsumeType: React.FC<Props> = ({type, onChange}) => {
+const ConsumeType: React.FC<Props> = ({ type, onChange }) => {
   const selected = (t: BillType) => (type === t ? "selected" : "");
   return (
     <Wrapper className="type">
-      <div className={selected(BillType.paid)} onClick={() => onChange(BillType.paid)}>
+      <div
+        className={selected(BillType.paid)}
+        onClick={() => onChange(BillType.paid)}
+      >
         支出
       </div>
-      <div className={selected(BillType.receive)} onClick={() => onChange(BillType.receive)}>
+      <div
+        className={selected(BillType.receive)}
+        onClick={() => onChange(BillType.receive)}
+      >
         收入
       </div>
     </Wrapper>

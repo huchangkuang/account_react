@@ -3,7 +3,7 @@ import { useUpdate } from "./useUpdate";
 
 export enum BillType {
   paid = 1,
-  receive
+  receive,
 }
 export type ReceiptData = {
   cash: string;

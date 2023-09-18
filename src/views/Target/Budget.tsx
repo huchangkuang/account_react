@@ -3,14 +3,14 @@ import styled from "styled-components";
 import { Prompt } from "../../components/Prompt";
 import { useUpdate } from "../../hooks/useUpdate";
 import dayjs from "dayjs";
-import {Card} from "../../components/Card";
-import {editBudget} from "../../api/user";
+import { Card } from "../../components/Card";
+import { editBudget } from "../../api/user";
 
 type BudgetProps = {
   expense: number;
   _budget: number;
-}
-const Budget: React.FC<BudgetProps> = ({expense, _budget}) => {
+};
+const Budget: React.FC<BudgetProps> = ({ expense, _budget }) => {
   const [month, setMonth] = useState("");
   const [display, setDisplay] = useState<string>("hide");
   const [budget, setBudget] = useState<number>(_budget);
@@ -26,22 +26,22 @@ const Budget: React.FC<BudgetProps> = ({expense, _budget}) => {
   const changeBudget = async (state: string) => {
     const number = parseFloat(state);
     if (number) {
-      await editBudget(number)
+      await editBudget(number);
       setBudget(number);
     } else {
       window.alert("请输入合法的数字");
     }
   };
   useEffect(() => {
-    setBudget(_budget)
-  },[_budget])
+    setBudget(_budget);
+  }, [_budget]);
 
   useEffect(() => {
     setMonth(dayjs().format("MM"));
-  },[])
+  }, []);
   return (
     <Wrapper deg={deg}>
-      <Card className='budget'>
+      <Card className="budget">
         <div className="budget-header">
           <div className="text">{month}月总预算</div>
           <button className="setBudget" onClick={() => setDisplay("show")}>
@@ -117,8 +117,8 @@ const Wrapper = styled.div<Props>`
         border-radius: 50%;
         position: relative;
         background: conic-gradient(
-                #f3c623 ${(props) => (props.deg / 100) * 360}deg,
-                #eaeaea ${(props) => (props.deg / 100) * 360}deg 360deg
+          #f3c623 ${(props) => (props.deg / 100) * 360}deg,
+          #eaeaea ${(props) => (props.deg / 100) * 360}deg 360deg
         );
         .remain {
           text-align: center;

@@ -5,10 +5,10 @@ import { Receipt } from "./Money/Receipt";
 import { NumberPad } from "./Money/NumberPad";
 import { Classify } from "./Money/Classify";
 import styled from "styled-components";
-import {BillType, CommonBill} from "../api/bills/type";
-import {addBill} from "../api/bills";
+import { BillType, CommonBill } from "../api/bills/type";
+import { addBill } from "../api/bills";
 import dayjs from "dayjs";
-import {TagItem} from "../api/tags/type";
+import { TagItem } from "../api/tags/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,22 +22,22 @@ const Wrapper = styled.div`
 `;
 
 const Money = () => {
-  const [tags, setTags] = useState<TagItem[]>([])
+  const [tags, setTags] = useState<TagItem[]>([]);
   const [receiptData, setReceiptData] = useState<CommonBill>({
-    cash: '0',
-    remark: '',
-    time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+    cash: "0",
+    remark: "",
+    time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
     tags: [],
-    type: BillType.paid
+    type: BillType.paid,
   });
   const onChange = (obj: Partial<CommonBill>) => {
     setReceiptData({ ...receiptData, ...obj });
   };
   const confirm = async () => {
     try {
-      await addBill(receiptData)
-    } catch(e) {
-      console.error(e)
+      await addBill(receiptData);
+    } catch (e) {
+      console.error(e);
     }
   };
   return (
@@ -45,7 +45,7 @@ const Money = () => {
       <Wrapper>
         <ConsumeType
           type={receiptData.type}
-          onChange={type => onChange({type})}
+          onChange={(type) => onChange({ type })}
         />
         <Classify
           onChange={(ids) => onChange({ tags: ids })}

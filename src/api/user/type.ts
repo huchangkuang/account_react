@@ -1,21 +1,21 @@
 export type LoginParam = {
   idName: string;
   password: string;
-}
+};
 export type SignUpParam = {
   idName: string;
   password: string;
-}
+};
 export type LoginDto = {
   token: string;
   userName: string;
   avatar: string;
-}
+};
 export type EditInfoParam = {
   userName: string;
   avatar: string;
-}
-export type UserInfoDto ={
+};
+export type UserInfoDto = {
   id: number;
   idName: string;
   userName: string;
@@ -23,4 +23,4 @@ export type UserInfoDto ={
   budget: number;
   expense: number;
   income: number;
-}
+};

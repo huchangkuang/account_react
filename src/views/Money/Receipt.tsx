@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useTags } from "../../hooks/useTags";
-import {CommonBill} from "../../api/bills/type";
-import {TagItem} from "../../api/tags/type";
+import { CommonBill } from "../../api/bills/type";
+import { TagItem } from "../../api/tags/type";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -64,8 +64,8 @@ type Props = {
   receiptData: CommonBill;
   tags: TagItem[];
 };
-const Receipt: React.FC<Props> = ({receiptData, tags}) => {
-  const {tags: select = [], cash, time, remark} = receiptData
+const Receipt: React.FC<Props> = ({ receiptData, tags }) => {
+  const { tags: select = [], cash, time, remark } = receiptData;
   return (
     <Wrapper>
       <div className="top-bar">
@@ -83,7 +83,10 @@ const Receipt: React.FC<Props> = ({receiptData, tags}) => {
         <div className="bar kind">
           <div>分类：</div>
           <div className="kind-content">
-            {tags.filter(i => select.includes(i.id)).map(i => i.name).join(',')}
+            {tags
+              .filter((i) => select.includes(i.id))
+              .map((i) => i.name)
+              .join(",")}
           </div>
         </div>
         <div className="bar notes">

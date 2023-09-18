@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Icon from "../../components/Icon";
-import {BillType} from "../../api/bills/type";
-import {tagList} from "../../api/tags";
-import {TagItem} from "../../api/tags/type";
+import { BillType } from "../../api/bills/type";
+import { tagList } from "../../api/tags";
+import { TagItem } from "../../api/tags/type";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -47,20 +47,25 @@ type Props = {
   type: BillType;
   onGetList?: (list: TagItem[]) => void;
 };
-const Classify: React.FC<Props> = ({selectIds, onChange, type, onGetList}) => {
-  const [list, setList] = useState<TagItem[]>([])
+const Classify: React.FC<Props> = ({
+  selectIds,
+  onChange,
+  type,
+  onGetList,
+}) => {
+  const [list, setList] = useState<TagItem[]>([]);
   const fetchTagList = async () => {
     try {
-      const {data} = await tagList()
-      setList(data)
-      onGetList?.(data)
-    } catch(e) {
-      console.error(e)
+      const { data } = await tagList();
+      setList(data);
+      onGetList?.(data);
+    } catch (e) {
+      console.error(e);
     }
-  }
+  };
   useEffect(() => {
-    fetchTagList()
-  },[])
+    fetchTagList();
+  }, []);
   return (
     <Wrapper>
       <ul>
@@ -72,7 +77,9 @@ const Classify: React.FC<Props> = ({selectIds, onChange, type, onGetList}) => {
                 name={i.icon}
                 className={selectIds.includes(i.id) ? "selected" : ""}
                 onClick={() => {
-                  const ids = selectIds.includes(i.id) ? selectIds.filter(j => j !== i.id) : [...selectIds, i.id]
+                  const ids = selectIds.includes(i.id)
+                    ? selectIds.filter((j) => j !== i.id)
+                    : [...selectIds, i.id];
                   onChange(ids);
                 }}
               />

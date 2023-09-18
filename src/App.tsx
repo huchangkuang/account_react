@@ -13,7 +13,7 @@ import Tags from "./views/Tags";
 import NotFound from "./views/NotFound";
 import { EditTag } from "./views/Tags/EditTag";
 import { AddTag } from "./views/Tags/AddTag";
-import {Login} from "./views/Login";
+import { Login } from "./views/Login";
 
 function App() {
   return (

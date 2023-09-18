@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { createId } from "../lib/createId";
 import { useUpdate } from "./useUpdate";
-import {BillType} from "../api/bills/type";
+import { BillType } from "../api/bills/type";
 
-const {paid, receive} = BillType
+const { paid, receive } = BillType;
 type Tag = { id: number; name: string; icon: string; type: BillType };
 let iconMap = [
   { id: 0, name: "food", text: "餐饮", type: paid },
