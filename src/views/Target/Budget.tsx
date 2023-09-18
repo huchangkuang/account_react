@@ -2,42 +2,43 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Prompt } from "../../components/Prompt";
 import { useUpdate } from "../../hooks/useUpdate";
-import { useRecord } from "../../hooks/useRecord";
 import dayjs from "dayjs";
 import {Card} from "../../components/Card";
+import {editBudget} from "../../api/user";
 
-const Budget: React.FC = () => {
-  const now = dayjs();
+type BudgetProps = {
+  expense: number;
+  _budget: number;
+}
+const Budget: React.FC<BudgetProps> = ({expense, _budget}) => {
   const [month, setMonth] = useState("");
-  const [expense, setExpense] = useState<number>(0);
   const [display, setDisplay] = useState<string>("hide");
-  const [budget, _setBudget] = useState<number>(0);
+  const [budget, setBudget] = useState<number>(_budget);
   const [remain, setRemain] = useState<number>(0);
   const [deg, setDeg] = useState<number>(0);
-  const { recordItem } = useRecord();
-  useEffect(() => {
-    setMonth(now.format("MM"));
-  }, [now]);
   useUpdate(() => {
     let _remain = budget - expense;
     setRemain(_remain < 0 ? 0 : _remain);
-    setExpense(
-      recordItem
-        .filter((i) => i.type === "-")
-        .reduce((sum, j) => sum + parseFloat(j.amount), 0),
-    );
+
     let x = (remain / budget) * 100;
     setDeg(Math.round(x ? x : 0));
-  }, [budget, expense, recordItem]);
-  const setBudget = (state: string) => {
+  }, [budget, expense]);
+  const changeBudget = async (state: string) => {
     const number = parseFloat(state);
     if (number) {
-      _setBudget(number);
-      window.localStorage.setItem("budget", state);
+      await editBudget(number)
+      setBudget(number);
     } else {
       window.alert("请输入合法的数字");
     }
   };
+  useEffect(() => {
+    setBudget(_budget)
+  },[_budget])
+
+  useEffect(() => {
+    setMonth(dayjs().format("MM"));
+  },[])
   return (
     <Wrapper deg={deg}>
       <Card className='budget'>
@@ -74,7 +75,7 @@ const Budget: React.FC = () => {
           placeholder="请输入预算金额"
           show={display}
           onChange={(state) => setDisplay(state)}
-          getValue={setBudget}
+          getValue={changeBudget}
           children="每月总预算"
         />
       </Card>

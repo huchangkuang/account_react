@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Icon from "../../components/Icon";
-import { useTags } from "../../hooks/useTags";
+import {BillType} from "../../api/bills/type";
+import {tagList} from "../../api/tags";
+import {TagItem} from "../../api/tags/type";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -28,9 +30,10 @@ const Wrapper = styled.div`
         }
       }
       .icon {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 32px;
         border-radius: 4px;
+        padding: 4px;
         &.selected {
           background: #f3c623;
         }
@@ -39,31 +42,41 @@ const Wrapper = styled.div`
   }
 `;
 type Props = {
-  onChange: (id: number) => void;
-  id: number;
-  type: "-" | "+";
+  onChange: (ids: number[]) => void;
+  selectIds: number[];
+  type: BillType;
+  onGetList?: (list: TagItem[]) => void;
 };
-const Classify: React.FC<Props> = (props) => {
-  const { tags } = useTags();
-  let iconId = props.id;
-  const select = (id: number) => {
-    props.onChange(id);
-  };
+const Classify: React.FC<Props> = ({selectIds, onChange, type, onGetList}) => {
+  const [list, setList] = useState<TagItem[]>([])
+  const fetchTagList = async () => {
+    try {
+      const {data} = await tagList()
+      setList(data)
+      onGetList?.(data)
+    } catch(e) {
+      console.error(e)
+    }
+  }
+  useEffect(() => {
+    fetchTagList()
+  },[])
   return (
     <Wrapper>
       <ul>
-        {tags
-          .filter((i) => i.type === props.type)
+        {list
+          .filter((i) => i.type === type)
           .map((i) => (
             <li key={i.id}>
               <Icon
-                name={i.name}
-                className={iconId === i.id ? "selected" : ""}
+                name={i.icon}
+                className={selectIds.includes(i.id) ? "selected" : ""}
                 onClick={() => {
-                  select(i.id);
+                  const ids = selectIds.includes(i.id) ? selectIds.filter(j => j !== i.id) : [...selectIds, i.id]
+                  onChange(ids);
                 }}
               />
-              <span>{i.text}</span>
+              <span>{i.name}</span>
             </li>
           ))}
       </ul>

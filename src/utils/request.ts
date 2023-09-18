@@ -5,7 +5,7 @@ const request = <T>(url: string, data?: Record<string, any> , option?: RequestIn
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem('token') || ''
     fetch(url, {
-      body: JSON.stringify(data),
+      body: data ? JSON.stringify(data) : undefined,
       headers: {
         "authorization": token,
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const request = <T>(url: string, data?: Record<string, any> , option?: RequestIn
 };
 export const get = <T>(url: string, query?: Record<string, any> , option?: RequestInit): Promise<Result<T>> => {
   const {method, headers, ...rest} = option || {}
-  return request<T>(`${url}${query ? `?${querystring.stringify(query)}` : ''}`, {}, {method: 'get', ...rest})
+  return request<T>(`${url}${query ? `?${querystring.stringify(query)}` : ''}`, undefined, {method: 'get', ...rest})
 }
 export const post = <T>(url: string, data?: Record<string, any> , option?: RequestInit): Promise<Result<T>> => {
   const {method, headers, ...rest} = option || {}

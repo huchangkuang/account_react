@@ -48,15 +48,15 @@ export const Login: FC<LoginProps> = (props) => {
       <form>
         <div className='formItem'>
           <div className='label'>用户名：</div>
-          <input maxLength={20} value={idName} onChange={(e: any) => setIdName(e.target.value)} className='userName'/>
+          <input placeholder='请输入用户名' maxLength={20} value={idName} onChange={(e: any) => setIdName(e.target.value)} className='userName'/>
         </div>
         <div className='formItem'>
           <div className='label'>密码：</div>
-          <input maxLength={20} value={password} onChange={(e: any) => setPassword(e.target.value)} type='password' className='password'/>
+          <input placeholder='请输入密码' maxLength={20} value={password} onChange={(e: any) => setPassword(e.target.value)} type='password' className='password'/>
         </div>
         {!isLogin && <div className='formItem'>
           <div className='label'>确认密码：</div>
-          <input maxLength={20} value={password2} onChange={(e: any) => setPassword2(e.target.value)} type='password' className='password'/>
+          <input placeholder='请再次输入密码' maxLength={20} value={password2} onChange={(e: any) => setPassword2(e.target.value)} type='password' className='password'/>
         </div>}
         <div className='descWrap'>
           <div className='desc'>用户名与密码最多20个字符</div>
@@ -126,7 +126,7 @@ const Wrapper = styled.div`
     }
 
     input {
-      padding: 2px 4px;
+      padding: 8px;
       outline: none;
       border: none;
       background: none;

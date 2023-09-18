@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useUpdate } from "./useUpdate";
 
-type Category = "-" | "+";
-type ReceiptData = {
-  amount: string;
-  date: string;
-  selectedId: number;
-  note: string;
-  type: Category;
+export enum BillType {
+  paid = 1,
+  receive
+}
+export type ReceiptData = {
+  cash: string;
+  id?: number;
+  remark: string;
+  type: BillType;
 };
 const useRecord = () => {
   const [recordItem, setRecordItem] = useState<ReceiptData[]>([]);

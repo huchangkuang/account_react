@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import {BillType} from "../api/bills/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,20 +29,18 @@ const Wrapper = styled.div`
     }
   }
 `;
-type Category = "-" | "+";
 type Props = {
-  type: Category;
-  onChange: (type: Category) => void;
+  type: BillType;
+  onChange: (type: BillType) => void;
 };
-const ConsumeType: React.FC<Props> = (props) => {
-  let type = props.type;
-  const selected = (t: Category) => (type === t ? "selected" : "");
+const ConsumeType: React.FC<Props> = ({type, onChange}) => {
+  const selected = (t: BillType) => (type === t ? "selected" : "");
   return (
     <Wrapper className="type">
-      <div className={selected("-")} onClick={() => props.onChange("-")}>
+      <div className={selected(BillType.paid)} onClick={() => onChange(BillType.paid)}>
         支出
       </div>
-      <div className={selected("+")} onClick={() => props.onChange("+")}>
+      <div className={selected(BillType.receive)} onClick={() => onChange(BillType.receive)}>
         收入
       </div>
     </Wrapper>

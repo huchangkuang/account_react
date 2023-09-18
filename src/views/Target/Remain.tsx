@@ -34,37 +34,21 @@ const Wrapper = styled.div`
     }
   }
 `;
-const Remain: React.FC = () => {
-  const now = dayjs();
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-  const { recordItem } = useRecord();
-  const [expense, setExpense] = useState(0);
-  const [income, setIncome] = useState(0);
+type RemainProps = {
+  expense: number;
+  income: number;
+}
+const Remain: React.FC<RemainProps> = ({expense, income}) => {
   const [remain, setRemain] = useState(0);
-  useEffect(() => {
-    setMonth(now.format("MM"));
-    setYear(now.format("YYYY"));
-  }, [now]);
   useUpdate(() => {
-    setExpense(
-      recordItem
-        .filter((i) => i.type === "-")
-        .reduce((sum, j) => sum + parseFloat(j.amount), 0),
-    );
-    setIncome(
-      recordItem
-        .filter((i) => i.type === "+")
-        .reduce((sum, j) => sum + parseFloat(j.amount), 0),
-    );
     setRemain(income - expense);
-  }, [expense, income, recordItem]);
+  }, [expense, income]);
   return (
     <Wrapper>
       <Card className="remain">
         <div className="time">
-          <div className="year">{year}年</div>
-          <div className="mouth">{month}月</div>
+          <div className="year">{dayjs().format("YYYY")}年</div>
+          <div className="mouth">{dayjs().format("MM")}月</div>
         </div>
         <div className="line" />
         <ul className="message">

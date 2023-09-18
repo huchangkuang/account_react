@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useTags } from "../../hooks/useTags";
+import {CommonBill} from "../../api/bills/type";
+import {TagItem} from "../../api/tags/type";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -28,11 +30,11 @@ const Wrapper = styled.div`
     width: 95%;
     margin-top: -5px;
     min-height: 100px;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
     .amount {
       display: flex;
       justify-content: space-between;
-      padding: 2px 10px;
+      padding: 8px 10px;
       font-size: 24px;
       font-family: Consolas, monospace;
       border-bottom: 1px solid #e9e9e9;
@@ -44,7 +46,10 @@ const Wrapper = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2px 10px;
+      padding: 8px 10px;
+      > :first-child {
+        flex-shrink: 0;
+      }
     }
     .notes {
       .note-content {
@@ -52,27 +57,15 @@ const Wrapper = styled.div`
         overflow-wrap: break-word;
       }
     }
-    .time {
-      padding: 2px 10px;
-    }
-
-    .kind {
-      padding: 2px 10px;
-    }
   }
 `;
-type ReceiptData = {
-  amount: string;
-  date: string;
-  selectedId: number;
-  note: string;
-  type: string;
-};
+
 type Props = {
-  receiptData: ReceiptData;
+  receiptData: CommonBill;
+  tags: TagItem[];
 };
-const Receipt: React.FC<Props> = (props) => {
-  const { tags } = useTags();
+const Receipt: React.FC<Props> = ({receiptData, tags}) => {
+  const {tags: select = [], cash, time, remark} = receiptData
   return (
     <Wrapper>
       <div className="top-bar">
@@ -81,26 +74,21 @@ const Receipt: React.FC<Props> = (props) => {
       <div className="paper">
         <div className="amount">
           <div className="text">金额：</div>
-          <div className="output">{props.receiptData.amount}</div>
+          <div className="output">{cash}</div>
         </div>
         <div className="bar time">
           <div>日期：</div>
-          <div className="time-content">{props.receiptData.date}</div>
+          <div className="time-content">{time}</div>
         </div>
         <div className="bar kind">
           <div>分类：</div>
           <div className="kind-content">
-            {
-              (
-                tags.filter((i) => i.id === props.receiptData.selectedId)[0] ||
-                {}
-              ).text
-            }
+            {tags.filter(i => select.includes(i.id)).map(i => i.name).join(',')}
           </div>
         </div>
         <div className="bar notes">
           <div>备注：</div>
-          <div className="note-content">{props.receiptData.note}</div>
+          <div className="note-content">{remark}</div>
         </div>
       </div>
     </Wrapper>

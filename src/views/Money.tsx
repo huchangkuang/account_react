@@ -5,9 +5,10 @@ import { Receipt } from "./Money/Receipt";
 import { NumberPad } from "./Money/NumberPad";
 import { Classify } from "./Money/Classify";
 import styled from "styled-components";
-import { useTags } from "../hooks/useTags";
+import {BillType, CommonBill} from "../api/bills/type";
+import {addBill} from "../api/bills";
 import dayjs from "dayjs";
-import { useRecord } from "../hooks/useRecord";
+import {TagItem} from "../api/tags/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,60 +20,46 @@ const Wrapper = styled.div`
     min-height: 54px;
   }
 `;
-type Category = "-" | "+";
-type ReceiptData = {
-  amount: string;
-  date: string;
-  selectedId: number;
-  note: string;
-  type: Category;
-};
+
 const Money = () => {
-  const { recordItem, setRecordItem } = useRecord();
-  const { tags } = useTags();
-  const now = dayjs().format("YYYY-MM-DD");
-  const defaultData: ReceiptData = {
-    amount: "0",
-    date: now,
-    selectedId: 0,
-    note: "",
-    type: "-",
-  };
-  const [receiptData, setReceiptData] = useState<ReceiptData>({
-    ...defaultData,
-    selectedId: tags.filter((i) => i.type === defaultData.type)[0].id,
+  const [tags, setTags] = useState<TagItem[]>([])
+  const [receiptData, setReceiptData] = useState<CommonBill>({
+    cash: '0',
+    remark: '',
+    time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+    tags: [],
+    type: BillType.paid
   });
-  const onChange = (obj: object) => {
+  const onChange = (obj: Partial<CommonBill>) => {
     setReceiptData({ ...receiptData, ...obj });
   };
-  const confirm = () => {
-    window.alert("记下一笔！");
-    setRecordItem([...recordItem, receiptData]);
+  const confirm = async () => {
+    try {
+      await addBill(receiptData)
+    } catch(e) {
+      console.error(e)
+    }
   };
   return (
     <Layout>
       <Wrapper>
         <ConsumeType
           type={receiptData.type}
-          onChange={(type) =>
-            onChange({
-              type: type,
-              selectedId: tags.filter((i) => i.type === type)[0].id,
-            })
-          }
+          onChange={type => onChange({type})}
         />
         <Classify
-          onChange={(id) => onChange({ selectedId: id })}
-          id={receiptData.selectedId}
+          onChange={(ids) => onChange({ tags: ids })}
+          selectIds={receiptData.tags}
           type={receiptData.type}
+          onGetList={setTags}
         />
-        <Receipt receiptData={receiptData} />
+        <Receipt receiptData={receiptData} tags={tags} />
         <NumberPad
-          value={receiptData.amount}
-          onChange={(value) => onChange({ amount: value })}
-          getNote={(value) => onChange({ note: value })}
+          value={receiptData.cash}
+          onChange={(value) => onChange({ cash: value })}
+          getNote={(value) => onChange({ remark: value })}
           confirm={confirm}
-          getTime={(time) => onChange({ date: time })}
+          getTime={(time) => onChange({ time: time })}
         />
       </Wrapper>
     </Layout>
