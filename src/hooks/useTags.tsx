@@ -28,7 +28,7 @@ const useTags = () => {
   const updateTag = (id: string, value: string, selectedName: string) => {
     if (!value) {
       return "empty";
-    } else if (tags.filter((i) => i.text === value).length > 0) {
+    } else if (tags.filter((i) => i.name === value).length > 0) {
       return "duplicated";
     } else {
       setTags(
@@ -41,19 +41,19 @@ const useTags = () => {
       return "success";
     }
   };
-  const createTag = (selectedName: string, value: string, type: Category) => {
+  const createTag = (selectedName: string, value: string, type: BillType) => {
     if (!value) {
       return "name empty";
     } else if (!selectedName) {
       return "icon empty";
-    } else if (tags.filter((i) => i.text === value).length > 0) {
+    } else if (tags.filter((i) => i.name === value).length > 0) {
       return "duplicated";
     } else {
       let tagsClone: Tag[] = JSON.parse(JSON.stringify(tags));
       tagsClone.push({
         id: createId(),
-        name: selectedName,
-        text: value,
+        icon: selectedName,
+        name: value,
         type: type,
       });
       setTags(tagsClone);

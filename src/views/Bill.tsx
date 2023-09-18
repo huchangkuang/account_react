@@ -160,7 +160,7 @@ const Bill = () => {
                                   .name
                               }
                             />
-                            {tags.filter((i) => i.id === j.selectedId)[0].text}
+                            {tags.filter((i) => i.id === j.selectedId)[0].name}
                           </div>
                           <div className="note">{j.note}</div>
                         </div>

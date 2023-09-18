@@ -28,6 +28,7 @@ const EditInput: React.FC<Props> = (props) => {
     <Label>
       <span>标签名</span>
       <input
+        maxLength={10}
         type="text"
         value={props.value}
         placeholder="输入类别名称，建议不超过四个汉字"

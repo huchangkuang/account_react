@@ -49,7 +49,7 @@ const Money = () => {
         />
         <Classify
           onChange={(ids) => onChange({ tags: ids })}
-          selectIds={receiptData.tags}
+          selectIds={receiptData.tags ?? []}
           type={receiptData.type}
           onGetList={setTags}
         />

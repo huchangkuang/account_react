@@ -44,15 +44,15 @@ const TouchCard: React.FC = () => {
     setKeep(parseFloat(window.localStorage.getItem("keep") || "0"));
   }, []);
   useEffect(() => {
-    let dateArray = recordItem.reduce((arr: string[], i) => {
-      if (arr.indexOf(i.date) < 0) {
-        arr.push(i.date);
-        return arr;
-      } else {
-        return arr;
-      }
-    }, []);
-    setSumDay(dateArray.length);
+    // let dateArray = recordItem.reduce((arr: string[], i) => {
+    //   if (arr.indexOf(i.date) < 0) {
+    //     arr.push(i.date);
+    //     return arr;
+    //   } else {
+    //     return arr;
+    //   }
+    // }, []);
+    // setSumDay(dateArray.length);
   }, [recordItem]);
   const touchCard = () => {
     let lastTouch = window.localStorage.getItem("lastTouch");

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Layout from "../../components/Layout";
 import { EditTitle } from "./EidtTitle";
 import { EditInput } from "./EditInput";
 import { IconList } from "./IconList";
-import { useType } from "../../hooks/useType";
-import { useTags } from "../../hooks/useTags";
 import { useHistory } from "react-router-dom";
-import { PopWarning } from "../../components/PopWarning";
+import {addTag} from "../../api/tags";
+import querystring from "querystring";
+import {BillType} from "../../api/bills/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,40 +21,40 @@ const Wrapper = styled.div`
   }
 `;
 const AddTag = () => {
-  const [value, setValue] = useState("");
-  const [selectedName, setSelectedName] = useState("");
-  const { type } = useType();
-  const { createTag } = useTags();
+  const [name, setName] = useState("");
+  const [icon, setIcon] = useState("");
   const history = useHistory();
-  const [show, setShow] = useState("");
-  const [tagState, setTagState] = useState("");
-  const save = () => {
-    const saveState = {
-      "name empty": "标签名不能为空",
-      "icon empty": "请选择一个图标",
-      duplicated: "标签名重复了",
-    };
-    let result: "name empty" | "icon empty" | "duplicated" | "success" =
-      createTag(selectedName, value, type);
-    if (result !== "success") {
-      setShow("show");
-      setTagState(saveState[result]);
-    } else {
+  const [type, setType] = useState<BillType>(BillType.paid)
+  const validate = () => {
+    if (!name.trim()) return "请输入标签名"
+    if (!icon.trim()) return "请选择标签图标"
+  }
+  const save = async () => {
+    const msg = validate()
+    if (msg) {
+      console.error(msg);
+      return;
+    }
+    try {
+      await addTag({type, name, icon})
       history.goBack();
+    } catch(e) {
+      console.error(e);
     }
   };
+  useEffect(() => {
+    const obj = querystring.parse(history.location.search.slice(1)) as any
+    setType(obj.type)
+  },[])
   return (
     <Layout>
       <Wrapper>
         <EditTitle text="新增标签" save={save} />
-        <EditInput value={value} onChange={(value) => setValue(value)} />
+        <EditInput value={name} onChange={(value) => setName(value)} />
         <IconList
-          selectedName={selectedName}
-          getIconName={(name) => setSelectedName(name)}
+          selectedName={icon}
+          getIconName={(name) => setIcon(name)}
         />
-        <PopWarning show={show} cancel={(value) => setShow(value)}>
-          {tagState}
-        </PopWarning>
       </Wrapper>
     </Layout>
   );

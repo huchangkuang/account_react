@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Icon from "../../components/Icon";
-import { useTags } from "../../hooks/useTags";
+import {TagItem} from "../../api/tags/type";
+import {tagList} from "../../api/tags";
+import {BillType} from "../../api/bills/type";
 
 const Wrapper = styled.div`
   .link {
@@ -12,11 +14,11 @@ const Wrapper = styled.div`
     padding: 4px 10px;
     border-bottom: 1px solid #c4c4c4;
     margin-left: 20px;
+    margin-right: 20px;
     .icon-name {
       display: flex;
-      justify-content: space-around;
       align-items: center;
-      min-width: 25%;
+      flex: 1;
       min-height: 48px;
       .icon-container {
         width: 32px;
@@ -26,6 +28,7 @@ const Wrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-right: 12px;
         .icon {
           width: 24px;
           height: 24px;
@@ -39,21 +42,32 @@ const Wrapper = styled.div`
   }
 `;
 type Props = {
-  type: "-" | "+";
+  type: BillType;
 };
 const DisplayTags: React.FC<Props> = (props) => {
-  const { tags } = useTags();
+  const [tags, setTags] = useState<TagItem[]>([]);
+  const fetchTagList = async () => {
+    try {
+      const { data } = await tagList();
+      setTags(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    fetchTagList();
+  }, []);
   return (
     <Wrapper className="display">
       {tags
         .filter((i) => i.type === props.type)
         .map((i) => (
-          <Link to={"/tags/" + i.id} key={i.id} className="link">
+          <Link to={"/tags/" + i.id + `?type=${props.type}`} key={i.id} className="link">
             <div className="icon-name">
               <div className="icon-container">
-                <Icon name={i.name} />
+                <Icon name={i.icon} />
               </div>
-              <span>{i.text}</span>
+              <span>{i.name}</span>
             </div>
             <Icon name="right" />
           </Link>

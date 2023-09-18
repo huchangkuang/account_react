@@ -1,10 +1,10 @@
 import Layout from "../components/Layout";
-import React from "react";
-import { ConsumeType } from "../components/ConsumeType";
+import React, {useState} from "react";
+import {ConsumeType} from "../components/ConsumeType";
 import styled from "styled-components";
-import { DisplayTags } from "./Tags/DisplayTags";
-import { AddTagButton } from "./Tags/AddTagButton";
-import { useType } from "../hooks/useType";
+import {DisplayTags} from "./Tags/DisplayTags";
+import {AddTagButton} from "./Tags/AddTagButton";
+import {BillType} from "../api/bills/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,14 +23,14 @@ const Wrapper = styled.div`
   }
 `;
 const Tags = () => {
-  const { type, setType } = useType();
+  const [type, setType] = useState<BillType>(BillType.paid);
   return (
     <Layout>
       <Wrapper>
         <div className="title">分类设置</div>
         <ConsumeType type={type} onChange={(type) => setType(type)} />
         <DisplayTags type={type} />
-        <AddTagButton />
+        <AddTagButton type={type} />
       </Wrapper>
     </Layout>
   );

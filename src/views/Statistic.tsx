@@ -81,10 +81,10 @@ const Statistic = () => {
       }
       if (
         pieName.indexOf(
-          tags.filter((i) => i.id === current.selectedId)[0].text,
+          tags.filter((i) => i.id === current.selectedId)[0].name,
         ) < 0
       ) {
-        pieName.push(tags.filter((i) => i.id === current.selectedId)[0].text);
+        pieName.push(tags.filter((i) => i.id === current.selectedId)[0].name);
       }
     }
     //["06-15","07-07"]
@@ -112,7 +112,7 @@ const Statistic = () => {
       pieValue.push({
         value: newRecord.reduce(
           (sum, i) =>
-            tags.filter((j) => j.id === i.selectedId)[0].text === current
+            tags.filter((j) => j.id === i.selectedId)[0].name === current
               ? sum + parseFloat(i.amount)
               : sum,
           0,

@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useHistory, useParams} from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../../components/Layout";
-import { RemoveTagButton } from "./RemoveTagButton";
-import { EditTitle } from "./EidtTitle";
-import { IconList } from "./IconList";
-import { EditInput } from "./EditInput";
-import { useTags } from "../../hooks/useTags";
-import { PopWarning } from "../../components/PopWarning";
+import {RemoveTagButton} from "./RemoveTagButton";
+import {EditTitle} from "./EidtTitle";
+import {IconList} from "./IconList";
+import {EditInput} from "./EditInput";
+import {delTag, updateTag} from "../../api/tags";
+import {BillType} from "../../api/bills/type";
+import * as querystring from "querystring";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,48 +25,55 @@ type Params = {
   id: string;
 };
 const EditTag = () => {
-  const { findTag, updateTag, removeTag } = useTags();
   let { id } = useParams<Params>();
-  const tag = findTag(id);
-  const [selectedName, setSelectedName] = useState(tag.name);
-  const [value, setValue] = useState(tag.text);
-  const [show, setShow] = useState("hide");
-  const [tagState, setTagState] = useState("");
+  const [icon, setIcon] = useState('');
+  const [name, setName] = useState('');
+  const [type, setType] = useState<BillType>(BillType.paid)
   const history = useHistory();
-  const remove = () => {
-    removeTag(id);
-    history.goBack();
-  };
-  const save = () => {
-    const saveState = {
-      empty: "标签名不能为空",
-      duplicated: "标签名重复了",
-    };
-    let result: "empty" | "duplicated" | "success" = updateTag(
-      id,
-      value,
-      selectedName,
-    );
-    if (result !== "success") {
-      setShow("show");
-      setTagState(saveState[result]);
-    } else {
+  const remove = async () => {
+    try {
+      await delTag(Number(id))
       history.goBack();
+    } catch(e) {
+      console.error(e);
     }
   };
+  const validate = () => {
+    if (!name.trim()) return "请输入标签名"
+    if (!icon.trim()) return "请选择标签图标"
+  }
+  const save = async () => {
+    const msg = validate()
+    if (msg) {
+      console.error(msg);
+      return;
+    }
+    try {
+      await updateTag({
+        id: Number(id),
+        type,
+        name,
+        icon
+      })
+      history.goBack();
+    } catch(e) {
+      console.error(e)
+    }
+  };
+  useEffect(() => {
+    const obj = querystring.parse(history.location.search.slice(1)) as any
+    setType(obj.type as BillType)
+  },[])
   return (
     <Layout>
       <Wrapper>
         <EditTitle text="编辑标签" save={save} />
-        <EditInput value={value} onChange={(value) => setValue(value)} />
+        <EditInput value={name} onChange={(value) => setName(value)} />
         <IconList
-          selectedName={selectedName}
-          getIconName={(name) => setSelectedName(name)}
+          selectedName={icon}
+          getIconName={(name) => setIcon(name)}
         />
         <RemoveTagButton remove={remove} />
-        <PopWarning show={show} cancel={(value) => setShow(value)}>
-          {tagState}
-        </PopWarning>
       </Wrapper>
     </Layout>
   );
