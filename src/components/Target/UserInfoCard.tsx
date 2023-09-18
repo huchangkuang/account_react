@@ -3,23 +3,27 @@ import styled from "styled-components";
 import {Card} from "../Card";
 import Icon from "../Icon";
 import { Link } from 'react-router-dom';
+import {LocalStore} from "../../utils/localStore";
 
 type UserInfoProps = {
 
 };
 export const UserInfo: FC<UserInfoProps> = (props) => {
+  const token = LocalStore.getToken()
+  const userName = LocalStore.getUserName()
+  const avatar = LocalStore.getAvatar()
   return (
     <Wrapper>
       <Card className='userInfo'>
-          <div className='left'>
-            <Icon name='avatar' fill='#999' />
-            <div className='userName'>
-              HELLO!
-            </div>
+        <div className='left'>
+          {token && avatar ? <img className='avatar' alt='' src={avatar} /> : <Icon name='avatar' fill='#999' />}
+          <div className='userName'>
+            {token && userName ? userName : 'HELLO!'}
           </div>
-          <Link to='/login' className='loginBtn'>
-            注册/登录
-          </Link>
+        </div>
+        <Link to='/login' className='loginBtn'>
+          {!token ? '注册/登录' :'切换用户'}
+        </Link>
       </Card>
   </Wrapper>
 )};
@@ -37,6 +41,13 @@ const Wrapper = styled.div`
         width: 40px;
         height: 40px;
         margin-right: 12px;
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+        margin-right: 12px;
+        border-radius: 50%;
+        object-fit: fill;
       }
       .userName {
         color: #333333;
