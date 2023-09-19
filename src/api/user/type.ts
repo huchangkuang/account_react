@@ -23,4 +23,7 @@ export type UserInfoDto = {
   budget: number;
   expense: number;
   income: number;
+  billsNum: number;
+  reportNum: number;
+  reportDate: string;
 };

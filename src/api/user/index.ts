@@ -16,3 +16,4 @@ export const editBudget = (num: number) => post(`${prefix}/budget`, { num });
 export const editInfo = (data: EditInfoParam) =>
   post(`${prefix}/editInfo`, data);
 export const userInfo = () => get<UserInfoDto>(`${prefix}/info`);
+export const reportCard = () => post(`${prefix}/report`);

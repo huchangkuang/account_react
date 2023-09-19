@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Icon from "../../components/Icon";
 import dayjs from "dayjs";
-import { useRecord } from "../../hooks/useRecord";
+import {reportCard} from "../../api/user";
 
 const Wrapper = styled.div`
   background: #f3c623;
@@ -35,40 +35,31 @@ const Wrapper = styled.div`
     }
   }
 `;
-const TouchCard: React.FC = () => {
+type TouchCardProps = {
+  billsNum: number;
+  reportNum: number;
+  reportDate: string;
+  refresh?: () => void;
+}
+const TouchCard: React.FC<TouchCardProps> = ({reportDate, reportNum,billsNum,refresh}) => {
   const today = dayjs().format("YYYY-MM-DD");
-  const [keep, setKeep] = useState<number>(0);
-  const { recordItem } = useRecord();
-  const [sumDay, setSumDay] = useState(0);
-  useEffect(() => {
-    setKeep(parseFloat(window.localStorage.getItem("keep") || "0"));
-  }, []);
-  useEffect(() => {
-    // let dateArray = recordItem.reduce((arr: string[], i) => {
-    //   if (arr.indexOf(i.date) < 0) {
-    //     arr.push(i.date);
-    //     return arr;
-    //   } else {
-    //     return arr;
-    //   }
-    // }, []);
-    // setSumDay(dateArray.length);
-  }, [recordItem]);
-  const touchCard = () => {
-    let lastTouch = window.localStorage.getItem("lastTouch");
-    if (lastTouch === today) {
+  const touchCard = async () => {
+    if (dayjs(reportDate).format("YYYY-MM-DD") === today) {
       window.alert("今日已经打过卡咯！");
     } else {
-      window.alert("打卡成功，保持记账的好习惯哦！");
-      setKeep(keep + 1);
-      window.localStorage.setItem("keep", (keep + 1).toString());
-      window.localStorage.setItem("lastTouch", today);
+      try {
+        await reportCard()
+        refresh?.()
+        window.alert("打卡成功，保持记账的好习惯哦！");
+      } catch(e) {
+        console.error(e);
+      }
     }
   };
   return (
     <Wrapper>
       <div className="keeping">
-        <div className="number">{keep}</div>
+        <div className="number">{reportNum}</div>
         <div>已持续打卡</div>
       </div>
       <div className="touch" onClick={touchCard}>
@@ -76,7 +67,7 @@ const TouchCard: React.FC = () => {
         <span>打卡</span>
       </div>
       <div className="sum">
-        <div className="number">{sumDay}</div>
+        <div className="number">{billsNum}</div>
         <div>记账总天数</div>
       </div>
     </Wrapper>
