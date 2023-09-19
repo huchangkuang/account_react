@@ -21,15 +21,16 @@ const Wrapper = styled.div`
   }
 `;
 
+const defaultData: CommonBill = {
+  cash: "0",
+  remark: "",
+  date: dayjs().format("YYYY-MM-DD"),
+  tags: [],
+  type: BillType.paid,
+}
 const Money = () => {
   const [tags, setTags] = useState<TagItem[]>([]);
-  const [receiptData, setReceiptData] = useState<CommonBill>({
-    cash: "0",
-    remark: "",
-    time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-    tags: [],
-    type: BillType.paid,
-  });
+  const [receiptData, setReceiptData] = useState<CommonBill>(defaultData);
   const onChange = (obj: Partial<CommonBill>) => {
     setReceiptData({ ...receiptData, ...obj });
   };
@@ -45,6 +46,7 @@ const Money = () => {
     }
     try {
       await addBill(receiptData);
+      setReceiptData({...defaultData, type: receiptData.type})
     } catch (e) {
       console.error(e);
     }
@@ -68,7 +70,7 @@ const Money = () => {
           onChange={(value) => onChange({ cash: value })}
           getNote={(value) => onChange({ remark: value })}
           confirm={confirm}
-          getTime={(time) => onChange({ time: time })}
+          getTime={(value) => onChange({ date: value })}
         />
       </Wrapper>
     </Layout>

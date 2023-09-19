@@ -5,9 +5,9 @@ export enum BillType {
 export type CommonBill = {
   cash: string;
   type: BillType;
-  time?: string;
+  date: string;
   remark?: string;
-  tags?: number[];
+  tags: number[];
 };
 export type BillItem = {
   id: number;
@@ -15,7 +15,7 @@ export type BillItem = {
   type: BillType;
   remark: string;
   tags: number[];
-  createAt: string;
+  date: string;
 };
 export type BillFilterDate = 'year' | 'month' | 'day'
 export type BillListQuery = {

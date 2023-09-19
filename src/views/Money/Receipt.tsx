@@ -65,7 +65,7 @@ type Props = {
   tags: TagItem[];
 };
 const Receipt: React.FC<Props> = ({ receiptData, tags }) => {
-  const { tags: select = [], cash, time, remark } = receiptData;
+  const { tags: select = [], cash, date, remark } = receiptData;
   return (
     <Wrapper>
       <div className="top-bar">
@@ -78,7 +78,7 @@ const Receipt: React.FC<Props> = ({ receiptData, tags }) => {
         </div>
         <div className="bar time">
           <div>日期：</div>
-          <div className="time-content">{time}</div>
+          <div className="time-content">{date}</div>
         </div>
         <div className="bar kind">
           <div>分类：</div>

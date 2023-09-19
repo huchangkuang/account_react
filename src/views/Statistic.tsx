@@ -75,8 +75,8 @@ const Statistic = () => {
     const { lineX, lineY, pieValue, pieName } = dataOrigin;
     for (let i = 0; i < list.length; i++) {
       const current = list[i];
-      if (lineX.indexOf(formatTime(date, current.createAt)) < 0) {
-        lineX.push(formatTime(date, current.createAt)); //"MM-DD"
+      if (lineX.indexOf(formatTime(date, current.date)) < 0) {
+        lineX.push(formatTime(date, current.date)); //"MM-DD"
       }
       const t = tags.filter((i) => current.tags.includes(i.id)).map(t => t.name)
       const pieT = t.filter(l => !pieName.includes(l))
@@ -93,7 +93,7 @@ const Statistic = () => {
       lineY.push(
         list.reduce(
           (sum, i) =>
-            formatTime(date, i.createAt) === formatTime(date, current)
+            formatTime(date, i.date) === formatTime(date, current)
               ? sum + i.cash
               : sum,
           0,

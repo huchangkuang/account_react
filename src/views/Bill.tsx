@@ -94,7 +94,7 @@ const Bill = () => {
   };
   const displayList = useMemo<DisplayBillItem[]>(() =>
     list.reduce((arr: DisplayBillItem[], i) => {
-      const curDate = formatTime(date, i.createAt)
+      const curDate = formatTime(date, i.date)
       const item = arr.find(j => j.date === curDate)
       if (item) {
         item.list.push(i)
