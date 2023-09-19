@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Icon from "../../components/Icon";
-import {TagItem} from "../../api/tags/type";
-import {tagList} from "../../api/tags";
-import {BillType} from "../../api/bills/type";
+import { TagItem } from "../../api/tags/type";
+import { tagList } from "../../api/tags";
+import { BillType } from "../../api/bills/type";
 
 const Wrapper = styled.div`
   .link {
@@ -62,7 +62,15 @@ const DisplayTags: React.FC<Props> = (props) => {
       {tags
         .filter((i) => i.type === props.type)
         .map((i) => (
-          <Link to={"/tags/" + i.id + `?type=${props.type}&tagName=${i.name}&icon=${i.icon}`} key={i.id} className="link">
+          <Link
+            to={
+              "/tags/" +
+              i.id +
+              `?type=${props.type}&tagName=${i.name}&icon=${i.icon}`
+            }
+            key={i.id}
+            className="link"
+          >
             <div className="icon-name">
               <div className="icon-container">
                 <Icon name={i.icon} />

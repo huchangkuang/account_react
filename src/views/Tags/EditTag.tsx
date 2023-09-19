@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../../components/Layout";
-import {RemoveTagButton} from "./RemoveTagButton";
-import {EditTitle} from "./EidtTitle";
-import {IconList} from "./IconList";
-import {EditInput} from "./EditInput";
-import {delTag, updateTag} from "../../api/tags";
-import {BillType} from "../../api/bills/type";
+import { RemoveTagButton } from "./RemoveTagButton";
+import { EditTitle } from "./EidtTitle";
+import { IconList } from "./IconList";
+import { EditInput } from "./EditInput";
+import { delTag, updateTag } from "../../api/tags";
+import { BillType } from "../../api/bills/type";
 import * as querystring from "querystring";
 
 const Wrapper = styled.div`
@@ -26,24 +26,24 @@ type Params = {
 };
 const EditTag = () => {
   let { id } = useParams<Params>();
-  const [icon, setIcon] = useState('');
-  const [name, setName] = useState('');
-  const [type, setType] = useState<BillType>(BillType.paid)
+  const [icon, setIcon] = useState("");
+  const [name, setName] = useState("");
+  const [type, setType] = useState<BillType>(BillType.paid);
   const history = useHistory();
   const remove = async () => {
     try {
-      await delTag(Number(id))
+      await delTag(Number(id));
       history.goBack();
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
   };
   const validate = () => {
-    if (!name.trim()) return "请输入标签名"
-    if (!icon.trim()) return "请选择标签图标"
-  }
+    if (!name.trim()) return "请输入标签名";
+    if (!icon.trim()) return "请选择标签图标";
+  };
   const save = async () => {
-    const msg = validate()
+    const msg = validate();
     if (msg) {
       console.error(msg);
       return;
@@ -53,28 +53,25 @@ const EditTag = () => {
         id: Number(id),
         type,
         name,
-        icon
-      })
+        icon,
+      });
       history.goBack();
-    } catch(e) {
-      console.error(e)
+    } catch (e) {
+      console.error(e);
     }
   };
   useEffect(() => {
-    const obj = querystring.parse(history.location.search.slice(1)) as any
-    setType(obj.type)
-    setName(obj.tagName)
-    setIcon(obj.icon)
-  },[])
+    const obj = querystring.parse(history.location.search.slice(1)) as any;
+    setType(obj.type);
+    setName(obj.tagName);
+    setIcon(obj.icon);
+  }, []);
   return (
     <Layout>
       <Wrapper>
         <EditTitle text="编辑标签" save={save} />
         <EditInput value={name} onChange={(value) => setName(value)} />
-        <IconList
-          selectedName={icon}
-          getIconName={(name) => setIcon(name)}
-        />
+        <IconList selectedName={icon} getIconName={(name) => setIcon(name)} />
         <RemoveTagButton remove={remove} />
       </Wrapper>
     </Layout>

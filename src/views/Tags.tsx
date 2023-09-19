@@ -1,10 +1,10 @@
 import Layout from "../components/Layout";
-import React, {useState} from "react";
-import {ConsumeType} from "../components/ConsumeType";
+import React, { useState } from "react";
+import { ConsumeType } from "../components/ConsumeType";
 import styled from "styled-components";
-import {DisplayTags} from "./Tags/DisplayTags";
-import {AddTagButton} from "./Tags/AddTagButton";
-import {BillType} from "../api/bills/type";
+import { DisplayTags } from "./Tags/DisplayTags";
+import { AddTagButton } from "./Tags/AddTagButton";
+import { BillType } from "../api/bills/type";
 
 const Wrapper = styled.div`
   display: flex;

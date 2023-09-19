@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Icon from "../../components/Icon";
 import dayjs from "dayjs";
-import {reportCard} from "../../api/user";
+import { reportCard } from "../../api/user";
 
 const Wrapper = styled.div`
   background: #f3c623;
@@ -40,18 +40,23 @@ type TouchCardProps = {
   reportNum: number;
   reportDate: string;
   refresh?: () => void;
-}
-const TouchCard: React.FC<TouchCardProps> = ({reportDate, reportNum,billsNum,refresh}) => {
+};
+const TouchCard: React.FC<TouchCardProps> = ({
+  reportDate,
+  reportNum,
+  billsNum,
+  refresh,
+}) => {
   const today = dayjs().format("YYYY-MM-DD");
   const touchCard = async () => {
     if (dayjs(reportDate).format("YYYY-MM-DD") === today) {
       window.alert("今日已经打过卡咯！");
     } else {
       try {
-        await reportCard()
-        refresh?.()
+        await reportCard();
+        refresh?.();
         window.alert("打卡成功，保持记账的好习惯哦！");
-      } catch(e) {
+      } catch (e) {
         console.error(e);
       }
     }

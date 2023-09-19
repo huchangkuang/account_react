@@ -9,7 +9,14 @@ import { UserInfoDto } from "../api/user/type";
 
 const Target = () => {
   const [info, setInfo] = useState<UserInfoDto>();
-  const { budget = 0, expense = 0, income = 0, reportDate = '', reportNum = 0, billsNum=0 } = info || {};
+  const {
+    budget = 0,
+    expense = 0,
+    income = 0,
+    reportDate = "",
+    reportNum = 0,
+    billsNum = 0,
+  } = info || {};
   const fetchUserInfo = async () => {
     try {
       const { data } = await userInfo();
@@ -23,7 +30,12 @@ const Target = () => {
   }, []);
   return (
     <Layout>
-      <TouchCard reportDate={reportDate} reportNum={reportNum} billsNum={billsNum} refresh={fetchUserInfo} />
+      <TouchCard
+        reportDate={reportDate}
+        reportNum={reportNum}
+        billsNum={billsNum}
+        refresh={fetchUserInfo}
+      />
       <UserInfo />
       <Remain expense={expense} income={income} />
       <Budget _budget={budget} expense={expense} />

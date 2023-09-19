@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {BillFilterDate, BillType} from "../api/bills/type";
+import { BillFilterDate, BillType } from "../api/bills/type";
 
 const Wrapper = styled.div`
   display: flex;

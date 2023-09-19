@@ -17,8 +17,8 @@ export type BillItem = {
   tags: number[];
   date: string;
 };
-export type BillFilterDate = 'year' | 'month' | 'day'
+export type BillFilterDate = "year" | "month" | "day";
 export type BillListQuery = {
   type?: BillType;
   date?: BillFilterDate;
-}
+};

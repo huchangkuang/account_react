@@ -27,7 +27,7 @@ const defaultData: CommonBill = {
   date: dayjs().format("YYYY-MM-DD"),
   tags: [],
   type: BillType.paid,
-}
+};
 const Money = () => {
   const [tags, setTags] = useState<TagItem[]>([]);
   const [receiptData, setReceiptData] = useState<CommonBill>(defaultData);
@@ -35,18 +35,18 @@ const Money = () => {
     setReceiptData({ ...receiptData, ...obj });
   };
   const confirm = async () => {
-    const {cash, tags = []} = receiptData
+    const { cash, tags = [] } = receiptData;
     if (!Number(cash)) {
-      console.error('金额不能为0')
+      console.error("金额不能为0");
       return;
     }
     if (!tags.length) {
-      console.error('请至少选择一个标签')
+      console.error("请至少选择一个标签");
       return;
     }
     try {
       await addBill(receiptData);
-      setReceiptData({...defaultData, type: receiptData.type})
+      setReceiptData({ ...defaultData, type: receiptData.type });
     } catch (e) {
       console.error(e);
     }

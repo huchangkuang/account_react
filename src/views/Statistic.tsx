@@ -1,14 +1,19 @@
 import Layout from "../components/Layout";
-import React, {useEffect, useState} from "react";
-import {DataFilter} from "../components/DataFilter";
-import {NoData} from "../components/NoData";
-import {Chart} from "../components/Chart";
+import React, { useEffect, useState } from "react";
+import { DataFilter } from "../components/DataFilter";
+import { NoData } from "../components/NoData";
+import { Chart } from "../components/Chart";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import {BillFilterDate, BillItem, BillListQuery, BillType} from "../api/bills/type";
-import {billList} from "../api/bills";
-import {tagList} from "../api/tags";
-import {TagItem} from "../api/tags/type";
+import {
+  BillFilterDate,
+  BillItem,
+  BillListQuery,
+  BillType,
+} from "../api/bills/type";
+import { billList } from "../api/bills";
+import { tagList } from "../api/tags";
+import { TagItem } from "../api/tags/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,14 +53,14 @@ const Wrapper = styled.div`
 const Statistic = () => {
   const [type, setType] = useState<BillType>(BillType.paid);
   const [date, setDate] = useState<BillFilterDate>("day");
-  const [list, setList] = useState<BillItem[]>([])
+  const [list, setList] = useState<BillItem[]>([]);
   const nMap = { day: 30, month: 12, year: 5 };
-  const [tags, setTags] = useState<TagItem[]>([])
+  const [tags, setTags] = useState<TagItem[]>([]);
   const fetchTagList = async () => {
     try {
-      const {data} = await tagList()
-      setTags(data)
-    } catch(e) {
+      const { data } = await tagList();
+      setTags(data);
+    } catch (e) {
       console.error(e);
     }
   };
@@ -78,8 +83,10 @@ const Statistic = () => {
       if (lineX.indexOf(formatTime(date, current.date)) < 0) {
         lineX.push(formatTime(date, current.date)); //"MM-DD"
       }
-      const t = tags.filter((i) => current.tags.includes(i.id)).map(t => t.name)
-      const pieT = t.filter(l => !pieName.includes(l))
+      const t = tags
+        .filter((i) => current.tags.includes(i.id))
+        .map((t) => t.name);
+      const pieT = t.filter((l) => !pieName.includes(l));
       pieName.push(...pieT);
     }
     lineX.sort((a, b) => dayjs(a).valueOf() - dayjs(b).valueOf());
@@ -103,15 +110,12 @@ const Statistic = () => {
     for (let i = 0; i < pieName.length; i++) {
       const current = pieName[i];
       pieValue.push({
-        value: list.reduce(
-          (sum, i) => {
-            const t = tags.filter((n) => i.tags.includes(n.id)).map(t => t.name)
-            return t.includes(current)
-              ? sum + i.cash
-              : sum
-          },
-          0,
-        ),
+        value: list.reduce((sum, i) => {
+          const t = tags
+            .filter((n) => i.tags.includes(n.id))
+            .map((t) => t.name);
+          return t.includes(current) ? sum + i.cash : sum;
+        }, 0),
         name: current,
       });
     }
@@ -148,12 +152,12 @@ const Statistic = () => {
   };
   const fetchBillList = async (newParam?: BillListQuery) => {
     try {
-      const {data} = await billList({
+      const { data } = await billList({
         date: newParam?.date ?? date,
-        type: newParam?.type ?? type
-      })
-      setList(data)
-    } catch(e) {
+        type: newParam?.type ?? type,
+      });
+      setList(data);
+    } catch (e) {
       console.error(e);
     }
   };
@@ -234,27 +238,27 @@ const Statistic = () => {
     ],
   };
   useEffect(() => {
-    fetchBillList()
-    fetchTagList()
-  },[])
+    fetchBillList();
+    fetchTagList();
+  }, []);
   return (
     <Layout>
       <Wrapper>
         <DataFilter
           getType={(type) => {
-            setType(type)
-            fetchBillList({type})
+            setType(type);
+            fetchBillList({ type });
           }}
           getDate={(date) => {
-            setDate(date)
-            fetchBillList({date})
+            setDate(date);
+            fetchBillList({ date });
           }}
         />
         <div className="chart">
           <div className="line">
             {list.length === 0 ? (
               <div className="nodata">
-                <div style={{marginBottom: 20}}>支出统计</div>
+                <div style={{ marginBottom: 20 }}>支出统计</div>
                 <NoData />
               </div>
             ) : (
@@ -264,7 +268,7 @@ const Statistic = () => {
           <div className="pie">
             {list.length === 0 ? (
               <div className="nodata">
-                <div style={{marginBottom: 20}}>分类占比</div>
+                <div style={{ marginBottom: 20 }}>分类占比</div>
                 <NoData />
               </div>
             ) : (
