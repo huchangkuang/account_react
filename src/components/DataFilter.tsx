@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
+import {BillFilterDate, BillType} from "../api/bills/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,24 +40,22 @@ const Wrapper = styled.div`
   }
 `;
 
-const typeMap = { "-": "支出", "+": "收入" };
+const typeMap = { 1: "支出", 2: "收入" };
 const dateMap = { day: "日", month: "月", year: "年" };
-type TypeList = keyof typeof typeMap;
-type DateList = keyof typeof dateMap;
 type Props = {
-  getType: (type: TypeList) => void;
-  getDate: (date: DateList) => void;
+  getType: (type: BillType) => void;
+  getDate: (date: BillFilterDate) => void;
 };
 const DataFilter: React.FC<Props> = (props) => {
-  const [typeList] = useState<TypeList[]>(["-", "+"]);
-  const [dateList] = useState<DateList[]>(["day", "month", "year"]);
-  const [selectedType, setSelectedType] = useState("-");
-  const [selectedDate, setSelectedDate] = useState("day");
-  const changeType = (i: TypeList) => {
+  const [typeList] = useState<BillType[]>([BillType.paid, BillType.receive]);
+  const [dateList] = useState<BillFilterDate[]>(["day", "month", "year"]);
+  const [selectedType, setSelectedType] = useState<BillType>(BillType.paid);
+  const [selectedDate, setSelectedDate] = useState<BillFilterDate>("day");
+  const changeType = (i: BillType) => {
     setSelectedType(i);
     props.getType(i);
   };
-  const changeDate = (d: DateList) => {
+  const changeDate = (d: BillFilterDate) => {
     setSelectedDate(d);
     props.getDate(d);
   };

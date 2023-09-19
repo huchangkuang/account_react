@@ -1,12 +1,14 @@
 import Layout from "../components/Layout";
-import React, { useState } from "react";
-import { DataFilter } from "../components/DataFilter";
-import { NoData } from "../components/NoData";
-import { Chart } from "../components/Chart";
+import React, {useEffect, useState} from "react";
+import {DataFilter} from "../components/DataFilter";
+import {NoData} from "../components/NoData";
+import {Chart} from "../components/Chart";
 import styled from "styled-components";
-import { useRecord } from "../hooks/useRecord";
 import dayjs from "dayjs";
-import { useTags } from "../hooks/useTags";
+import {BillFilterDate, BillItem, BillListQuery, BillType} from "../api/bills/type";
+import {billList} from "../api/bills";
+import {tagList} from "../api/tags";
+import {TagItem} from "../api/tags/type";
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,30 +45,27 @@ const Wrapper = styled.div`
     }
   }
 `;
-type Category = "-" | "+";
-type ReceiptData = {
-  amount: string;
-  date: string;
-  selectedId: number;
-  note: string;
-  type: Category;
-};
 const Statistic = () => {
-  const [type, setType] = useState<"-" | "+">("-");
-  const [date, setDate] = useState<"day" | "month" | "year">("day");
-  const { recordItem } = useRecord();
-  const { tags } = useTags();
+  const [type, setType] = useState<BillType>(BillType.paid);
+  const [date, setDate] = useState<BillFilterDate>("day");
+  const [list, setList] = useState<BillItem[]>([])
   const nMap = { day: 30, month: 12, year: 5 };
-  const getGroupRecord = (type: string, date: "day" | "month" | "year") => {
+  const [tags, setTags] = useState<TagItem[]>([])
+  const fetchTagList = async () => {
+    try {
+      const {data} = await tagList()
+      setTags(data)
+    } catch(e) {
+      console.error(e);
+    }
+  };
+  const getGroupRecord = (type: BillType, date: BillFilterDate) => {
     type DataOrigin = {
       lineX: string[];
       lineY: number[];
       pieValue: { value: number; name: string }[];
       pieName: string[];
     };
-    const newRecord = (
-      JSON.parse(JSON.stringify(recordItem)) as ReceiptData[]
-    ).filter((i) => i.type === type);
     const dataOrigin: DataOrigin = {
       lineX: [],
       lineY: [],
@@ -74,34 +73,28 @@ const Statistic = () => {
       pieName: [],
     };
     const { lineX, lineY, pieValue, pieName } = dataOrigin;
-    for (let i = 0; i < newRecord.length; i++) {
-      const current = newRecord[i];
-      if (lineX.indexOf(formatTime(date, current.date)) < 0) {
-        lineX.push(formatTime(date, current.date)); //"MM-DD"
+    for (let i = 0; i < list.length; i++) {
+      const current = list[i];
+      if (lineX.indexOf(formatTime(date, current.createAt)) < 0) {
+        lineX.push(formatTime(date, current.createAt)); //"MM-DD"
       }
-      if (
-        pieName.indexOf(
-          tags.filter((i) => i.id === current.selectedId)[0].name,
-        ) < 0
-      ) {
-        pieName.push(tags.filter((i) => i.id === current.selectedId)[0].name);
-      }
+      const t = tags.filter((i) => current.tags.includes(i.id)).map(t => t.name)
+      const pieT = t.filter(l => !pieName.includes(l))
+      pieName.push(...pieT);
     }
-    //["06-15","07-07"]
     lineX.sort((a, b) => dayjs(a).valueOf() - dayjs(b).valueOf());
     const maxDate = lineX[lineX.length - 1];
     lineX.splice(0, lineX.length);
     fillDate(maxDate, nMap[date], lineX, date);
     lineX.sort((a, b) => dayjs(a).valueOf() - dayjs(b).valueOf());
-    //["07-04","07-05","07-06","07-07"]
 
     for (let i = 0; i < lineX.length; i++) {
       const current = lineX[i];
       lineY.push(
-        newRecord.reduce(
+        list.reduce(
           (sum, i) =>
-            formatTime(date, i.date) === formatTime(date, current)
-              ? sum + parseFloat(i.amount)
+            formatTime(date, i.createAt) === formatTime(date, current)
+              ? sum + i.cash
               : sum,
           0,
         ),
@@ -110,11 +103,13 @@ const Statistic = () => {
     for (let i = 0; i < pieName.length; i++) {
       const current = pieName[i];
       pieValue.push({
-        value: newRecord.reduce(
-          (sum, i) =>
-            tags.filter((j) => j.id === i.selectedId)[0].name === current
-              ? sum + parseFloat(i.amount)
-              : sum,
+        value: list.reduce(
+          (sum, i) => {
+            const t = tags.filter((n) => i.tags.includes(n.id)).map(t => t.name)
+            return t.includes(current)
+              ? sum + i.cash
+              : sum
+          },
           0,
         ),
         name: current,
@@ -126,7 +121,7 @@ const Statistic = () => {
     maxDate: string,
     n: number,
     arr: string[],
-    date: "day" | "month" | "year",
+    date: BillFilterDate,
   ) => {
     const map = {
       day: "MM-DD",
@@ -143,13 +138,24 @@ const Statistic = () => {
       return arr;
     }
   };
-  const formatTime = (type: "day" | "month" | "year", time: string) => {
+  const formatTime = (d: BillFilterDate, time: string) => {
     const obj = {
       day: dayjs(time).format("MM-DD"),
       month: dayjs(time).format("MM"),
       year: dayjs(time).format("YYYY"),
     };
-    return obj[type];
+    return obj[d];
+  };
+  const fetchBillList = async (newParam?: BillListQuery) => {
+    try {
+      const {data} = await billList({
+        date: newParam?.date ?? date,
+        type: newParam?.type ?? type
+      })
+      setList(data)
+    } catch(e) {
+      console.error(e);
+    }
   };
   const { lineX, lineY, pieName, pieValue } = getGroupRecord(type, date);
   const optionLine = {
@@ -227,18 +233,28 @@ const Statistic = () => {
       },
     ],
   };
+  useEffect(() => {
+    fetchBillList()
+    fetchTagList()
+  },[])
   return (
     <Layout>
       <Wrapper>
         <DataFilter
-          getType={(type) => setType(type)}
-          getDate={(date) => setDate(date)}
+          getType={(type) => {
+            setType(type)
+            fetchBillList({type})
+          }}
+          getDate={(date) => {
+            setDate(date)
+            fetchBillList({date})
+          }}
         />
         <div className="chart">
           <div className="line">
-            {recordItem.length === 0 ? (
+            {list.length === 0 ? (
               <div className="nodata">
-                <div>支出统计</div>
+                <div style={{marginBottom: 20}}>支出统计</div>
                 <NoData />
               </div>
             ) : (
@@ -246,9 +262,9 @@ const Statistic = () => {
             )}
           </div>
           <div className="pie">
-            {recordItem.length === 0 ? (
+            {list.length === 0 ? (
               <div className="nodata">
-                <div>分类占比</div>
+                <div style={{marginBottom: 20}}>分类占比</div>
                 <NoData />
               </div>
             ) : (

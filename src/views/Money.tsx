@@ -34,6 +34,15 @@ const Money = () => {
     setReceiptData({ ...receiptData, ...obj });
   };
   const confirm = async () => {
+    const {cash, tags = []} = receiptData
+    if (!Number(cash)) {
+      console.error('金额不能为0')
+      return;
+    }
+    if (!tags.length) {
+      console.error('请至少选择一个标签')
+      return;
+    }
     try {
       await addBill(receiptData);
     } catch (e) {

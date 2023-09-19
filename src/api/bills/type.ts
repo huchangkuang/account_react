@@ -11,9 +11,14 @@ export type CommonBill = {
 };
 export type BillItem = {
   id: number;
-  cash: string;
+  cash: number;
   type: BillType;
   remark: string;
   tags: number[];
   createAt: string;
 };
+export type BillFilterDate = 'year' | 'month' | 'day'
+export type BillListQuery = {
+  type?: BillType;
+  date?: BillFilterDate;
+}

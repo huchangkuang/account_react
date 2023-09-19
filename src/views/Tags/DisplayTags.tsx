@@ -62,7 +62,7 @@ const DisplayTags: React.FC<Props> = (props) => {
       {tags
         .filter((i) => i.type === props.type)
         .map((i) => (
-          <Link to={"/tags/" + i.id + `?type=${props.type}`} key={i.id} className="link">
+          <Link to={"/tags/" + i.id + `?type=${props.type}&tagName=${i.name}&icon=${i.icon}`} key={i.id} className="link">
             <div className="icon-name">
               <div className="icon-container">
                 <Icon name={i.icon} />

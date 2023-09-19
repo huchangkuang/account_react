@@ -62,7 +62,9 @@ const EditTag = () => {
   };
   useEffect(() => {
     const obj = querystring.parse(history.location.search.slice(1)) as any
-    setType(obj.type as BillType)
+    setType(obj.type)
+    setName(obj.tagName)
+    setIcon(obj.icon)
   },[])
   return (
     <Layout>

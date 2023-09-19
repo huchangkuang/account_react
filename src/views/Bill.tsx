@@ -1,13 +1,14 @@
 import Layout from "../components/Layout";
-import React, { useState } from "react";
-import { DataFilter } from "../components/DataFilter";
-import { useRecord } from "../hooks/useRecord";
+import React, {useEffect, useMemo, useState} from "react";
+import {DataFilter} from "../components/DataFilter";
 import styled from "styled-components";
-import { useTags } from "../hooks/useTags";
-import Icon from "../components/Icon";
 import dayjs from "dayjs";
 import cs from "classnames";
-import { NoData } from "../components/NoData";
+import {NoData} from "../components/NoData";
+import {billList} from "../api/bills";
+import {BillFilterDate, BillItem, BillListQuery, BillType} from "../api/bills/type";
+import {tagList} from "../api/tags";
+import {TagItem} from "../api/tags/type";
 
 const Wrapper = styled.div`
   .bill-list {
@@ -33,8 +34,10 @@ const Wrapper = styled.div`
           display: flex;
           justify-content: space-between;
           align-items: center;
+          padding-top: 8px;
+          padding-bottom: 8px;
           border-bottom: 1px solid #b5b5b5;
-          margin-bottom: 2px;
+          margin-bottom: 8px;
           .count {
             &.red {
               color: #d40606;
@@ -71,104 +74,107 @@ const Wrapper = styled.div`
     transform: translate(-50%, -50%);
   }
 `;
-type Category = "-" | "+";
-type ReceiptData = {
-  amount: string;
+type DisplayBillItem = {
   date: string;
-  selectedId: number;
-  note: string;
-  type: Category;
-};
+  total: number;
+  list: BillItem[];
+}
 const Bill = () => {
-  const { recordItem } = useRecord();
-  const { tags } = useTags();
-  const [type, setType] = useState<"-" | "+">("-");
-  const [date, setDate] = useState<"day" | "month" | "year">("day");
-  const colorType = type === "+" ? "red" : "green";
-  const formatTime = (type: "day" | "month" | "year", time: string) => {
+  const [list, setList] = useState<BillItem[]>([])
+  const [tags, setTags] = useState<TagItem[]>([])
+  const [type, setType] = useState<BillType>(BillType.paid);
+  const [date, setDate] = useState<BillFilterDate>("day");
+  const formatTime = (d: BillFilterDate, time: string) => {
     const obj = {
       day: dayjs(time).format("YYYY-MM-DD"),
       month: dayjs(time).format("YYYY-MM"),
       year: dayjs(time).format("YYYY"),
     };
-    return obj[type];
+    return obj[d];
   };
-  const getGroupRecord = () => {
-    if (recordItem.length === 0) {
-      return [];
-    }
-    const newRecord: ReceiptData[] = (
-      JSON.parse(JSON.stringify(recordItem)) as ReceiptData[]
-    ).filter((i) => i.type === type);
-    const result = [
-      {
-        title: formatTime(date, newRecord[0].date),
-        item: [newRecord[0]],
-        total: 0,
-      },
-    ];
-    const titleList: string[] = [];
-    for (let i = 1; i < newRecord.length; i++) {
-      let current = newRecord[i];
-      for (let j = 0; j < result.length; j++) {
-        if (titleList.indexOf(result[j].title)) {
-          titleList.push(result[j].title);
-        }
-      }
-      let index = titleList.indexOf(formatTime(date, current.date));
-      if (index >= 0) {
-        result[index].item.push(current);
+  const displayList = useMemo<DisplayBillItem[]>(() =>
+    list.reduce((arr: DisplayBillItem[], i) => {
+      const curDate = formatTime(date, i.createAt)
+      const item = arr.find(j => j.date === curDate)
+      if (item) {
+        item.list.push(i)
+        return arr.map(k => ({...k, total: k.list.reduce((sum, l) => sum + l.cash,0)}))
       } else {
-        result.push({
-          title: formatTime(date, current.date),
-          item: [current],
-          total: 0,
-        });
+        return [...arr, {date: curDate, total: i.cash, list: [i]}]
       }
+    },[]),[list, date])
+  const billTypeMap = {
+    1: {
+      color: 'green',
+      tag: "-"
+    },
+    2: {
+      tag: '+',
+      color: 'red'
     }
-    result.sort((a, b) => dayjs(b.title).valueOf() - dayjs(a.title).valueOf());
-    result.map(
-      (i) =>
-        (i.total = i.item.reduce((sum, j) => sum + parseFloat(j.amount), 0)),
-    );
-    return result;
+  }
+  const fetchBillList = async (newParam?: BillListQuery) => {
+    try {
+      const {data} = await billList({
+        date: newParam?.date ?? date,
+        type: newParam?.type ?? type
+      })
+      setList(data)
+    } catch(e) {
+      console.error(e);
+    }
   };
+  const fetchTagList = async () => {
+    try {
+      const {data} = await tagList()
+      setTags(data)
+    } catch(e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    fetchBillList()
+    fetchTagList()
+  },[])
   return (
     <Layout>
       <DataFilter
-        getType={(type) => setType(type)}
-        getDate={(date) => setDate(date)}
+        getType={(type) => {
+          setType(type)
+          fetchBillList({type})
+        }}
+        getDate={(date) => {
+          setDate(date)
+          fetchBillList({date})
+        }}
       />
       <Wrapper>
-        {recordItem.length !== 0 ? (
+        {displayList.length !== 0 ? (
           <div className="bill-list">
             <ol>
-              {getGroupRecord().map((i) => (
-                <li key={i.title}>
+              {displayList.map((i) => (
+                <li key={i.date}>
                   <div className="head">
-                    <div className="title">{i.title}</div>
+                    <div className="title">{i.date}</div>
                     <div className="sum">总计：{i.total}</div>
                   </div>
                   <ol>
-                    {i.item.map((j, index) => (
-                      <li key={index}>
-                        <div className="detail">
-                          <div className="classify">
-                            <Icon
-                              name={
-                                tags.filter((i) => i.id === j.selectedId)[0]
-                                  .name
-                              }
-                            />
-                            {tags.filter((i) => i.id === j.selectedId)[0].name}
+                    {i.list.map((j, index) => {
+                      const t = tags.filter((i) => j.tags.includes(i.id))
+                      return (
+                        <li key={index}>
+                          <div className="detail">
+                            <div className="classify">
+                              {t.map(icon => icon.name).join(',')}
+                            </div>
+                            <div className="note">{j.remark}</div>
                           </div>
-                          <div className="note">{j.note}</div>
-                        </div>
-                        <div className={cs("count", colorType)}>
-                          {j.type + j.amount}
-                        </div>
-                      </li>
-                    ))}
+                          <div className={cs("count", billTypeMap[j.type].color)}>
+                            {billTypeMap[j.type].tag}{j.cash}
+                          </div>
+                        </li>
+                      )
+                    })}
                   </ol>
                 </li>
               ))}
