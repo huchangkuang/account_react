@@ -40,25 +40,25 @@ const Nav = () => {
     <NavWrapper>
       <ul>
         <li>
-          <NavLink to="/bill" className={cs('navItem', location.pathname === '/target' && 'selected')}>
+          <NavLink to="/bill" className={cs('navItem', location.pathname === '/bill' && 'selected')}>
             <Icon name={"bill"} />
             账单
           </NavLink>
         </li>
         <li>
-          <NavLink to="/statistic" className={cs('navItem', location.pathname === '/target' && 'selected')}>
+          <NavLink to="/statistic" className={cs('navItem', location.pathname === '/statistic' && 'selected')}>
             <Icon name={"charts_line"} />
             统计
           </NavLink>
         </li>
         <li>
-          <NavLink to="/money" className={cs('navItem', location.pathname === '/target' && 'selected')}>
+          <NavLink to="/money" className={cs('navItem', location.pathname === '/money' && 'selected')}>
             <Icon name={"add"} />
             记账
           </NavLink>
         </li>
         <li>
-          <NavLink to="/tags" className={cs('navItem', location.pathname === '/target' && 'selected')}>
+          <NavLink to="/tags" className={cs('navItem', location.pathname === '/tags' && 'selected')}>
             <Icon name={"tag"} />
             标签
           </NavLink>
