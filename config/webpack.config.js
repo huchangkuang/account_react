@@ -379,27 +379,27 @@ module.exports = function (webpackEnv) {
               test: /\.svg$/,
               use: [
                 {
-                  loader: require.resolve('@svgr/webpack'),
+                  loader: require.resolve('svg-sprite-loader'),
                   options: {
                     prettier: false,
-                    svgo: false,
+                    svgo: true,
                     svgoConfig: {
-                      plugins: [{ removeViewBox: false }],
+                      plugins: [{ removeViewBox: false, removeAttrs: 'fill' }],
                     },
                     titleProp: true,
                     ref: true,
                   },
                 },
-                {
-                  loader: require.resolve('file-loader'),
-                  options: {
-                    name: 'static/media/[name].[hash].[ext]',
-                  },
-                },
+                // {
+                //   loader: require.resolve('file-loader'),
+                //   options: {
+                //     name: 'static/media/[name].[hash].[ext]',
+                //   },
+                // },
               ],
-              issuer: {
-                and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
-              },
+              // issuer: {
+              //   and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+              // },
             },
             // Process application JS with Babel.
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
