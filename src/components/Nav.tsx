@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import Icon from "./Icon";
+import cs from "classnames";
 
 const NavWrapper = styled.nav`
   background: #ffffff;
@@ -12,7 +13,7 @@ const NavWrapper = styled.nav`
     > li {
       width: 20%;
       font-size: 12px;
-      a {
+      .navItem {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -33,35 +34,37 @@ const NavWrapper = styled.nav`
   }
 `;
 const Nav = () => {
+  const location = useLocation()
+  console.log(location.pathname);
   return (
     <NavWrapper>
       <ul>
         <li>
-          <NavLink to="/bill" activeClassName="selected">
+          <NavLink to="/bill" className={cs('navItem', location.pathname === '/target' && 'selected')}>
             <Icon name={"bill"} />
             账单
           </NavLink>
         </li>
         <li>
-          <NavLink to="/statistic" activeClassName="selected">
+          <NavLink to="/statistic" className={cs('navItem', location.pathname === '/target' && 'selected')}>
             <Icon name={"charts_line"} />
             统计
           </NavLink>
         </li>
         <li>
-          <NavLink to="/money" activeClassName="selected">
+          <NavLink to="/money" className={cs('navItem', location.pathname === '/target' && 'selected')}>
             <Icon name={"add"} />
             记账
           </NavLink>
         </li>
         <li>
-          <NavLink to="/tags" activeClassName="selected">
+          <NavLink to="/tags" className={cs('navItem', location.pathname === '/target' && 'selected')}>
             <Icon name={"tag"} />
             标签
           </NavLink>
         </li>
         <li>
-          <NavLink to="/target" activeClassName="selected">
+          <NavLink className={cs('navItem', location.pathname === '/target' && 'selected')} to="/target">
             <Icon name={"target"} />
             目标
           </NavLink>

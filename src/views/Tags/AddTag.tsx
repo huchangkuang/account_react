@@ -4,10 +4,10 @@ import Layout from "../../components/Layout";
 import { EditTitle } from "./EidtTitle";
 import { EditInput } from "./EditInput";
 import { IconList } from "./IconList";
-import { useHistory } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { addTag } from "../../api/tags";
-import querystring from "querystring";
 import { BillType } from "../../api/bills/type";
+import {parseQuery} from "../../utils/parseQuery";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,7 +23,8 @@ const Wrapper = styled.div`
 const AddTag = () => {
   const [name, setName] = useState("");
   const [icon, setIcon] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [type, setType] = useState<BillType>(BillType.paid);
   const validate = () => {
     if (!name.trim()) return "请输入标签名";
@@ -37,13 +38,13 @@ const AddTag = () => {
     }
     try {
       await addTag({ type, name, icon });
-      history.goBack();
+      navigate(-1)
     } catch (e) {
       console.error(e);
     }
   };
   useEffect(() => {
-    const obj = querystring.parse(history.location.search.slice(1)) as any;
+    const obj = parseQuery(location.search) as any;
     setType(obj.type);
   }, []);
   return (

@@ -1,13 +1,13 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
 import Icon from "../components/Icon";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { login, signUp } from "../api/user";
 import { LocalStore } from "../utils/localStore";
 
 type LoginProps = {};
 export const Login: FC<LoginProps> = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [idName, setIdName] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -38,7 +38,7 @@ export const Login: FC<LoginProps> = (props) => {
     }
   };
   const back = () => {
-    history.goBack();
+    navigate(-1)
   };
   return (
     <Wrapper>

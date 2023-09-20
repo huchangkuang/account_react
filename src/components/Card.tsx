@@ -1,11 +1,11 @@
-import React, { CSSProperties, FC } from "react";
+import React, {CSSProperties, FC, PropsWithChildren} from "react";
 import styled from "styled-components";
 
 type CardProps = {
   style?: CSSProperties;
   className?: string;
 };
-export const Card: FC<CardProps> = ({ children, style, className }) => {
+export const Card: FC<PropsWithChildren<CardProps>> = ({ children, style, className }) => {
   return (
     <CardStyle style={style} className={className}>
       {children}

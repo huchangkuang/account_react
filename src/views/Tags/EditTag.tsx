@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../../components/Layout";
 import { RemoveTagButton } from "./RemoveTagButton";
@@ -8,7 +8,7 @@ import { IconList } from "./IconList";
 import { EditInput } from "./EditInput";
 import { delTag, updateTag } from "../../api/tags";
 import { BillType } from "../../api/bills/type";
-import * as querystring from "querystring";
+import {parseQuery} from "../../utils/parseQuery";
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,11 +29,12 @@ const EditTag = () => {
   const [icon, setIcon] = useState("");
   const [name, setName] = useState("");
   const [type, setType] = useState<BillType>(BillType.paid);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation()
   const remove = async () => {
     try {
       await delTag(Number(id));
-      history.goBack();
+      navigate(-1)
     } catch (e) {
       console.error(e);
     }
@@ -55,13 +56,13 @@ const EditTag = () => {
         name,
         icon,
       });
-      history.goBack();
+      navigate(-1)
     } catch (e) {
       console.error(e);
     }
   };
   useEffect(() => {
-    const obj = querystring.parse(history.location.search.slice(1)) as any;
+    const obj = parseQuery(location.search) as any;
     setType(obj.type);
     setName(obj.tagName);
     setIcon(obj.icon);

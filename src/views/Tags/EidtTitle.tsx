@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Icon from "../../components/Icon";
 
@@ -31,9 +31,9 @@ type Props = {
   save: () => void;
 };
 const EditTitle: React.FC<Props> = (props) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const back = () => {
-    history.goBack();
+    navigate(-1)
   };
   return (
     <Wrapper>

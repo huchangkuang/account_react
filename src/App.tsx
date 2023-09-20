@@ -1,9 +1,9 @@
 import React from "react";
 import {
   HashRouter as Router,
-  Switch,
+  Navigate,
   Route,
-  Redirect,
+  Routes,
 } from "react-router-dom";
 import Money from "./views/Money";
 import Target from "./views/Target";
@@ -18,36 +18,18 @@ import { Login } from "./views/Login";
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route exact path="/money">
-          <Money />
-        </Route>
-        <Route exact path="/bill">
-          <Bill />
-        </Route>
-        <Route exact path="/statistic">
-          <Statistic />
-        </Route>
-        <Route exact path="/tags">
-          <Tags />
-        </Route>
-        <Route exact path="/tags/:id">
-          <EditTag />
-        </Route>
-        <Route exact path="/tag/add">
-          <AddTag />
-        </Route>
-        <Route exact path="/target">
-          <Target />
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Redirect exact from="/" to="/money" />
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/money" />} />
+        <Route path="/money" element={<Money />} />
+        <Route path="/bill" element={<Bill />} />
+        <Route path="/statistic" element={<Statistic />} />
+        <Route path="/tags" element={<Tags />} />
+        <Route path="/tags/:id" element={<EditTag />} />
+        <Route path="/tag/add" element={<AddTag />} />
+        <Route path="/target" element={<Target />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Router>
   );
 }

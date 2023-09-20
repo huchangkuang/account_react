@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from "react";
-import echarts, { ECharts } from "echarts";
+import * as echarts from "echarts";
+import {ECharts} from "echarts";
+
 type Props = {
-  option: Object;
+  option: any;
 };
 const Chart: React.FC<Props> = (props) => {
-  const container = useRef<HTMLDivElement>(null);
-  const chart = useRef<ECharts>(null);
+  const container = useRef<HTMLDivElement | null>(null);
+  const chart = useRef<ECharts | null>(null);
   const { option } = props;
   useEffect(() => {
     const width = document.documentElement.clientWidth;

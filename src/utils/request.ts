@@ -1,5 +1,5 @@
-import querystring from "querystring";
 import { Result } from "./type";
+import {dataToQuery} from "./parseQuery";
 
 const request = <T>(
   url: string,
@@ -8,7 +8,7 @@ const request = <T>(
 ): Promise<Result<T>> => {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem("token") || "";
-    fetch(url, {
+    const inti: RequestInit = {
       body: data ? JSON.stringify(data) : undefined,
       headers: {
         authorization: token,
@@ -16,7 +16,8 @@ const request = <T>(
         ...option?.headers,
       },
       ...option,
-    })
+    }
+    fetch(url, inti)
       .then((response) => {
         response.text().then((resStr) => {
           const obj = JSON.parse(resStr);
@@ -37,7 +38,7 @@ export const get = <T>(
 ): Promise<Result<T>> => {
   const { method, headers, ...rest } = option || {};
   return request<T>(
-    `${url}${query ? `?${querystring.stringify(query)}` : ""}`,
+    `${url}${query ? `?${dataToQuery(query)}` : ""}`,
     undefined,
     { method: "get", ...rest },
   );
