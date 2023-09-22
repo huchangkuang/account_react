@@ -3226,9 +3226,9 @@ bluebird@^3.5.0, bluebird@^3.7.2:
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
 boat-ui-react@1.0.4:
-  version "1.0.3"
-  resolved "https://registry.npmmirror.com/boat-ui-react/-/boat-ui-react-1.0.3.tgz#20e15b6b005375be55f2a58a7bb8708f2d064457"
-  integrity sha512-YOtgDkfSHG9Pdi2t5qt6wzDU8KbXHx5BxTiao1zpOkPxuVRMj9nAfeD9rrLCA3ZoN7TUkzidQz+E2FWddWoCWw==
+  version "1.0.4"
+  resolved "https://registry.npmmirror.com/boat-ui-react/-/boat-ui-react-1.0.4.tgz#49799bc4c938e5403644840705a6f5c5489ce731"
+  integrity sha512-qwB8U6/+pYuJqFSp4oz0X+QGiUYeEyMLr0LyMM1eE6wLSs2GYfCFRsZjtsyHQJxQYMpvR4V0gGnh+aYKIKSrBQ==
   dependencies:
     classnames "^2.3.2"
     react "^18.2.0"
