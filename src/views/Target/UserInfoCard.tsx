@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { Card } from "../../components/Card";
-import Icon from "../../components/Icon";
+import {Icon} from "boat-ui-react";
 import { Link } from "react-router-dom";
 import { LocalStore } from "../../utils/localStore";
 

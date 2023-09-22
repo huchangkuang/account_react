@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Icon from "../../components/Icon";
+import {Icon} from "boat-ui-react";
 import { TagItem } from "../../api/tags/type";
 import { tagList } from "../../api/tags";
 import { BillType } from "../../api/bills/type";

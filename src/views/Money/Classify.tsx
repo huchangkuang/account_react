@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Icon from "../../components/Icon";
+import {Icon} from "boat-ui-react";
 import { BillType } from "../../api/bills/type";
 import { tagList } from "../../api/tags";
 import { TagItem } from "../../api/tags/type";
