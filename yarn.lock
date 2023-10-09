@@ -3225,10 +3225,10 @@ bluebird@^3.5.0, bluebird@^3.7.2:
   resolved "https://registry.npmmirror.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
-boat-ui-react@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmmirror.com/boat-ui-react/-/boat-ui-react-1.0.4.tgz#49799bc4c938e5403644840705a6f5c5489ce731"
-  integrity sha512-qwB8U6/+pYuJqFSp4oz0X+QGiUYeEyMLr0LyMM1eE6wLSs2GYfCFRsZjtsyHQJxQYMpvR4V0gGnh+aYKIKSrBQ==
+boat-ui-react@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmmirror.com/boat-ui-react/-/boat-ui-react-1.0.8.tgz#7c26bca9d9fb3e19033bec949c4c235afe342337"
+  integrity sha512-JLDAG6MmzAtGGauaE9roS5Tx1iZN9eppxqF4d8u9JcwyJDH/4/uqf81IPoTA3UMCZDtlmH+XFRGftkj+a7Cyuw==
   dependencies:
     classnames "^2.3.2"
     react "^18.2.0"
