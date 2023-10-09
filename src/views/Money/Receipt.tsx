@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useTags } from "../../hooks/useTags";
-import { CommonBill } from "../../api/bills/type";
-import { TagItem } from "../../api/tags/type";
+import { CommonBill } from "@/api/bills/type";
+import { TagItem } from "@/api/tags/type";
 
 const Wrapper = styled.div`
   width: 90%;

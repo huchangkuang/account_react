@@ -4,10 +4,10 @@ import Layout from "../../components/Layout";
 import { EditTitle } from "./EidtTitle";
 import { EditInput } from "./EditInput";
 import { IconList } from "./IconList";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addTag } from "../../api/tags";
 import { BillType } from "../../api/bills/type";
-import {parseQuery} from "../../utils/parseQuery";
+import { parseQuery } from "../../utils/parseQuery";
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ const AddTag = () => {
     }
     try {
       await addTag({ type, name, icon });
-      navigate(-1)
+      navigate(-1);
     } catch (e) {
       console.error(e);
     }

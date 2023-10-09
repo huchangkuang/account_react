@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
-import {Icon} from "boat-ui-react";
+import { Icon } from "boat-ui-react";
 import { useNavigate } from "react-router-dom";
 import { login, signUp } from "../api/user";
 import { LocalStore } from "../utils/localStore";
@@ -38,7 +38,7 @@ export const Login: FC<LoginProps> = (props) => {
     }
   };
   const back = () => {
-    navigate(-1)
+    navigate(-1);
   };
   return (
     <Wrapper>

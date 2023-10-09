@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Prompt } from "../../components/Prompt";
-import { useUpdate } from "../../hooks/useUpdate";
+import { Prompt } from "@/components/Prompt";
+import { useUpdate } from "@/hooks/useUpdate";
 import dayjs from "dayjs";
-import { Card } from "../../components/Card";
-import { editBudget } from "../../api/user";
+import { Card } from "@/components/Card";
+import { editBudget } from "@/api/user";
 
 type BudgetProps = {
   expense: number;

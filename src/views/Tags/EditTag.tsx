@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../../components/Layout";
 import { RemoveTagButton } from "./RemoveTagButton";
@@ -8,7 +8,7 @@ import { IconList } from "./IconList";
 import { EditInput } from "./EditInput";
 import { delTag, updateTag } from "../../api/tags";
 import { BillType } from "../../api/bills/type";
-import {parseQuery} from "../../utils/parseQuery";
+import { parseQuery } from "../../utils/parseQuery";
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,11 +30,11 @@ const EditTag = () => {
   const [name, setName] = useState("");
   const [type, setType] = useState<BillType>(BillType.paid);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const remove = async () => {
     try {
       await delTag(Number(id));
-      navigate(-1)
+      navigate(-1);
     } catch (e) {
       console.error(e);
     }
@@ -56,7 +56,7 @@ const EditTag = () => {
         name,
         icon,
       });
-      navigate(-1)
+      navigate(-1);
     } catch (e) {
       console.error(e);
     }

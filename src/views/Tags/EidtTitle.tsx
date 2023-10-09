@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {Icon} from "boat-ui-react";
+import { Icon } from "boat-ui-react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ type Props = {
 const EditTitle: React.FC<Props> = (props) => {
   const navigate = useNavigate();
   const back = () => {
-    navigate(-1)
+    navigate(-1);
   };
   return (
     <Wrapper>

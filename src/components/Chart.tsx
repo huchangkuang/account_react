@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as echarts from "echarts";
-import {ECharts} from "echarts";
+import { ECharts } from "echarts";
 
 type Props = {
   option: any;

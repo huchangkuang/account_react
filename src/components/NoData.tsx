@@ -1,5 +1,5 @@
 import React from "react";
-import {Icon} from "boat-ui-react";
+import { Icon } from "boat-ui-react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useRecord } from "../../hooks/useRecord";
-import { useUpdate } from "../../hooks/useUpdate";
+import { useUpdate } from "@/hooks/useUpdate";
 import dayjs from "dayjs";
-import { Card } from "../../components/Card";
+import { Card } from "@/components/Card";
 
 const Wrapper = styled.div`
   .remain {

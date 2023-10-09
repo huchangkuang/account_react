@@ -1,5 +1,5 @@
 import { Result } from "./type";
-import {dataToQuery} from "./parseQuery";
+import { dataToQuery } from "./parseQuery";
 
 const request = <T>(
   url: string,
@@ -16,7 +16,7 @@ const request = <T>(
         ...option?.headers,
       },
       ...option,
-    }
+    };
     fetch(url, inti)
       .then((response) => {
         response.text().then((resStr) => {

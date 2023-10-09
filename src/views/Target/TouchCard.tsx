@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Icon} from "boat-ui-react";
+import { Icon } from "boat-ui-react";
 import dayjs from "dayjs";
 import { reportCard } from "../../api/user";
 
