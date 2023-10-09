@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Icon } from "boat-ui-react";
 import { useNavigate } from "react-router-dom";
 import { login, signUp } from "../api/user";
-import { LocalStore } from "../utils/localStore";
+import { LocalStore } from "@/utils/localStore";
 
 type LoginProps = {};
 export const Login: FC<LoginProps> = (props) => {

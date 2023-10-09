@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Icon } from "boat-ui-react";
-import { BillType } from "../../api/bills/type";
+import { BillType } from "@/api/bills/type";
 
 const Wrapper = styled.div`
   .link {

@@ -1,5 +1,6 @@
 import { Result } from "./type";
 import { dataToQuery } from "./parseQuery";
+import {LocalStore} from "@/utils/localStore";
 
 const request = <T>(
   url: string,
@@ -8,7 +9,7 @@ const request = <T>(
 ): Promise<Result<T>> => {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem("token") || "";
-    const inti: RequestInit = {
+    const init: RequestInit = {
       body: data ? JSON.stringify(data) : undefined,
       headers: {
         authorization: token,
@@ -17,12 +18,19 @@ const request = <T>(
       },
       ...option,
     };
-    fetch(url, inti)
+    fetch(url, init)
       .then((response) => {
+        console.log(response.status);
+        if (response.status === 401) {
+          LocalStore.setToken('')
+        }
         response.text().then((resStr) => {
           const obj = JSON.parse(resStr);
           if (obj.code !== 0) {
             reject(obj.msg);
+            if (obj.code === 401) {
+              LocalStore.setToken('')
+            }
           } else {
             resolve(obj);
           }

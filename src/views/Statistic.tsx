@@ -1,8 +1,8 @@
 import Layout from "../components/Layout";
 import React, { useEffect, useState } from "react";
-import { DataFilter } from "../components/DataFilter";
-import { NoData } from "../components/NoData";
-import { Chart } from "../components/Chart";
+import { DataFilter } from "@/components/DataFilter";
+import { NoData } from "@/components/NoData";
+import { Chart } from "@/components/Chart";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import {
@@ -10,10 +10,10 @@ import {
   BillItem,
   BillListQuery,
   BillType,
-} from "../api/bills/type";
-import { billList } from "../api/bills";
-import { tagList } from "../api/tags";
-import { TagItem } from "../api/tags/type";
+} from "@/api/bills/type";
+import { billList } from "@/api/bills";
+import { tagList } from "@/api/tags";
+import { TagItem } from "@/api/tags/type";
 
 const Wrapper = styled.div`
   display: flex;

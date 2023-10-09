@@ -1,14 +1,16 @@
-import Layout from "../components/Layout";
+import Layout from "@/components/Layout";
 import React, { useState } from "react";
-import { ConsumeType } from "../components/ConsumeType";
+import { ConsumeType } from "@/components/ConsumeType";
 import { Receipt } from "./Money/Receipt";
 import { NumberPad } from "./Money/NumberPad";
 import { Classify } from "./Money/Classify";
 import styled from "styled-components";
-import { BillType, CommonBill } from "../api/bills/type";
-import { addBill } from "../api/bills";
+import { BillType, CommonBill } from "@/api/bills/type";
+import { addBill } from "@/api/bills";
 import dayjs from "dayjs";
-import { TagItem } from "../api/tags/type";
+import { TagItem } from "@/api/tags/type";
+import {useNavigate} from "react-router-dom";
+import {LocalStore} from "@/utils/localStore";
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,12 +31,18 @@ const defaultData: CommonBill = {
   type: BillType.paid,
 };
 const Money = () => {
+  const navigate = useNavigate()
   const [tags, setTags] = useState<TagItem[]>([]);
   const [receiptData, setReceiptData] = useState<CommonBill>(defaultData);
   const onChange = (obj: Partial<CommonBill>) => {
     setReceiptData({ ...receiptData, ...obj });
   };
   const confirm = async () => {
+    console.log(LocalStore.getToken());
+    if (!LocalStore.getToken()) {
+      navigate('/login')
+      return;
+    }
     const { cash, tags = [] } = receiptData;
     if (!Number(cash)) {
       console.error("金额不能为0");

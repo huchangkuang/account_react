@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Icon } from "boat-ui-react";
-import { BillType } from "../../api/bills/type";
-import { tagList } from "../../api/tags";
-import { TagItem } from "../../api/tags/type";
+import { BillType } from "@/api/bills/type";
+import { tagList } from "@/api/tags";
+import { TagItem } from "@/api/tags/type";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -47,13 +48,28 @@ type Props = {
   type: BillType;
   onGetList?: (list: TagItem[]) => void;
 };
+const { paid, receive } = BillType;
+export const initTags = [
+  { icon: "food", name: "餐饮", type: paid },
+  { icon: "shop", name: "购物", type: paid },
+  { icon: "clothes", name: "服饰", type: paid },
+  { icon: "bus", name: "交通", type: paid },
+  { icon: "entertainment", name: "娱乐", type: paid },
+  { icon: "handshake", name: "社交", type: paid },
+  { icon: "chat", name: "通讯", type: paid },
+  { icon: "medical", name: "医疗", type: paid },
+  { icon: "part_time_job", name: "兼职", type: receive },
+  { icon: "salary", name: "工资", type: receive },
+  { icon: "bonus", name: "奖金", type: receive },
+  { icon: "lottery", name: "彩票", type: receive },
+];
 const Classify: React.FC<Props> = ({
   selectIds,
   onChange,
   type,
   onGetList,
 }) => {
-  const [list, setList] = useState<TagItem[]>([]);
+  const [list, setList] = useState<TagItem[]>(initTags.map((i, index) => ({...i, id: index, createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')})));
   const fetchTagList = async () => {
     try {
       const { data } = await tagList();
