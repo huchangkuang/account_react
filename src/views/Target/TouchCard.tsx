@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Icon } from "boat-ui-react";
 import dayjs from "dayjs";
-import { reportCard } from "../../api/user";
+import { reportCard } from "@/api/user";
+import { errorToast } from "@/utils/errortoast";
 
 const Wrapper = styled.div`
   background: #f3c623;
@@ -57,7 +58,7 @@ const TouchCard: React.FC<TouchCardProps> = ({
         refresh?.();
         window.alert("打卡成功，保持记账的好习惯哦！");
       } catch (e) {
-        console.error(e);
+        errorToast(e);
       }
     }
   };

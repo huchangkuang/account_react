@@ -5,9 +5,10 @@ import { EditTitle } from "./EidtTitle";
 import { EditInput } from "./EditInput";
 import { IconList } from "./IconList";
 import { useLocation, useNavigate } from "react-router-dom";
-import { addTag } from "../../api/tags";
-import { BillType } from "../../api/bills/type";
-import { parseQuery } from "../../utils/parseQuery";
+import { addTag } from "@/api/tags";
+import { BillType } from "@/api/bills/type";
+import { parseQuery } from "@/utils/parseQuery";
+import { errorToast } from "@/utils/errortoast";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,14 +34,14 @@ const AddTag = () => {
   const save = async () => {
     const msg = validate();
     if (msg) {
-      console.error(msg);
+      errorToast(msg);
       return;
     }
     try {
       await addTag({ type, name, icon });
       navigate(-1);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   useEffect(() => {

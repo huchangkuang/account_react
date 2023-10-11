@@ -6,9 +6,10 @@ import { RemoveTagButton } from "./RemoveTagButton";
 import { EditTitle } from "./EidtTitle";
 import { IconList } from "./IconList";
 import { EditInput } from "./EditInput";
-import { delTag, updateTag } from "../../api/tags";
-import { BillType } from "../../api/bills/type";
-import { parseQuery } from "../../utils/parseQuery";
+import { delTag, updateTag } from "@/api/tags";
+import { BillType } from "@/api/bills/type";
+import { parseQuery } from "@/utils/parseQuery";
+import { errorToast } from "@/utils/errortoast";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,7 +37,7 @@ const EditTag = () => {
       await delTag(Number(id));
       navigate(-1);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   const validate = () => {
@@ -46,7 +47,7 @@ const EditTag = () => {
   const save = async () => {
     const msg = validate();
     if (msg) {
-      console.error(msg);
+      errorToast(msg);
       return;
     }
     try {
@@ -58,7 +59,7 @@ const EditTag = () => {
       });
       navigate(-1);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   useEffect(() => {

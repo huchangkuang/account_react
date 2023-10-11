@@ -5,6 +5,7 @@ import { BillType } from "@/api/bills/type";
 import { tagList } from "@/api/tags";
 import { TagItem } from "@/api/tags/type";
 import dayjs from "dayjs";
+import { errorToast } from "@/utils/errortoast";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -69,14 +70,20 @@ const Classify: React.FC<Props> = ({
   type,
   onGetList,
 }) => {
-  const [list, setList] = useState<TagItem[]>(initTags.map((i, index) => ({...i, id: index, createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')})));
+  const [list, setList] = useState<TagItem[]>(
+    initTags.map((i, index) => ({
+      ...i,
+      id: index,
+      createAt: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    })),
+  );
   const fetchTagList = async () => {
     try {
       const { data } = await tagList();
       setList(data);
       onGetList?.(data);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   useEffect(() => {

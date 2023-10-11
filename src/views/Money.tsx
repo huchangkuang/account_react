@@ -9,8 +9,9 @@ import { BillType, CommonBill } from "@/api/bills/type";
 import { addBill } from "@/api/bills";
 import dayjs from "dayjs";
 import { TagItem } from "@/api/tags/type";
-import {useNavigate} from "react-router-dom";
-import {LocalStore} from "@/utils/localStore";
+import { useNavigate } from "react-router-dom";
+import { LocalStore } from "@/utils/localStore";
+import { errorToast } from "@/utils/errortoast";
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,7 +32,7 @@ const defaultData: CommonBill = {
   type: BillType.paid,
 };
 const Money = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [tags, setTags] = useState<TagItem[]>([]);
   const [receiptData, setReceiptData] = useState<CommonBill>(defaultData);
   const onChange = (obj: Partial<CommonBill>) => {
@@ -40,23 +41,23 @@ const Money = () => {
   const confirm = async () => {
     console.log(LocalStore.getToken());
     if (!LocalStore.getToken()) {
-      navigate('/login')
+      navigate("/login");
       return;
     }
     const { cash, tags = [] } = receiptData;
     if (!Number(cash)) {
-      console.error("金额不能为0");
+      errorToast("金额不能为0");
       return;
     }
     if (!tags.length) {
-      console.error("请至少选择一个标签");
+      errorToast("请至少选择一个标签");
       return;
     }
     try {
       await addBill(receiptData);
       setReceiptData({ ...defaultData, type: receiptData.type });
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   return (

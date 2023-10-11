@@ -6,6 +6,7 @@ import { Budget } from "./Target/Budget";
 import { UserInfo } from "./Target/UserInfoCard";
 import { userInfo } from "@/api/user";
 import { UserInfoDto } from "@/api/user/type";
+import { errorToast } from "@/utils/errortoast";
 
 const Target = () => {
   const [info, setInfo] = useState<UserInfoDto>();
@@ -22,7 +23,7 @@ const Target = () => {
       const { data } = await userInfo();
       setInfo(data);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   useEffect(() => {

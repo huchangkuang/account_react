@@ -14,6 +14,7 @@ import {
 import { billList } from "@/api/bills";
 import { tagList } from "@/api/tags";
 import { TagItem } from "@/api/tags/type";
+import { errorToast } from "@/utils/errortoast";
 
 const Wrapper = styled.div`
   display: flex;
@@ -61,7 +62,7 @@ const Statistic = () => {
       const { data } = await tagList();
       setTags(data);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   const getGroupRecord = (type: BillType, date: BillFilterDate) => {
@@ -158,7 +159,7 @@ const Statistic = () => {
       });
       setList(data);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   const { lineX, lineY, pieName, pieValue } = getGroupRecord(type, date);

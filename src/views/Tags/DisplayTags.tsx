@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "boat-ui-react";
-import { TagItem } from "../../api/tags/type";
-import { tagList } from "../../api/tags";
-import { BillType } from "../../api/bills/type";
+import { TagItem } from "@/api/tags/type";
+import { tagList } from "@/api/tags";
+import { BillType } from "@/api/bills/type";
+import { errorToast } from "@/utils/errortoast";
 
 const Wrapper = styled.div`
   .link {
@@ -51,7 +52,7 @@ const DisplayTags: React.FC<Props> = (props) => {
       const { data } = await tagList();
       setTags(data);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   useEffect(() => {

@@ -18,7 +18,7 @@ const NavWrapper = styled.nav`
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        .icon {
+        .boat-icon {
           width: 32px;
           height: 32px;
           margin: 3px;
@@ -46,7 +46,7 @@ const Nav = () => {
               location.pathname === "/bill" && "selected",
             )}
           >
-            <Icon size='2em' style={{marginBottom: 4}} name="bill" />
+            <Icon name="bill" />
             账单
           </NavLink>
         </li>
@@ -58,7 +58,7 @@ const Nav = () => {
               location.pathname === "/statistic" && "selected",
             )}
           >
-            <Icon size='2em' style={{marginBottom: 4}} name="charts_line" />
+            <Icon name="charts_line" />
             统计
           </NavLink>
         </li>
@@ -70,7 +70,7 @@ const Nav = () => {
               location.pathname === "/money" && "selected",
             )}
           >
-            <Icon size='2em' style={{marginBottom: 4}} name="add" />
+            <Icon name="add" />
             记账
           </NavLink>
         </li>
@@ -82,7 +82,7 @@ const Nav = () => {
               location.pathname === "/tags" && "selected",
             )}
           >
-            <Icon size='2em' style={{marginBottom: 4}} name="tag" />
+            <Icon name="tag" />
             标签
           </NavLink>
         </li>
@@ -94,7 +94,7 @@ const Nav = () => {
             )}
             to="/target"
           >
-            <Icon size='2em' style={{marginBottom: 4}} name="target" />
+            <Icon name="target" />
             目标
           </NavLink>
         </li>

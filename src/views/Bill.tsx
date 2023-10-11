@@ -1,19 +1,20 @@
 import Layout from "../components/Layout";
 import React, { useEffect, useMemo, useState } from "react";
-import { DataFilter } from "../components/DataFilter";
+import { DataFilter } from "@/components/DataFilter";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import cs from "classnames";
-import { NoData } from "../components/NoData";
-import { billList } from "../api/bills";
+import { NoData } from "@/components/NoData";
+import { billList } from "@/api/bills";
 import {
   BillFilterDate,
   BillItem,
   BillListQuery,
   BillType,
-} from "../api/bills/type";
-import { tagList } from "../api/tags";
-import { TagItem } from "../api/tags/type";
+} from "@/api/bills/type";
+import { tagList } from "@/api/tags";
+import { TagItem } from "@/api/tags/type";
+import {errorToast} from "@/utils/errorToast";
 
 const Wrapper = styled.div`
   .bill-list {
@@ -132,7 +133,7 @@ const Bill = () => {
       });
       setList(data);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   const fetchTagList = async () => {
@@ -140,7 +141,7 @@ const Bill = () => {
       const { data } = await tagList();
       setTags(data);
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   useEffect(() => {

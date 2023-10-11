@@ -2,8 +2,9 @@ import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { Icon } from "boat-ui-react";
 import { useNavigate } from "react-router-dom";
-import { login, signUp } from "../api/user";
+import { login, signUp } from "@/api/user";
 import { LocalStore } from "@/utils/localStore";
+import { errorToast } from "@/utils/errortoast";
 
 type LoginProps = {};
 export const Login: FC<LoginProps> = (props) => {
@@ -22,19 +23,19 @@ export const Login: FC<LoginProps> = (props) => {
       LocalStore.setAvatar(avatar || "");
       back();
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   const toRegister = async () => {
     if (password !== password2) {
-      console.error("两次密码不一致");
+      errorToast("两次密码不一致");
       return;
     }
     try {
       await signUp({ idName, password });
       await toLogin();
     } catch (e) {
-      console.error(e);
+      errorToast(e);
     }
   };
   const back = () => {
