@@ -10,6 +10,7 @@ import { BillType } from "@/api/bills/type";
 import { parseQuery } from "@/utils/parseQuery";
 import { errorToast } from "@/utils/errorToast";
 import { LocalStore } from "@/utils/localStore";
+import {message} from "boat-ui-react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,6 +45,7 @@ const AddTag = () => {
     }
     try {
       await addTag({ type, name, icon });
+      message.success('新增成功')
       navigate(-1);
     } catch (e) {
       errorToast(e);

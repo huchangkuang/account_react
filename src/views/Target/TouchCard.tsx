@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Icon } from "boat-ui-react";
+import {Icon, message} from "boat-ui-react";
 import dayjs from "dayjs";
 import { reportCard } from "@/api/user";
 import { errorToast } from "@/utils/errorToast";
@@ -59,12 +59,12 @@ const TouchCard: React.FC<TouchCardProps> = ({
       return;
     }
     if (dayjs(reportDate).format("YYYY-MM-DD") === today) {
-      window.alert("今日已经打过卡咯！");
+      message.info("今日已经打过卡咯！");
     } else {
       try {
         await reportCard();
         refresh?.();
-        window.alert("打卡成功，保持记账的好习惯哦！");
+        message.info("打卡成功，保持记账的好习惯哦！");
       } catch (e) {
         errorToast(e);
       }

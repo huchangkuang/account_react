@@ -11,6 +11,7 @@ import { BillType } from "@/api/bills/type";
 import { parseQuery } from "@/utils/parseQuery";
 import { errorToast } from "@/utils/errorToast";
 import { LocalStore } from "@/utils/localStore";
+import {message} from "boat-ui-react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -66,6 +67,7 @@ const EditTag = () => {
         name,
         icon,
       });
+      message.success('修改成功')
       navigate(-1);
     } catch (e) {
       errorToast(e);

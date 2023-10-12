@@ -12,6 +12,7 @@ import { TagItem } from "@/api/tags/type";
 import { useNavigate } from "react-router-dom";
 import { LocalStore } from "@/utils/localStore";
 import { errorToast } from "@/utils/errorToast";
+import {message} from "boat-ui-react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,6 +56,7 @@ const Money = () => {
     try {
       await addBill(receiptData);
       setReceiptData({ ...defaultData, type: receiptData.type });
+      message.success('记了一笔')
     } catch (e) {
       errorToast(e);
     }

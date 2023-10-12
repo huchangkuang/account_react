@@ -5,7 +5,7 @@ import { useUpdate } from "@/hooks/useUpdate";
 import dayjs from "dayjs";
 import { Card } from "@/components/Card";
 import { editBudget } from "@/api/user";
-import { Button } from "boat-ui-react";
+import {Button, message} from "boat-ui-react";
 import { globalStyle } from "@/utils/style";
 import { LocalStore } from "@/utils/localStore";
 import { useNavigate } from "react-router-dom";
@@ -37,8 +37,9 @@ const Budget: React.FC<BudgetProps> = ({ expense, _budget }) => {
     if (number) {
       await editBudget(number);
       setBudget(number);
+      message.success('预算设置成功')
     } else {
-      window.alert("请输入合法的数字");
+      message.warning("请输入合法的数字");
     }
   };
   useEffect(() => {
