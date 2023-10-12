@@ -1,30 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 import { BillType } from "../api/bills/type";
+import { globalStyle } from "@/utils/style";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f3c623;
+  background: ${globalStyle.theme_color};
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
   padding: 12px 0;
   width: 100%;
   > div {
-    border: 1px solid #333333;
+    border: 1px solid #666;
     font-size: 16px;
     padding: 4px 23px;
     text-align: center;
-    color: #333333;
+    color: #666;
     min-height: 30px;
     &.selected {
-      background: #333333;
-      color: #f3c623;
+      background: #666;
+      color: #ffffff;
     }
-    :first-child {
+    &:first-child {
       border-radius: 4px 0 0 4px;
     }
-    :last-child {
+    &:last-child {
       border-radius: 0 4px 4px 0;
     }
   }

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { DisplayTags } from "./Tags/DisplayTags";
 import { AddTagButton } from "./Tags/AddTagButton";
 import { BillType } from "@/api/bills/type";
+import { globalStyle } from "@/utils/style";
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
   height: 100%;
   .title {
     text-align: center;
-    background: #f3c623;
+    background: ${globalStyle.theme_color};
     font-weight: bold;
     font-size: 18px;
     padding-top: 8px;

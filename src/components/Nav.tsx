@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { NavLink, useLocation } from "react-router-dom";
 import { Icon } from "boat-ui-react";
 import cs from "classnames";
+import { globalStyle } from "@/utils/style";
 
 const NavWrapper = styled.nav`
   background: #ffffff;
@@ -21,12 +22,12 @@ const NavWrapper = styled.nav`
         .boat-icon {
           width: 32px;
           height: 32px;
-          margin: 3px;
+          margin: 4px;
         }
         &.selected {
-          color: #f3c623;
+          color: ${globalStyle.theme_color};
           .boat-icon {
-            fill: #f3c623;
+            fill: ${globalStyle.theme_color};
           }
         }
       }

@@ -9,7 +9,7 @@ import { EditInput } from "./EditInput";
 import { delTag, updateTag } from "@/api/tags";
 import { BillType } from "@/api/bills/type";
 import { parseQuery } from "@/utils/parseQuery";
-import { errorToast } from "@/utils/errortoast";
+import { errorToast } from "@/utils/errorToast";
 
 const Wrapper = styled.div`
   display: flex;

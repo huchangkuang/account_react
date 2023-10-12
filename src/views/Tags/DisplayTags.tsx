@@ -5,7 +5,7 @@ import { Icon } from "boat-ui-react";
 import { TagItem } from "@/api/tags/type";
 import { tagList } from "@/api/tags";
 import { BillType } from "@/api/bills/type";
-import { errorToast } from "@/utils/errortoast";
+import { errorToast } from "@/utils/errorToast";
 
 const Wrapper = styled.div`
   .link {
@@ -30,13 +30,13 @@ const Wrapper = styled.div`
         justify-content: center;
         align-items: center;
         margin-right: 12px;
-        .icon {
+        .boat-icon {
           width: 24px;
           height: 24px;
         }
       }
     }
-    > .icon {
+    > .boat-icon {
       width: 16px;
       height: 16px;
     }

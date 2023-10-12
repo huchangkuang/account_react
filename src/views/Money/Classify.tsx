@@ -5,7 +5,8 @@ import { BillType } from "@/api/bills/type";
 import { tagList } from "@/api/tags";
 import { TagItem } from "@/api/tags/type";
 import dayjs from "dayjs";
-import { errorToast } from "@/utils/errortoast";
+import { errorToast } from "@/utils/errorToast";
+import { globalStyle } from "@/utils/style";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -26,18 +27,18 @@ const Wrapper = styled.div`
       @media (max-height: 580px) {
         height: 48px;
         font-size: 14px;
-        .icon {
+        .boat-icon {
           width: 22px;
           height: 22px;
         }
       }
-      .icon {
+      .boat-icon {
         width: 32px;
         height: 32px;
         border-radius: 4px;
         padding: 4px;
         &.selected {
-          background: #f3c623;
+          background: ${globalStyle.theme_color};
         }
       }
     }

@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import { TagItem } from "@/api/tags/type";
 import { useNavigate } from "react-router-dom";
 import { LocalStore } from "@/utils/localStore";
-import { errorToast } from "@/utils/errortoast";
+import { errorToast } from "@/utils/errorToast";
 
 const Wrapper = styled.div`
   display: flex;

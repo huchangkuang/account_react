@@ -1,10 +1,11 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
-import { Icon } from "boat-ui-react";
+import {Button, Icon} from "boat-ui-react";
 import { useNavigate } from "react-router-dom";
 import { login, signUp } from "@/api/user";
 import { LocalStore } from "@/utils/localStore";
-import { errorToast } from "@/utils/errortoast";
+import { errorToast } from "@/utils/errorToast";
+import { globalStyle } from "@/utils/style";
 
 type LoginProps = {};
 export const Login: FC<LoginProps> = (props) => {
@@ -87,7 +88,8 @@ export const Login: FC<LoginProps> = (props) => {
             {isLogin ? "去注册" : "去登录"}
           </div>
         </div>
-        <div
+        <Button
+          type='primary'
           className="btn"
           onClick={() => {
             console.log(isLogin);
@@ -99,7 +101,7 @@ export const Login: FC<LoginProps> = (props) => {
           }}
         >
           {isLogin ? "登录" : "注册并登录"}
-        </div>
+        </Button>
       </form>
     </Wrapper>
   );
@@ -109,7 +111,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
   padding: 16px 24px;
 
-  .icon {
+  .boat-icon {
     width: 24px;
     height: 24px;
   }
@@ -132,12 +134,8 @@ const Wrapper = styled.div`
       }
     }
     .btn {
-      border-radius: 8px;
+      width: 100%;
       height: 44px;
-      background: #f3c623;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       color: #fff;
       font-size: 18px;
     }

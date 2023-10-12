@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     border-top: 1px solid #c4c4c4;
     padding: 8px 0;
     background: white;
-    .icon {
+    .boat-icon {
       width: 24px;
       height: 24px;
     }

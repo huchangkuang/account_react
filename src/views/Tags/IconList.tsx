@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Icon } from "boat-ui-react";
+import { globalStyle } from "@/utils/style";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -18,12 +19,12 @@ const Wrapper = styled.div`
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      .icon {
+      .boat-icon {
         width: 24px;
         height: 24px;
         border-radius: 4px;
         &.selected {
-          background: #f3c623;
+          background: ${globalStyle.theme_color};
         }
       }
     }

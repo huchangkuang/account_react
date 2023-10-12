@@ -5,6 +5,8 @@ import { useUpdate } from "@/hooks/useUpdate";
 import dayjs from "dayjs";
 import { Card } from "@/components/Card";
 import { editBudget } from "@/api/user";
+import { Button } from "boat-ui-react";
+import { globalStyle } from "@/utils/style";
 
 type BudgetProps = {
   expense: number;
@@ -44,9 +46,9 @@ const Budget: React.FC<BudgetProps> = ({ expense, _budget }) => {
       <Card className="budget">
         <div className="budget-header">
           <div className="text">{month}月总预算</div>
-          <button className="setBudget" onClick={() => setDisplay("show")}>
+          <Button type="primary" onClick={() => setDisplay("show")}>
             +设置预算
-          </button>
+          </Button>
         </div>
         <div className="budget-main">
           <div className="pie">
@@ -91,15 +93,6 @@ const Wrapper = styled.div<Props>`
       align-items: center;
       justify-content: space-between;
       padding: 10px 0;
-      .setBudget {
-        background: #f3c623;
-        border: none;
-        border-radius: 4px;
-        padding: 3px 4px;
-        font-weight: bold;
-        font-size: 16px;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-      }
       .text {
         margin-left: 10px;
       }
@@ -117,7 +110,7 @@ const Wrapper = styled.div<Props>`
         border-radius: 50%;
         position: relative;
         background: conic-gradient(
-          #f3c623 ${(props) => (props.deg / 100) * 360}deg,
+          ${globalStyle.theme_color} ${(props) => (props.deg / 100) * 360}deg,
           #eaeaea ${(props) => (props.deg / 100) * 360}deg 360deg
         );
         .remain {

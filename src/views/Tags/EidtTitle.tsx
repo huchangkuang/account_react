@@ -2,13 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "boat-ui-react";
+import { globalStyle } from "@/utils/style";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
-  background: #f3c623;
+  background: ${globalStyle.theme_color};
   width: 100vw;
   padding: 10px 20px;
   > button {
@@ -16,7 +17,7 @@ const Wrapper = styled.div`
     font-weight: bold;
     background: transparent;
     width: 32px;
-    .icon {
+    .boat-icon {
       width: 16px;
       height: 16px;
     }

@@ -12,7 +12,7 @@ const Button = styled.button`
   padding: 8px 0;
   background: white;
   font-size: 16px;
-  > .icon {
+  > .boat-icon {
     width: 24px;
     height: 24px;
   }

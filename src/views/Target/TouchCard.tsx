@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { Icon } from "boat-ui-react";
 import dayjs from "dayjs";
 import { reportCard } from "@/api/user";
-import { errorToast } from "@/utils/errortoast";
+import { errorToast } from "@/utils/errorToast";
+import { globalStyle } from "@/utils/style";
 
 const Wrapper = styled.div`
-  background: #f3c623;
+  background: ${globalStyle.theme_color};
   border-radius: 0 0 16px 16px;
   display: flex;
   justify-content: space-around;
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    .icon {
+    .boat-icon {
       width: 32px;
       height: 32px;
     }

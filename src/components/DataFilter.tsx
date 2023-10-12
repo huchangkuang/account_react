@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { BillFilterDate, BillType } from "../api/bills/type";
+import { globalStyle } from "@/utils/style";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
-  background: #f3c623;
+  background: ${globalStyle.theme_color};
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
   padding: 12px 0;
   width: 100%;
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
       margin: 0 2px;
       &.selected {
         background: #333333;
-        color: #f3c623;
+        color: ${globalStyle.theme_color};
       }
     }
   }

@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  .icon {
+  .boat-icon {
     margin-bottom: 20px;
     width: 48px;
     height: 48px;

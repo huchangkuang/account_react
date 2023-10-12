@@ -1,12 +1,14 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { Card } from "../../components/Card";
-import { Icon } from "boat-ui-react";
-import { Link } from "react-router-dom";
-import { LocalStore } from "../../utils/localStore";
+import { Card } from "@/components/Card";
+import { Button, Icon } from "boat-ui-react";
+import { useNavigate } from "react-router-dom";
+import { LocalStore } from "@/utils/localStore";
+import {globalStyle} from "@/utils/style";
 
 type UserInfoProps = {};
 export const UserInfo: FC<UserInfoProps> = (props) => {
+  const navigate = useNavigate();
   const token = LocalStore.getToken();
   const userName = LocalStore.getUserName();
   const avatar = LocalStore.getAvatar();
@@ -23,9 +25,9 @@ export const UserInfo: FC<UserInfoProps> = (props) => {
             {token && userName ? userName : "HELLO!"}
           </div>
         </div>
-        <Link to="/login" className="loginBtn">
+        <Button style={{color: globalStyle.link_color}} onClick={() => navigate("/login")} type="link" size="small">
           {!token ? "注册/登录" : "切换用户"}
-        </Link>
+        </Button>
       </Card>
     </Wrapper>
   );
@@ -40,7 +42,7 @@ const Wrapper = styled.div`
     .left {
       display: flex;
       align-items: center;
-      .icon {
+      .boat-icon {
         width: 40px;
         height: 40px;
         margin-right: 12px;

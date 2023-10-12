@@ -14,7 +14,7 @@ import {
 } from "@/api/bills/type";
 import { tagList } from "@/api/tags";
 import { TagItem } from "@/api/tags/type";
-import {errorToast} from "@/utils/errorToast";
+import { errorToast } from "@/utils/errorToast";
 
 const Wrapper = styled.div`
   .bill-list {
@@ -58,7 +58,7 @@ const Wrapper = styled.div`
               padding: 4px 0;
               display: flex;
               align-items: center;
-              .icon {
+              .boat-icon {
                 width: 1em;
                 height: 1em;
               }

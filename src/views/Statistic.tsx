@@ -14,7 +14,7 @@ import {
 import { billList } from "@/api/bills";
 import { tagList } from "@/api/tags";
 import { TagItem } from "@/api/tags/type";
-import { errorToast } from "@/utils/errortoast";
+import { errorToast } from "@/utils/errorToast";
 
 const Wrapper = styled.div`
   display: flex;
