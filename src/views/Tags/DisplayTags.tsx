@@ -6,6 +6,9 @@ import { TagItem } from "@/api/tags/type";
 import { tagList } from "@/api/tags";
 import { BillType } from "@/api/bills/type";
 import { errorToast } from "@/utils/errorToast";
+import { LocalStore } from "@/utils/localStore";
+import { initTags } from "@/views/Money/Classify";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
   .link {
@@ -46,8 +49,17 @@ type Props = {
   type: BillType;
 };
 const DisplayTags: React.FC<Props> = (props) => {
-  const [tags, setTags] = useState<TagItem[]>([]);
+  const [tags, setTags] = useState<TagItem[]>(
+    initTags.map((i, index) => ({
+      ...i,
+      id: index,
+      createAt: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    })),
+  );
   const fetchTagList = async () => {
+    if (!LocalStore.getToken()) {
+      return;
+    }
     try {
       const { data } = await tagList();
       setTags(data);

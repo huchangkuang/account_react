@@ -10,6 +10,7 @@ import { delTag, updateTag } from "@/api/tags";
 import { BillType } from "@/api/bills/type";
 import { parseQuery } from "@/utils/parseQuery";
 import { errorToast } from "@/utils/errorToast";
+import { LocalStore } from "@/utils/localStore";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,6 +34,10 @@ const EditTag = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const remove = async () => {
+    if (!LocalStore.getToken()) {
+      navigate("/login");
+      return;
+    }
     try {
       await delTag(Number(id));
       navigate(-1);
@@ -45,6 +50,10 @@ const EditTag = () => {
     if (!icon.trim()) return "请选择标签图标";
   };
   const save = async () => {
+    if (!LocalStore.getToken()) {
+      navigate("/login");
+      return;
+    }
     const msg = validate();
     if (msg) {
       errorToast(msg);
@@ -65,7 +74,7 @@ const EditTag = () => {
   useEffect(() => {
     const obj = parseQuery(location.search) as any;
     setType(obj.type);
-    setName(obj.tagName);
+    setName(decodeURIComponent(obj.tagName));
     setIcon(obj.icon);
   }, []);
   return (

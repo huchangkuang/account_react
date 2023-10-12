@@ -7,12 +7,15 @@ import { Card } from "@/components/Card";
 import { editBudget } from "@/api/user";
 import { Button } from "boat-ui-react";
 import { globalStyle } from "@/utils/style";
+import { LocalStore } from "@/utils/localStore";
+import { useNavigate } from "react-router-dom";
 
 type BudgetProps = {
   expense: number;
   _budget: number;
 };
 const Budget: React.FC<BudgetProps> = ({ expense, _budget }) => {
+  const navigate = useNavigate();
   const [month, setMonth] = useState("");
   const [display, setDisplay] = useState<string>("hide");
   const [budget, setBudget] = useState<number>(_budget);
@@ -26,6 +29,10 @@ const Budget: React.FC<BudgetProps> = ({ expense, _budget }) => {
     setDeg(Math.round(x ? x : 0));
   }, [budget, expense]);
   const changeBudget = async (state: string) => {
+    if (!LocalStore.getToken()) {
+      navigate("/login");
+      return;
+    }
     const number = parseFloat(state);
     if (number) {
       await editBudget(number);

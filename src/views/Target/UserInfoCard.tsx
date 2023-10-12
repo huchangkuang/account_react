@@ -4,7 +4,7 @@ import { Card } from "@/components/Card";
 import { Button, Icon } from "boat-ui-react";
 import { useNavigate } from "react-router-dom";
 import { LocalStore } from "@/utils/localStore";
-import {globalStyle} from "@/utils/style";
+import { globalStyle } from "@/utils/style";
 
 type UserInfoProps = {};
 export const UserInfo: FC<UserInfoProps> = (props) => {
@@ -25,7 +25,12 @@ export const UserInfo: FC<UserInfoProps> = (props) => {
             {token && userName ? userName : "HELLO!"}
           </div>
         </div>
-        <Button style={{color: globalStyle.link_color}} onClick={() => navigate("/login")} type="link" size="small">
+        <Button
+          style={{ color: globalStyle.link_color }}
+          onClick={() => navigate("/login")}
+          type="link"
+          size="small"
+        >
           {!token ? "注册/登录" : "切换用户"}
         </Button>
       </Card>

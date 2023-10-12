@@ -1,4 +1,4 @@
-import { get, post } from "../../utils/request";
+import { get, post } from "@/utils/request";
 import { CommonTag, TagItem } from "./type";
 
 const prefix = "/api/tags";

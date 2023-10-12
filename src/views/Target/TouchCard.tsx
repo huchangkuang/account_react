@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 import { reportCard } from "@/api/user";
 import { errorToast } from "@/utils/errorToast";
 import { globalStyle } from "@/utils/style";
+import { LocalStore } from "@/utils/localStore";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   background: ${globalStyle.theme_color};
@@ -49,8 +51,13 @@ const TouchCard: React.FC<TouchCardProps> = ({
   billsNum,
   refresh,
 }) => {
+  const navigate = useNavigate();
   const today = dayjs().format("YYYY-MM-DD");
   const touchCard = async () => {
+    if (!LocalStore.getToken()) {
+      navigate("/login");
+      return;
+    }
     if (dayjs(reportDate).format("YYYY-MM-DD") === today) {
       window.alert("今日已经打过卡咯！");
     } else {

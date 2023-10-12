@@ -15,6 +15,7 @@ import {
 import { tagList } from "@/api/tags";
 import { TagItem } from "@/api/tags/type";
 import { errorToast } from "@/utils/errorToast";
+import { LocalStore } from "@/utils/localStore";
 
 const Wrapper = styled.div`
   .bill-list {
@@ -126,6 +127,9 @@ const Bill = () => {
     },
   };
   const fetchBillList = async (newParam?: BillListQuery) => {
+    if (!LocalStore.getToken()) {
+      return;
+    }
     try {
       const { data } = await billList({
         date: newParam?.date ?? date,
@@ -137,6 +141,9 @@ const Bill = () => {
     }
   };
   const fetchTagList = async () => {
+    if (!LocalStore.getToken()) {
+      return;
+    }
     try {
       const { data } = await tagList();
       setTags(data);

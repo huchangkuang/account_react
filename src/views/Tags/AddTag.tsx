@@ -9,6 +9,7 @@ import { addTag } from "@/api/tags";
 import { BillType } from "@/api/bills/type";
 import { parseQuery } from "@/utils/parseQuery";
 import { errorToast } from "@/utils/errorToast";
+import { LocalStore } from "@/utils/localStore";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,6 +33,10 @@ const AddTag = () => {
     if (!icon.trim()) return "请选择标签图标";
   };
   const save = async () => {
+    if (!LocalStore.getToken()) {
+      navigate("/login");
+      return;
+    }
     const msg = validate();
     if (msg) {
       errorToast(msg);

@@ -7,6 +7,7 @@ import { UserInfo } from "./Target/UserInfoCard";
 import { userInfo } from "@/api/user";
 import { UserInfoDto } from "@/api/user/type";
 import { errorToast } from "@/utils/errorToast";
+import { LocalStore } from "@/utils/localStore";
 
 const Target = () => {
   const [info, setInfo] = useState<UserInfoDto>();
@@ -19,6 +20,9 @@ const Target = () => {
     billsNum = 0,
   } = info || {};
   const fetchUserInfo = async () => {
+    if (!LocalStore.getToken()) {
+      return;
+    }
     try {
       const { data } = await userInfo();
       setInfo(data);

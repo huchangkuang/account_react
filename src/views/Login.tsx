@@ -1,11 +1,10 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
-import {Button, Icon} from "boat-ui-react";
+import {Button, Icon, message} from "boat-ui-react";
 import { useNavigate } from "react-router-dom";
 import { login, signUp } from "@/api/user";
 import { LocalStore } from "@/utils/localStore";
 import { errorToast } from "@/utils/errorToast";
-import { globalStyle } from "@/utils/style";
 
 type LoginProps = {};
 export const Login: FC<LoginProps> = (props) => {
@@ -23,6 +22,7 @@ export const Login: FC<LoginProps> = (props) => {
       LocalStore.setUserName(userName || "");
       LocalStore.setAvatar(avatar || "");
       back();
+      message.success('登录成功')
     } catch (e) {
       errorToast(e);
     }
@@ -89,10 +89,9 @@ export const Login: FC<LoginProps> = (props) => {
           </div>
         </div>
         <Button
-          type='primary'
+          type="primary"
           className="btn"
           onClick={() => {
-            console.log(isLogin);
             if (isLogin) {
               toLogin();
             } else {

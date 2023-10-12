@@ -7,6 +7,7 @@ import { TagItem } from "@/api/tags/type";
 import dayjs from "dayjs";
 import { errorToast } from "@/utils/errorToast";
 import { globalStyle } from "@/utils/style";
+import { LocalStore } from "@/utils/localStore";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -79,6 +80,9 @@ const Classify: React.FC<Props> = ({
     })),
   );
   const fetchTagList = async () => {
+    if (!LocalStore.getToken()) {
+      return;
+    }
     try {
       const { data } = await tagList();
       setList(data);

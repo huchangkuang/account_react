@@ -39,7 +39,6 @@ const Money = () => {
     setReceiptData({ ...receiptData, ...obj });
   };
   const confirm = async () => {
-    console.log(LocalStore.getToken());
     if (!LocalStore.getToken()) {
       navigate("/login");
       return;

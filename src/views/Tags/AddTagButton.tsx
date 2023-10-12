@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Icon } from "boat-ui-react";
 import { BillType } from "@/api/bills/type";
+import { LocalStore } from "@/utils/localStore";
 
 const Wrapper = styled.div`
   .link {
@@ -19,9 +20,10 @@ const Wrapper = styled.div`
   }
 `;
 const AddTagButton: React.FC<{ type: BillType }> = ({ type }) => {
+  const token = LocalStore.getToken();
   return (
     <Wrapper>
-      <Link to={`/tag/add?type=${type}`} className="link">
+      <Link to={token ? `/tag/add?type=${type}` : "/login"} className="link">
         <Icon name="addNoCircle" />
         添加类别
       </Link>
