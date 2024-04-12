@@ -47,7 +47,7 @@ export const Login: FC<LoginProps> = (props) => {
       <div>
         <Icon name="left" fill="black" onClick={back} />
       </div>
-      <form>
+      <div className='formData'>
         <div className="formItem">
           <div className="label">用户名：</div>
           <input
@@ -101,7 +101,7 @@ export const Login: FC<LoginProps> = (props) => {
         >
           {isLogin ? "登录" : "注册并登录"}
         </Button>
-      </form>
+      </div>
     </Wrapper>
   );
 };
@@ -115,7 +115,7 @@ const Wrapper = styled.div`
     height: 24px;
   }
 
-  form {
+  .formData {
     margin-top: 200px;
     padding-inline: 10px;
 
